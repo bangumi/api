@@ -3,7 +3,10 @@
 
 `GET /user/:id`
 
-- id = username / UID
+| Parameter | Type | Desc | Note | Required |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| id  | string | 用户名 | 也可使用 UID | ☑️ |
+
 
 ```json
 {
