@@ -31,8 +31,9 @@
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | username  | string | 用户名 | 也可使用 UID | ☑️ |
-| cat  | string | 收藏类型 |  目前仅支持 watching  | |
+| cat  | string | 收藏类型 |  watching = 在看的动画与三次元条目 / all_watching = 在看的动画三次元与书籍条目  | |
 | ids  | string | 收藏条目 ID |  批量查询收藏状态，将条目 ID 以半角逗号分隔，如 `1,2,4,6`  | |
+| responseGroup  | string |  medium / small  |  默认为 medium。small 时不返回条目详细信息  | |
 
 # 用户收藏统计
 获取用户所有收藏信息
