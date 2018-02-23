@@ -35,6 +35,17 @@
 | ids  | string | 收藏条目 ID |  批量查询收藏状态，将条目 ID 以半角逗号分隔，如 `1,2,4,6`  | |
 | responseGroup  | string |  medium / small  |  默认为 medium。small 时不返回条目详细信息  | |
 
+# 用户收藏概览
+获取用户指定类型的收藏概览，固定返回最近更新的
+
+`GET /user/:username/collections/:subject_type`
+
+| Parameter | Type | Desc | Note | Required |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| username  | string | 用户名 | 也可使用 UID | ☑️ |
+| subject_type  | string | 条目类型 |  (book/anime/music/game/real)  | |
+| max_results  | integer | 每页条数  | 最多 25 | |
+
 # 用户收藏统计
 获取用户所有收藏信息
 
