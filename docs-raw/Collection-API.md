@@ -36,5 +36,6 @@
 | comment  | string | 简评 |  |  |
 | tags  | string | 标签 | 以半角空格分割 |  |
 | rating  | integer | 评分 | 0~10 |  |
+| privacy | integer | 收藏隐私 | 0 = 公开 / 1 = 私密 | |
 
 
