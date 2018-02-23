@@ -38,6 +38,7 @@
 获取用户所有收藏信息
 
 `GET /user/:username/collections/status`
+
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | username  | string | 用户名 | 也可使用 UID | ☑️ |
