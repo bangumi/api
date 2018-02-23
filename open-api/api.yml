@@ -313,7 +313,7 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SubjectSmall'
-  /ep/{ep_id}/status/{status}:
+  /ep/{id}/status/{status}:
     get:
       tags:
         - 进度
@@ -335,19 +335,14 @@ paths:
       parameters:
         - $ref: '#/components/parameters/ep_id'
         - $ref: '#/components/parameters/ep_status'
-      requestBody:
-        description: 使用 POST 批量更新
-          <br> 将章节以半角逗号分隔，如 `3697,3698,3699`。请求时 URL 中的 ep_id 为最后一个章节 ID
-        required: false
-        content:
-          # TODO: 不确定
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                ep_id:
-                  type: string
-                  example: 3697,3698,3699
+        - name: ep_id
+          in: query
+          description: 使用 POST 批量更新
+            <br> 将章节以半角逗号分隔，如 `3697,3698,3699`。请求时 URL 中的 ep_id 为最后一个章节 ID
+          required: false
+          schema:
+            type: string
+            example: 3697,3698,3699
       responses:
         200:
           description: TODO
@@ -362,24 +357,21 @@ paths:
       summary: 批量更新收视进度
       parameters:
         - $ref: '#/components/parameters/subject_id'
-      requestBody:
-        description: 章节话数
-        required: true
-        content:
-          # TODO: 不确定
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              # TODO: one of?
-              properties:
-                watched_eps:
-                  description: 如看到 123 话则 POST `123`
-                  type: string
-                  example: 123
-                watched_vols:
-                  description: 如看到第 3 卷则 POST `3`, 仅对书籍条目有效
-                  type: string
-                  example: 3
+        - name: watched_eps
+          in: query
+          description: 如看到 123 话则 POST `123`
+          # TODO: watched_eps 和 watched_vols 必填其一？
+          required: true
+          schema:
+            type: string
+            example: 123
+        - name: watched_vols
+          in: query
+          description: 如看到第 3 卷则 POST `3`, 仅对书籍条目有效
+          required: false
+          schema:
+            type: string
+            example: 3
       responses:
         200:
           description: TODO
@@ -422,39 +414,47 @@ paths:
       summary: 更新收藏
       parameters:
         - $ref: '#/components/parameters/subject_id'
-      requestBody:
-        required: true
-        content:
-          # TODO: 不确定
-          application/x-www-form-urlencoded:
-            schema:
-              type: object
-              properties:
-                status:
-                  $ref: '#/components/schemas/EpStatus'
-                comment:
-                  description: 简评
-                  type: string
-                tags:
-                  description: 标签
-                    <br> 以半角空格分割
-                  type: string
-                rating:
-                  description: 评分
-                    <br> 1-10
-                  type: integer
-                  minimum: 1
-                  maximum: 10
-                  example: 7
-                privacy:
-                  description: 收藏隐私
-                    <br> 0 = 公开
-                    <br> 1 = 私密
-                  type: integer
-                  enum:
-                    - 0
-                    - 1
-                  default: 0
+        - name: status
+          in: query
+          description: 章节状态
+          required: true
+          schema:
+            $ref: '#/components/schemas/EpStatus'
+        - name: comment
+          in: query
+          description: 简评
+          required: false
+          schema:
+            type: string
+        - name: tags
+          in: query
+          description: 标签
+            <br> 以半角空格分割
+          required: false
+          schema:
+            type: string
+        - name: rating
+          in: query
+          description: 评分
+            <br> 1-10
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+            example: 7
+        - name: privacy
+          in: query
+          description: 收藏隐私
+            <br> 0 = 公开
+            <br> 1 = 私密
+          required: false
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+            default: 0
       responses:
         200:
           description: TODO
@@ -512,7 +512,6 @@ components:
         <br> drop = 抛弃
         <br> remove = 撤销
       type: string
-      required: true
       enum:
         - watched
         - queue
@@ -1039,7 +1038,7 @@ components:
       schema:
         type: integer
     ep_id:
-      name: ep_id
+      name: id
       in: path
       description: 章节 ID
       required: true
