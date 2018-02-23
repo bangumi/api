@@ -10,7 +10,7 @@
 | Parameter | Type |  Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | id  | integer | 条目 ID  | | ☑️ |
-| responseGroup  | string | 返回数据大小  | 参考 [Define](https://github.com/bangumi/api/wiki/Define#response-group) | |
+| responseGroup  | string | 返回数据大小  | 参考 [Define](./Define#response-group) | |
 
 以下为 `responseGroup = large` 时的返回
 ```json
@@ -265,3 +265,7 @@
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | id  | integer | 条目 ID  | | ☑️ |
+
+
+# 每日放送
+`GET /calendar`

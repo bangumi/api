@@ -5,6 +5,19 @@
      4 = Game
      6 = Real
 
+### Collection Type
+    wish = 想做
+    collect = 做过
+    do = 在做
+    on_hold = 搁置
+    dropped = 抛弃
+    
+### Ep Status
+    watched = 看过
+    queue = 想看
+    drop = 抛弃
+    remove = 撤销
+    
 ### Response Group
      Small
      Medium
