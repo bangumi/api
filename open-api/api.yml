@@ -77,11 +77,61 @@ paths:
                       description: 完成话数
                       type: integer
                     lasttouch:
-                      description: TODO
+                      description: 上次更新时间
                       type: integer
                     subject:
                       # TODO: 其中 summary 为空
                       $ref: '#/components/schemas/SubjectSmall'
+  /user/{username}/collections/{subject_type}:
+    get:
+      tags:
+        - 用户
+      summary: 用户收藏概览
+      parameters:
+        - $ref: '#/components/parameters/username'
+        - name: subject_type
+          in: path
+          description: 条目类型
+            <br> book
+            <br> anime
+            <br> music
+            <br> game
+            <br> real
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubjectTypeName'
+      responses:
+        200:
+          description: 获取用户指定类型的收藏概览，固定返回最近更新的
+            <br> TODO 数据结构未确定
+            <br> [#3](https://github.com/bangumi/api/issues/3)
+          content:
+            application/json:
+              schema:
+                description: 收藏概览
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      $ref: '#/components/schemas/SubjectType'
+                    name:
+                      $ref: '#/components/schemas/SubjectTypeName'
+                    name_cn:
+                      description: 条目类型中文名
+                      type: string
+                      example: 动画
+                    collects:
+                      description: 收藏列表
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          subject_id:
+                            description: 条目 ID
+                            type: integer
+                          subject:
+                            $ref: '#/components/schemas/SubjectSmall'
   /user/{username}/collections/status:
     get:
       tags:
@@ -229,11 +279,11 @@ paths:
         - name: max_results
           in: query
           description: 每页条数
-            <br> 最多 20
+            <br> 最多 25
           required: false
           schema:
             type: integer
-            maximum: 20
+            maximum: 25
       responses:
         200:
           description: 搜索结果
@@ -250,6 +300,146 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/SubjectSmall'
+  /ep/{ep_id}/status/{status}:
+    get:
+      tags:
+        - 进度
+      summary: 获取收视进度
+      parameters:
+        - $ref: '#/components/parameters/ep_id'
+        - $ref: '#/components/parameters/ep_status'
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
+    post:
+      tags:
+        - 进度
+      summary: 更新收视进度
+      parameters:
+        - $ref: '#/components/parameters/ep_id'
+        - $ref: '#/components/parameters/ep_status'
+      requestBody:
+        description: 使用 POST 批量更新
+          <br> 将章节以半角逗号分隔，如 `3697,3698,3699`。请求时 URL 中的 ep_id 为最后一个章节 ID
+        required: false
+        content:
+          # TODO: 不确定
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ep_id:
+                  type: string
+                  example: 3697,3698,3699
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
+  /subject/{subject_id}/update/watched_eps:
+    post:
+      tags:
+        - 进度
+      summary: 批量更新收视进度
+      parameters:
+        - $ref: '#/components/parameters/subject_id'
+      requestBody:
+        description: 章节话数
+        required: true
+        content:
+          # TODO: 不确定
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                watched_eps:
+                  description: 如看到 123 话则 POST `123`
+                  type: string
+                  example: 123
+                watched_vols:
+                  description: 如看到第 3 卷则 POST `3`, 仅对书籍条目有效
+                  type: string
+                  example: 3
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
+  /collection/{subject_id}:
+    get:
+      tags:
+        - 收藏
+      summary: 获取指定条目收藏信息
+      parameters:
+        - $ref: '#/components/parameters/subject_id'
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
+  /collection/{subject_id}/create:
+    post:
+      tags:
+        - 收藏
+      summary: 添加收藏
+      parameters:
+        - $ref: '#/components/parameters/subject_id'
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
+  /collection/{subject_id}/update:
+    post:
+      tags:
+        - 收藏
+      summary: 更新收藏
+      parameters:
+        - $ref: '#/components/parameters/subject_id'
+      requestBody:
+        required: true
+        content:
+          # TODO: 不确定
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                status:
+                  required: true
+                  $ref: '#/components/schemas/EpStatus'
+                comment:
+                  description: 简评
+                  type: string
+                tags:
+                  description: 标签
+                    <br> 以半角空格分割
+                  type: string
+                rating:
+                  description: 评分
+                    <br> 1-10
+                  type: integer
+                  minimum: 1
+                  maximum: 10
+                  example: 7
+      responses:
+        200:
+          description: TODO
+          content:
+            application/json:
+              schema:
+                type: object
 components:
   schemas:
     CollectionsStatus:
@@ -269,7 +459,7 @@ components:
               - 5
             example: 5
           name:
-            $ref: '#/components/schemas/CollectionType'
+            $ref: '#/components/schemas/CollectionStatus'
           name_cn:
             description: 收藏类型中文
             type: string
@@ -278,8 +468,8 @@ components:
             description: 数量
             type: integer
             example: 1
-    CollectionType:
-      description: 收藏类型
+    CollectionStatus:
+      description: 收藏状态
         <br> wish = 想做
         <br> collect = 做过
         <br> do = 在做
@@ -374,11 +564,17 @@ components:
           type: string
           example: 女
         alias:
-          description: 别名（TODO 待完善）
+          description: 别名（TODO 待完善，字段名为数字的情况）
           type: object
           properties:
             jp:
               description: 日文名
+              type: string
+            kana:
+              description: 纯假名
+              type: string
+            nick:
+              description: 昵称
               type: string
             romaji:
               description: 罗马字
@@ -387,7 +583,7 @@ components:
               description: 第二中文名
               type: string
         source:
-          description: 引用来源
+          description: 引用来源（TODO 待完善，可以是字符串类型）
           type: array
           items:
             type: string
@@ -421,10 +617,23 @@ components:
                 $ref: '#/components/schemas/MonoBase'
     EpisodeType:
       description: 章节类型
-        <br> TODO
+        <br> 0 = 本篇
+        <br> 1 = 特别篇
+        <br> 2 = OP
+        <br> 3 = ED
+        <br> 4 = 预告/宣传/广告
+        <br> 5 = MAD
+        <br> 6 = 其他
+        <br> TODO 待确定
       type: integer
       enum:
         - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
       example: 0
     Episode:
       description: 章节信息
@@ -468,10 +677,16 @@ components:
           description: 简介
           type: string
         status:
-          description: 放送状态（TODO 待完善）
+          description: 放送状态
+            <br> Air = 已放送
+            <br> Today = 正在放送
+            <br> NA = 未放送
+            <br> TODO 待确定
           type: string
           enum:
             - Air
+            - Today
+            - NA
           example: Air
     Topic:
       description: 讨论版
@@ -517,7 +732,7 @@ components:
           description: 概览
           type: string
         image:
-          description: TODO
+          description: 图片（TODO 非数组？第一张？）
           type: string
         replies:
           description: 回复数
@@ -534,11 +749,11 @@ components:
           $ref: '#/components/schemas/User'
     SubjectType:
       description: 条目类型
-        <br> 1 = Book
-        <br> 2 = Anime
-        <br> 3 = Music
-        <br> 4 = Game
-        <br> 6 = Real
+        <br> 1 = book
+        <br> 2 = anime
+        <br> 3 = music
+        <br> 4 = game
+        <br> 6 = real
       type: integer
       enum:
         - 1
@@ -547,6 +762,21 @@ components:
         - 4
         - 6
       example: 2
+    SubjectTypeName:
+      description: 条目类型名称
+        <br> book
+        <br> anime
+        <br> music
+        <br> game
+        <br> real
+      type: integer
+      enum:
+        - book
+        - anime
+        - music
+        - game
+        - real
+      example: anime
     SubjectSmall:
       type: object
       properties:
@@ -785,10 +1015,24 @@ components:
       required: true
       schema:
         type: integer
+    ep_id:
+      name: ep_id
+      in: path
+      description: 章节 ID
+      required: true
+      schema:
+        type: integer
+    ep_status:
+      name: status
+      in: path
+      description: 收视类型，参考 [EpStatus](#model-EpStatus)
+      required: true
+      schema:
+        $ref: '#/components/schemas/EpStatus'
     responseGroup:
       name: responseGroup
       in: query
-      description: 返回数据大小
+      description: 返回数据大小，参考 [ResponseGroup](#model-ResponseGroup)
         <br> 默认为 small
       required: false
       schema:
