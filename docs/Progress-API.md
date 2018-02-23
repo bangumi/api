@@ -8,7 +8,7 @@
 | Parameter | Type | Desc | Note | Required  |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | ep_id  | integer | 章节 ID |  | ☑️ |
-| status  | string | 收视类型 | {watched/queue/drop/remove} 参考 [Define](./Define#ep-status)  | ☑️ |
+| status  | string | 收视类型 | {watched/queue/drop/remove} 参考 [Define](./Define.md#ep-status)  | ☑️ |
 | ep_id  | string | 使用 POST 批量更新 | 将章节以半角逗号分隔，如 `3697,3698,3699`。请求时 URL 中的 ep_id 为最后一个章节 ID  |  |
 
 

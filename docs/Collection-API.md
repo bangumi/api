@@ -32,7 +32,7 @@
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | subject_id  | integer | 条目 ID |  | ☑️ |
-| status  | string | 收藏状态 | {wish/collect/do/on_hold/dropped} 参考 [Define](./Define#collection-type)  | ☑️ |
+| status  | string | 收藏状态 | {wish/collect/do/on_hold/dropped} 参考 [Define](./Define.md#collection-type)  | ☑️ |
 | comment  | string | 简评 |  |  |
 | tags  | string | 标签 | 以半角空格分割 |  |
 | rating  | integer | 评分 | 0~10 |  |

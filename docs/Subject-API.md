@@ -10,7 +10,7 @@
 | Parameter | Type |  Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | id  | integer | 条目 ID  | | ☑️ |
-| responseGroup  | string | 返回数据大小  | 参考 [Define](./Define#response-group) | |
+| responseGroup  | string | 返回数据大小  | 参考 [Define](./Define.md#response-group) | |
 
 以下为 `responseGroup = large` 时的返回
 ```json
