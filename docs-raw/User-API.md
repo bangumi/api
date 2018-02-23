@@ -36,7 +36,7 @@
 | responseGroup  | string |  medium / small  |  默认为 medium。small 时不返回条目详细信息  | |
 
 # 用户收藏概览
-获取用户指定类型的收藏概览，固定返回最近更新的
+获取用户指定类型的收藏概览，固定返回最近更新的收藏，不支持翻页
 
 `GET /user/:username/collections/:subject_type`
 
@@ -44,7 +44,7 @@
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | username  | string | 用户名 | 也可使用 UID | ☑️ |
 | subject_type  | string | 条目类型 |  (book/anime/music/game/real)  | |
-| max_results  | integer | 每页条数  | 最多 25 | |
+| max_results  | integer | 显示条数  | 最多 25 | |
 
 # 用户收藏统计
 获取用户所有收藏信息
