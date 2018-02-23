@@ -5,7 +5,7 @@
      4 = Game
      6 = Real
 
-### Collection Type
+### Collection Status
     wish = 想做
     collect = 做过
     do = 在做
