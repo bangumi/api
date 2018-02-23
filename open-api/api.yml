@@ -100,9 +100,16 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/SubjectTypeName'
+        - name: max_results
+          in: query
+          description: 显示条数
+            <br> 最多 25
+          schema:
+            type: integer
+            maximum: 25
       responses:
         200:
-          description: 获取用户指定类型的收藏概览，固定返回最近更新的
+          description: 获取用户指定类型的收藏概览，固定返回最近更新的收藏，不支持翻页
             <br> TODO 数据结构未确定
             <br> [#3](https://github.com/bangumi/api/issues/3)
           content:
@@ -165,6 +172,12 @@ paths:
       summary: 用户收视进度
       parameters:
         - $ref: '#/components/parameters/username'
+        - name: subject_id
+          in: query
+          description: 条目 ID
+            <br> 获取指定条目收视进度
+          schema:
+            type: integer
       responses:
         200:
           description: TODO
@@ -265,7 +278,7 @@ paths:
             type: string
         - name: type
           in: query
-          description: 条目类型
+          description: 条目类型，参考 [SubjectType](#model-SubjectType)
           required: false
           schema:
             $ref: '#/components/schemas/SubjectType'
@@ -357,6 +370,7 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               type: object
+              # TODO: one of?
               properties:
                 watched_eps:
                   description: 如看到 123 话则 POST `123`
@@ -417,7 +431,6 @@ paths:
               type: object
               properties:
                 status:
-                  required: true
                   $ref: '#/components/schemas/EpStatus'
                 comment:
                   description: 简评
@@ -433,6 +446,15 @@ paths:
                   minimum: 1
                   maximum: 10
                   example: 7
+                privacy:
+                  description: 收藏隐私
+                    <br> 0 = 公开
+                    <br> 1 = 私密
+                  type: integer
+                  enum:
+                    - 0
+                    - 1
+                  default: 0
       responses:
         200:
           description: TODO
@@ -490,6 +512,7 @@ components:
         <br> drop = 抛弃
         <br> remove = 撤销
       type: string
+      required: true
       enum:
         - watched
         - queue
@@ -769,7 +792,7 @@ components:
         <br> music
         <br> game
         <br> real
-      type: integer
+      type: string
       enum:
         - book
         - anime
