@@ -44,6 +44,8 @@ Figure 3: Authorization Code Flow
 3. 第三方应用使用  `code`（验证代码）换取 access token
 4. 使用 access token 访问 API
 
+* 注意用户验证使用的 Base URL 与 API 不同
+
 ### 1. 第三方应用引导用户访问 Bangumi 授权页获取授权
 `GET https://bgm.tv/oauth/authorize`
 
@@ -95,7 +97,8 @@ Figure 3: Authorization Code Flow
 
 `Authorization: Bearer YOUR_ACCESS_TOKEN`
 
-例如在 curl 中设置 Header
+例如在 curl 中设置 Authorization Header
+
 `curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://api.chobits.sai.cc/collection/1`
 
 
@@ -116,10 +119,10 @@ Figure 3: Authorization Code Flow
 
 ```json
 {
-"access_token":"YOUR_NEW_ACCESS_TOKEN",
-"expires_in":604800,
-"token_type":"Bearer",
-"scope":null,
-"refresh_token":"YOUR_NEW_REFRESH_TOKEN"
+    "access_token":"YOUR_NEW_ACCESS_TOKEN",
+    "expires_in":604800,
+    "token_type":"Bearer",
+    "scope":null,
+    "refresh_token":"YOUR_NEW_REFRESH_TOKEN"
 }
 ```
