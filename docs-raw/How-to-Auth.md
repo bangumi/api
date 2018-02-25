@@ -41,13 +41,17 @@ Figure 3: Authorization Code Flow
 验证流程为：
 1. 第三方应用引导用户访问 Bangumi 授权页获取授权
 2. Bangumi 返回  `code`（验证代码）并跳转至第三方应用
-3. 第三方应用使用  `code`（验证代码）换取 access token
-4. 使用 access token 访问 API
+3. 第三方应用使用  `code`（验证代码）换取 Access Token
+4. 使用 Access Token 访问 API
 
-* 注意用户验证使用的 Base URL 与 API 不同
+**注意用户验证使用的 Base URL 与 API 不同**
+
+***
 
 ### 1. 第三方应用引导用户访问 Bangumi 授权页获取授权
-`GET https://bgm.tv/oauth/authorize`
+```
+GET https://bgm.tv/oauth/authorize
+```
 
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -62,10 +66,12 @@ Figure 3: Authorization Code Flow
 
 用户授权后，Bangumi 将会跳转回第三方应用提供的回调地址， 如 [https://sample.com/callback?code=`CODE`]。`code` 的有效期为 60 秒。
 
-### 3. 第三方应用使用  `code`（验证代码）换取 access token
-使用返回的的 `code` 换取 access token
+### 3. 第三方应用使用  `code`（验证代码）换取 Access Token
+使用返回的的 `code` 换取 Access Token
 
-`POST https://bgm.tv/oauth/access_token`
+```
+POST https://bgm.tv/oauth/access_token
+```
 
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -79,33 +85,40 @@ Figure 3: Authorization Code Flow
 返回
 ```json
 {
-    "access_token":"YOUR_ACCESS_TOKEN",
-    "expires_in":604800,
-    "token_type":"Bearer",
-    "scope":null,
-    "refresh_token":"YOUR_REFRESH_TOKEN"
+"access_token":"YOUR_ACCESS_TOKEN",
+"expires_in":604800,
+"token_type":"Bearer",
+"scope":null,
+"refresh_token":"YOUR_REFRESH_TOKEN"
 }
 ```
 
-### 4.使用 access token 访问 API
+### 4.使用 Access Token 访问 API
 
-之后便可使用获取的 access token 访问需要授权的 API，如：
+之后便可使用获取的 Access Token 访问需要授权的 API，如：
+```
+GET /collection/1?access_token={YOUR_ACCESS_TOKEN}
+```
 
-`GET /collection/1?access_token={YOUR_ACCESS_TOKEN}`
+虽然可以直接使用参数方式带上 Access Token，但建议直接在 HTTP Header 中通过 Authorization Header 带上 Access Token 信息：
 
-虽然可以直接使用参数方式带上 access token，但建议直接在 HTTP Header 中通过 Authorization Header 带上 acess token 信息：
-
-`Authorization: Bearer YOUR_ACCESS_TOKEN`
+```
+Authorization: Bearer YOUR_ACCESS_TOKEN
+```
 
 例如在 curl 中设置 Authorization Header
 
-`curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://api.chobits.sai.cc/collection/1`
+```
+curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://api.chobits.sai.cc/collection/1
+```
 
 
 ## 授权有效期刷新
-在 `/oauth/access_token`  API 的返回中，我们提供了 refresh token 以便第三方应用延续 access token 的有效期
+在 `/oauth/access_token`  API 的返回中，我们提供了 Refresh Token 以便第三方应用延续 Access Token 的有效期
 
-`POST https://bgm.tv/oauth/access_token`
+```
+POST https://bgm.tv/oauth/access_token
+```
 
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -119,10 +132,11 @@ Figure 3: Authorization Code Flow
 
 ```json
 {
-    "access_token":"YOUR_NEW_ACCESS_TOKEN",
-    "expires_in":604800,
-    "token_type":"Bearer",
-    "scope":null,
-    "refresh_token":"YOUR_NEW_REFRESH_TOKEN"
+"access_token":"YOUR_NEW_ACCESS_TOKEN",
+"expires_in":604800,
+"token_type":"Bearer",
+"scope":null,
+"refresh_token":"YOUR_NEW_REFRESH_TOKEN"
 }
 ```
+
