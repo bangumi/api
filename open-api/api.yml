@@ -180,11 +180,48 @@ paths:
             type: integer
       responses:
         200:
-          description: TODO
+          description: 返回用户收视进度
           content:
             application/json:
               schema:
-                description: 各个条目类型的收藏状态
+                type: array
+                items:
+                  type: object
+                  properties:
+                    subject_id:
+                      description: 条目 ID
+                      type: integer
+                    eps:
+                      description: 章节列表
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            description: 章节 ID
+                            type: integer
+                          status:
+                            type: object
+                            properties:
+                              id:
+                                $ref: '#/components/schemas/EpStatusId'
+                              css_name:
+                                description: TODO
+                                type: string
+                                example: Watched
+                              url_name:
+                                $ref: '#/components/schemas/EpStatusType'
+                              cn_name:
+                                $ref: '#/components/schemas/EpStatusName'
+        401:
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+           - r:user
   /subject/{subject_id}:
     get:
       tags:
@@ -202,6 +239,7 @@ paths:
           content:
             application/json:
               schema:
+                type: object
                 oneOf:
                   - $ref: '#/components/schemas/SubjectSmall'
                   - $ref: '#/components/schemas/SubjectMedium'
@@ -317,17 +355,26 @@ paths:
     get:
       tags:
         - 进度
-      summary: 获取收视进度
+      summary: 更新收视进度
       parameters:
         - $ref: '#/components/parameters/ep_id'
         - $ref: '#/components/parameters/ep_status'
       responses:
         200:
-          description: TODO
+          description: 成功
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+        401:
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
     post:
       tags:
         - 进度
@@ -345,11 +392,20 @@ paths:
             example: 3697,3698,3699
       responses:
         200:
-          description: TODO
+          description: 成功
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+        401:
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
   /subject/{subject_id}/update/watched_eps:
     post:
       tags:
@@ -374,11 +430,20 @@ paths:
             example: 3
       responses:
         200:
-          description: TODO
+          description: 成功
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+        401:
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
   /collection/{subject_id}:
     get:
       tags:
@@ -388,25 +453,42 @@ paths:
         - $ref: '#/components/parameters/subject_id'
       responses:
         200:
-          description: TODO
+          $ref: '#/components/responses/Collection'
+        400:
+          description: 用户未收藏该条目
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+        401:
+          description: 未授权
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
   /collection/{subject_id}/create:
     post:
       tags:
         - 收藏
       summary: 添加收藏
+      # TODO: 默认为 wish，其他类型的怎么传？
       parameters:
         - $ref: '#/components/parameters/subject_id'
       responses:
         200:
-          description: TODO
+          $ref: '#/components/responses/Collection'
+        401:
+          description: 未授权
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
   /collection/{subject_id}/update:
     post:
       tags:
@@ -416,10 +498,10 @@ paths:
         - $ref: '#/components/parameters/subject_id'
         - name: status
           in: query
-          description: 章节状态
+          description: 章节状态，参考 [EpStatusType](#model-EpStatusType)
           required: true
           schema:
-            $ref: '#/components/schemas/EpStatus'
+            $ref: '#/components/schemas/EpStatusType'
         - name: comment
           in: query
           description: 简评
@@ -457,11 +539,16 @@ paths:
             default: 0
       responses:
         200:
-          description: TODO
+          $ref: '#/components/responses/Collection'
+        401:
+          description: 未授权
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/StatusCode'
+      security:
+        - bangumi_auth:
+          - rw:collection
 components:
   schemas:
     CollectionsStatus:
@@ -471,32 +558,27 @@ components:
         type: object
         properties:
           type:
-            description: 收藏类型
-            type: integer
-            enum:
-              - 1
-              - 2
-              - 3
-              - 4
-              - 5
-            example: 5
+            $ref: '#/components/schemas/CollectionStatusId'
           name:
-            $ref: '#/components/schemas/CollectionStatus'
+            $ref: '#/components/schemas/CollectionStatusType'
           name_cn:
-            description: 收藏类型中文
-            type: string
-            example: 抛弃
+            $ref: '#/components/schemas/CollectionStatusName'
           count:
             description: 数量
             type: integer
             example: 1
-    CollectionStatus:
-      description: 收藏状态
-        <br> wish = 想做
-        <br> collect = 做过
-        <br> do = 在做
-        <br> on_hold = 搁置
-        <br> dropped = 抛弃
+    CollectionStatusId:
+      description: 收藏状态 ID
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      example: 5
+    CollectionStatusType:
+      description: 收藏状态类型
       type: string
       enum:
         - wish
@@ -505,18 +587,67 @@ components:
         - on_hold
         - dropped
       example: dropped
-    EpStatus:
-      description: 章节状态
-        <br> watched = 看过
-        <br> queue = 想看
-        <br> drop = 抛弃
-        <br> remove = 撤销
+    CollectionStatusName:
+      description: 收藏状态名称
+      type: string
+      enum:
+        - 想做
+        - 做过
+        - 在做
+        - 搁置
+        - 抛弃
+      example: 抛弃
+    CollectionStatus:
+      description: 收藏状态
+        <br> 1 = wish = 想做
+        <br> 2 = collect = 做过
+        <br> 3 = do = 在做
+        <br> 4 = on_hold = 搁置
+        <br> 5 = dropped = 抛弃
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/CollectionStatusId'
+        type:
+          $ref: '#/components/schemas/CollectionStatusType'
+        name:
+          $ref: '#/components/schemas/CollectionStatusName'
+    EpStatusId:
+      description: 章节状态 ID（TODO 待确定
+      type: integer
+      enum:
+        - 2
+    EpStatusType:
+      description: 章节状态类型
       type: string
       enum:
         - watched
         - queue
         - drop
         - remove
+    EpStatusName:
+      description: 章节状态名称
+      type: string
+      enum:
+        - 看过
+        - 想看
+        - 抛弃
+        - 撤销
+    EpStatus:
+      description: 章节状态
+        <br> 2 = watched = 看过
+        <br> ? = queue = 想看
+        <br> ? = drop = 抛弃
+        <br> ? = remove = 撤销
+        <br> TODO 待确定
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/EpStatusId'
+        type:
+          $ref: '#/components/schemas/EpStatusType'
+        name:
+          $ref: '#/components/schemas/EpStatusName'
     ResponseGroup:
       description: 返回数据大小
       type: string
@@ -1020,6 +1151,78 @@ components:
           description: 签名
           type: string
           example: Awesome!
+    StatusCode:
+      description: 响应状态（HTTP 状态码都为 200）
+      type: object
+      properties:
+        request:
+          description: 当前请求的地址
+          type: string
+        code:
+          description: >-
+            状态码
+            <br> 200 OK
+            <br> 202 Accepted
+            <br> 304 Not Modified
+            <br> 30401 Not Modified: Collection already exists
+            <br> 400 Bad Request
+            <br> 40001 Error: Nothing found with that ID
+            <br> 401 Unauthorized
+            <br> 40101 Error: Auth failed over 5 times
+            <br> 40102 Error: Username is not an Email address
+            <br> 405 Method Not Allowed
+            <br> 404 Not Found
+          type: integer
+          enum:
+            - 200
+            - 202
+            - 304
+            - 30401
+            - 400
+            - 40001
+            - 401
+            - 40101
+            - 40102
+            - 405
+            - 404
+        error:
+          description: 状态信息
+          type: string
+  responses:
+    Collection:
+      description: 条目收藏信息
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                $ref: '#/components/schemas/CollectionStatus'
+              rating:
+                description: 评分
+                type: integer
+              comment:
+                description: 评论
+                type: string
+              private:
+                description: 收藏隐私
+                type: integer
+                enum:
+                  - 0
+                  - 1
+              tag:
+                description: 标签
+                type: array
+                items:
+                  type: string
+              ep_status:
+                description: 完成话数
+                type: integer
+              lasttouch:
+                description: 上次更新时间
+                type: integer
+              user:
+                $ref: '#/components/schemas/User'
   parameters:
     username:
       name: username
@@ -1047,10 +1250,10 @@ components:
     ep_status:
       name: status
       in: path
-      description: 收视类型，参考 [EpStatus](#model-EpStatus)
+      description: 收视类型，参考 [EpStatusType](#model-EpStatusType)
       required: true
       schema:
-        $ref: '#/components/schemas/EpStatus'
+        $ref: '#/components/schemas/EpStatusType'
     responseGroup:
       name: responseGroup
       in: query
@@ -1059,3 +1262,16 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/ResponseGroup'
+  securitySchemes:
+    bangumi_auth:
+      type: oauth2
+      description: https://github.com/bangumi/api/blob/master/docs-raw/How-to-Auth.md
+      flows:
+        authorizationCode:
+          authorizationUrl: https://bgm.tv/oauth/authorize
+          tokenUrl: https://bgm.tv/oauth/access_token
+          refreshUrl: https://bgm.tv/oauth/access_token
+          scopes:
+            # TODO 未定义
+            r:user: 读取你的账户信息（尚未实现，scope 名非真实）
+            rw:collection: 读写你的收藏信息（尚未实现，scope 名非真实）
