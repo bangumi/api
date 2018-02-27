@@ -469,33 +469,25 @@ paths:
       security:
         - bangumi_auth:
           - rw:collection
-  /collection/{subject_id}/create:
+  /collection/{subject_id}/{action}:
     post:
       tags:
         - 收藏
-      summary: 添加收藏
-      # TODO: 默认为 wish，其他类型的怎么传？
+      summary: 管理收藏
       parameters:
         - $ref: '#/components/parameters/subject_id'
-      responses:
-        200:
-          $ref: '#/components/responses/Collection'
-        401:
-          description: 未授权
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/StatusCode'
-      security:
-        - bangumi_auth:
-          - rw:collection
-  /collection/{subject_id}/update:
-    post:
-      tags:
-        - 收藏
-      summary: 更新收藏
-      parameters:
-        - $ref: '#/components/parameters/subject_id'
+        - name: action
+          in: path
+          description: 收藏动作
+            <br> create = 添加收藏
+            <br> update = 更新收藏
+            <br> 可以统一使用 `update`，系统会自动判断需要新建还是更新收藏
+          required: true
+          schema:
+            type: string
+            enum:
+              - create
+              - update
         - name: status
           in: query
           description: 章节状态，参考 [EpStatusType](#model-EpStatusType)
