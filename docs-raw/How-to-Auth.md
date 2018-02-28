@@ -57,7 +57,7 @@ GET https://bgm.tv/oauth/authorize
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | client_id  | string | App ID | 注册应用时获取  | ☑️ |
 | response_type | string | 验证类型 | 目前仅支持 `code` | ☑️ |
-| redirect_uri  | string | 回调 URL |  在后台设置的回调地址  | |
+| redirect_uri  | string | 回调 URL |  在后台设置的回调地址  | ☑️ |
 | scope  | string | 请求权限 |  尚未实现  | |
 | state  | string |  随机参数 |  随机生产的参数，便于开发者防止跨站攻击  | |
 
