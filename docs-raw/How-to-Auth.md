@@ -85,11 +85,12 @@ POST https://bgm.tv/oauth/access_token
 返回
 ```json
 {
-"access_token":"YOUR_ACCESS_TOKEN",
-"expires_in":604800,
-"token_type":"Bearer",
-"scope":null,
-"refresh_token":"YOUR_REFRESH_TOKEN"
+    "access_token":"YOUR_ACCESS_TOKEN",
+    "expires_in":604800,
+    "token_type":"Bearer",
+    "scope":null,
+    "refresh_token":"YOUR_REFRESH_TOKEN"
+    "user_id" : USER_ID
 }
 ```
 
@@ -132,11 +133,34 @@ POST https://bgm.tv/oauth/access_token
 
 ```json
 {
-"access_token":"YOUR_NEW_ACCESS_TOKEN",
-"expires_in":604800,
-"token_type":"Bearer",
-"scope":null,
-"refresh_token":"YOUR_NEW_REFRESH_TOKEN"
+    "access_token":"YOUR_NEW_ACCESS_TOKEN",
+    "expires_in":604800,
+    "token_type":"Bearer",
+    "scope":null,
+    "refresh_token":"YOUR_NEW_REFRESH_TOKEN"
 }
 ```
 
+## 查询授权信息
+
+获取当前 Access Token 的相关信息，
+
+```
+POST https://bgm.tv/oauth/token_status
+```
+
+| Parameter | Type | Desc | Note | Required |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| access_token  | string | Access Token |  之前获取的 Access Token  |  ☑️ |
+
+返回
+```json
+
+{
+    "access_token":"YOUR_ACCESS_TOKEN",
+    "client_id":"YOUR_CLIENT_ID",
+    "expires": 1520323182
+    "scope":null,
+    "user_id" : USER_ID
+}
+```
