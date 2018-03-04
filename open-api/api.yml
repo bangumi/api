@@ -1,9 +1,8 @@
 openapi: 3.0.0
 info:
   title: Bangumi API
-  description: TODO
-  # TODO: 版本不确定
-  version: 1.0.0
+  # description: TODO
+  version: '2018-02-28'
 servers:
   - url: https://api.bgm.tv
 paths:
@@ -33,8 +32,7 @@ paths:
           description: 收藏类型
             <br> watching = 在看的动画与三次元条目
             <br> all_watching = 在看的动画三次元与书籍条目
-          # TODO: 实际为必填，未填不返回数据
-          required: false
+          required: true
           schema:
             type: string
             enum:
@@ -48,10 +46,9 @@ paths:
           schema:
             type: string
             example: 1,2,4,6
-        # TODO: 实际该参数无效，返回永远为 SubjectSmall
         - name: responseGroup
           in: query
-          description: 返回数据大小
+          description: medium / small
             <br> 默认为 medium。small 时不返回条目详细信息
           required: false
           schema:
@@ -73,15 +70,32 @@ paths:
                     name:
                       description: 番剧标题
                       type: string
+                    subject_id:
+                      description: 章节 ID
+                      type: integer
                     ep_status:
                       description: 完成话数
                       type: integer
+                    vol_status:
+                      description: 完成卷数（书籍）
                     lasttouch:
                       description: 上次更新时间
                       type: integer
                     subject:
-                      # TODO: 其中 summary 为空
-                      $ref: '#/components/schemas/SubjectSmall'
+                      allOf:
+                        - $ref: '#/components/schemas/SubjectBase'
+                        - type: object
+                          properties:
+                            eps:
+                              description: 话数
+                              type: integer
+                              example: 27
+                            eps_count:
+                              description: 话数
+                              type: integer
+                              example: 27
+                            collection:
+                              $ref: '#/components/schemas/SubjectCollection'
   /user/{username}/collections/{subject_type}:
     get:
       tags:
@@ -91,15 +105,11 @@ paths:
         - $ref: '#/components/parameters/username'
         - name: subject_type
           in: path
-          description: 条目类型
-            <br> book
-            <br> anime
-            <br> music
-            <br> game
-            <br> real
+          description: 条目类型，详见 [SubjectTypeName](#model-SubjectTypeName)
           required: true
           schema:
             $ref: '#/components/schemas/SubjectTypeName'
+        - $ref: '#/components/parameters/app_id'
         - name: max_results
           in: query
           description: 显示条数
@@ -110,12 +120,9 @@ paths:
       responses:
         200:
           description: 获取用户指定类型的收藏概览，固定返回最近更新的收藏，不支持翻页
-            <br> TODO 数据结构未确定
-            <br> [#3](https://github.com/bangumi/api/issues/3)
           content:
             application/json:
               schema:
-                description: 收藏概览
                 type: array
                 items:
                   type: object
@@ -134,11 +141,20 @@ paths:
                       items:
                         type: object
                         properties:
-                          subject_id:
-                            description: 条目 ID
+                          status:
+                            $ref: '#/components/schemas/CollectionStatus'
+                          count:
                             type: integer
-                          subject:
-                            $ref: '#/components/schemas/SubjectSmall'
+                          list:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                subject_id:
+                                  description: 条目 ID
+                                  type: string
+                                subject:
+                                  $ref: '#/components/schemas/SubjectBase'
   /user/{username}/collections/status:
     get:
       tags:
@@ -146,25 +162,35 @@ paths:
       summary: 用户收藏统计
       parameters:
         - $ref: '#/components/parameters/username'
+        - $ref: '#/components/parameters/app_id'
       responses:
         200:
           description: 获取用户所有收藏信息
           content:
             application/json:
               schema:
-                description: 各个条目类型的收藏状态
-                type: object
-                properties:
-                  1:
-                    $ref: '#/components/schemas/CollectionsStatus'
-                  2:
-                    $ref: '#/components/schemas/CollectionsStatus'
-                  3:
-                    $ref: '#/components/schemas/CollectionsStatus'
-                  4:
-                    $ref: '#/components/schemas/CollectionsStatus'
-                  6:
-                    $ref: '#/components/schemas/CollectionsStatus'
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      $ref: '#/components/schemas/SubjectType'
+                    name:
+                      $ref: '#/components/schemas/SubjectTypeName'
+                    name_cn:
+                      description: 条目类型中文名
+                      type: string
+                      example: 动画
+                    collects:
+                      description: 收藏列表
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          status:
+                            $ref: '#/components/schemas/CollectionStatus'
+                          count:
+                            type: integer
   /user/{username}/progress:
     get:
       tags:
@@ -206,7 +232,6 @@ paths:
                               id:
                                 $ref: '#/components/schemas/EpStatusId'
                               css_name:
-                                description: TODO
                                 type: string
                                 example: Watched
                               url_name:
@@ -258,8 +283,7 @@ paths:
             application/json:
               schema:
                 allOf:
-                  # TODO: summary、air_date、air_weekday 无数据；无 rating、rank 字段
-                  - $ref: '#/components/schemas/SubjectSmall'
+                  - $ref: '#/components/schemas/SubjectBase'
                   - type: object
                     properties:
                       eps:
@@ -416,7 +440,7 @@ paths:
         - name: watched_eps
           in: query
           description: 如看到 123 话则 POST `123`
-          # TODO: watched_eps 和 watched_vols 必填其一？
+            <br> 书籍条目传 watched_eps 与 watched_vols 至少其一
           required: true
           schema:
             type: string
@@ -543,22 +567,6 @@ paths:
           - rw:collection
 components:
   schemas:
-    CollectionsStatus:
-      description: 各个类型的收藏数量
-      type: array
-      items:
-        type: object
-        properties:
-          type:
-            $ref: '#/components/schemas/CollectionStatusId'
-          name:
-            $ref: '#/components/schemas/CollectionStatusType'
-          name_cn:
-            $ref: '#/components/schemas/CollectionStatusName'
-          count:
-            description: 数量
-            type: integer
-            example: 1
     CollectionStatusId:
       description: 收藏状态 ID
       type: integer
@@ -605,10 +613,12 @@ components:
         name:
           $ref: '#/components/schemas/CollectionStatusName'
     EpStatusId:
-      description: 章节状态 ID（TODO 待确定
+      description: 章节状态 ID
       type: integer
       enum:
         - 2
+        - 1
+        - 3
     EpStatusType:
       description: 章节状态类型
       type: string
@@ -628,10 +638,9 @@ components:
     EpStatus:
       description: 章节状态
         <br> 2 = watched = 看过
-        <br> ? = queue = 想看
-        <br> ? = drop = 抛弃
+        <br> 1 = queue = 想看
+        <br> 3 = drop = 抛弃
         <br> ? = remove = 撤销
-        <br> TODO 待确定
       type: object
       properties:
         id:
@@ -693,7 +702,7 @@ components:
               description: 收藏人数
               type: integer
     MonoInfo:
-      description: 人物信息（TODO 待完善）
+      description: 人物信息
       type: object
       properties:
         birth:
@@ -709,7 +718,7 @@ components:
           type: string
           example: 女
         alias:
-          description: 别名（TODO 待完善，字段名为数字的情况）
+          description: 别名（另外添加出来的 key 为 0 开始的数字）
           type: object
           properties:
             jp:
@@ -728,11 +737,14 @@ components:
               description: 第二中文名
               type: string
         source:
-          description: 引用来源（TODO 待完善，可以是字符串类型）
-          type: array
-          items:
-            type: string
-            example: anidb.net
+          description: 引用来源
+          oneOf:
+            - type: string
+              example: anidb.net
+            - type: array
+              items:
+                type: string
+                example: anidb.net
         name_cn:
           description: 简体中文名
           type: string
@@ -769,7 +781,6 @@ components:
         <br> 4 = 预告/宣传/广告
         <br> 5 = MAD
         <br> 6 = 其他
-        <br> TODO 待确定
       type: integer
       enum:
         - 0
@@ -826,7 +837,6 @@ components:
             <br> Air = 已放送
             <br> Today = 正在放送
             <br> NA = 未放送
-            <br> TODO 待确定
           type: string
           enum:
             - Air
@@ -877,7 +887,7 @@ components:
           description: 概览
           type: string
         image:
-          description: 图片（TODO 非数组？第一张？）
+          description: 图片
           type: string
         replies:
           description: 回复数
@@ -922,7 +932,31 @@ components:
         - game
         - real
       example: anime
-    SubjectSmall:
+    SubjectCollection:
+      description: 收藏人数
+      type: object
+      properties:
+        wish:
+          description: 想做
+          type: integer
+          example: 608
+        collect:
+          description: 做过
+          type: integer
+          example: 3010
+        doing:
+          description: 在做
+          type: integer
+          example: 103
+        on_hold:
+          description: 搁置
+          type: integer
+          example: 284
+        dropped:
+          description: 抛弃
+          type: integer
+          example: 86
+    Subject:
       type: object
       properties:
         id:
@@ -939,119 +973,111 @@ components:
           description: 条目名称
           type: string
           example: ちょびっツ
-        name_cn:
-          description: 条目中文名称
-          type: string
-          example: 人形电脑天使心
-        summary:
-          description: 剧情简介
-          type: string
-          example: 在不久的将来,电子技术飞速发展,电脑成为人们生活中不可缺少的一部分.主角的名字是本须和秀树,是个19岁的少年,由于考试失败,来到东京上补习班,过着贫穷潦倒的生活……\r\n到达东京的第一天,他很幸运的在垃圾堆捡到一个人型电脑,一直以来秀树都非常渴望拥有个人电脑.当他抱着她带返公寓后,却不知如何开机,在意想不到的地方找到开关并开启后,故事就此展开\r\n本须和秀树捡到了人型计算机〔唧〕。虽然不晓得她到底是不是〔Chobits〕，但她的身上似乎藏有极大的秘密。看到秀树为了钱而烦恼，唧出去找打工，没想到却找到了危险的工作！为了让秀树开心，唧开始到色情小屋打工。但她在遭到过度激烈的强迫要求之后失控。让周遭计算机因此而强制停摆。\r\n另一方面，秀树发现好友新保与补习班的清水老师有着不可告人的关系……
-        eps:
-          description: 话数
-          type: integer
-          example: 27
-        air_date:
-          description: 放送开始日期
-          type: string
-          example: '2002-04-02'
-        air_weekday:
-          description: 放送星期
-          type: integer
-          example: 2
-        rating:
-          description: 放送星期
-          type: object
+    SubjectBase:
+      allOf:
+        - $ref: '#/components/schemas/Subject'
+        - type: object
           properties:
-            total:
-              description: 总评分人数
+            name_cn:
+              description: 条目中文名称
+              type: string
+              example: 人形电脑天使心
+            summary:
+              description: 剧情简介
+              type: string
+              example: 在不久的将来,电子技术飞速发展,电脑成为人们生活中不可缺少的一部分.主角的名字是本须和秀树,是个19岁的少年,由于考试失败,来到东京上补习班,过着贫穷潦倒的生活……\r\n到达东京的第一天,他很幸运的在垃圾堆捡到一个人型电脑,一直以来秀树都非常渴望拥有个人电脑.当他抱着她带返公寓后,却不知如何开机,在意想不到的地方找到开关并开启后,故事就此展开\r\n本须和秀树捡到了人型计算机〔唧〕。虽然不晓得她到底是不是〔Chobits〕，但她的身上似乎藏有极大的秘密。看到秀树为了钱而烦恼，唧出去找打工，没想到却找到了危险的工作！为了让秀树开心，唧开始到色情小屋打工。但她在遭到过度激烈的强迫要求之后失控。让周遭计算机因此而强制停摆。\r\n另一方面，秀树发现好友新保与补习班的清水老师有着不可告人的关系……
+            air_date:
+              description: 放送开始日期
+              type: string
+              example: '2002-04-02'
+            air_weekday:
+              description: 放送星期
               type: integer
-              example: 2289
-            count:
-              description: 各分值评分人数
+              example: 2
+            images:
+              description: 封面
               type: object
               properties:
-                1:
-                  type: integer
-                  example: 5
-                2:
-                  type: integer
-                  example: 3
-                3:
-                  type: integer
-                  example: 4
-                4:
-                  type: integer
-                  example: 6
-                5:
-                  type: integer
-                  example: 46
-                6:
-                  type: integer
-                  example: 267
-                7:
-                  type: integer
-                  example: 659
-                8:
-                  type: integer
-                  example: 885
-                9:
-                  type: integer
-                  example: 284
-                10:
-                  type: integer
-                  example: 130
-            score:
+                large:
+                  type: string
+                  example: http://lain.bgm.tv/pic/cover/l/c2/0a/12_24O6L.jpg
+                common:
+                  type: string
+                  example: http://lain.bgm.tv/pic/cover/c/c2/0a/12_24O6L.jpg
+                medium:
+                  type: string
+                  example: http://lain.bgm.tv/pic/cover/m/c2/0a/12_24O6L.jpg
+                small:
+                  type: string
+                  example: http://lain.bgm.tv/pic/cover/s/c2/0a/12_24O6L.jpg
+                grid:
+                  type: string
+                  example: http://lain.bgm.tv/pic/cover/g/c2/0a/12_24O6L.jpg
+    SubjectSmall:
+      allOf:
+        - $ref: '#/components/schemas/SubjectBase'
+        - type: object
+          properties:
+            eps:
+              description: 话数
+              type: integer
+              example: 27
+            eps_count:
+              description: 话数
+              type: integer
+              example: 27
+            rating:
               description: 评分
-              type: number
-              example: 7.6
-        rank:
-          description: 排名
-          type: integer
-          example: 573
-        images:
-          description: 封面
-          type: object
-          properties:
-            large:
-              type: string
-              example: http://lain.bgm.tv/pic/cover/l/c2/0a/12_24O6L.jpg
-            common:
-              type: string
-              example: http://lain.bgm.tv/pic/cover/c/c2/0a/12_24O6L.jpg
-            medium:
-              type: string
-              example: http://lain.bgm.tv/pic/cover/m/c2/0a/12_24O6L.jpg
-            small:
-              type: string
-              example: http://lain.bgm.tv/pic/cover/s/c2/0a/12_24O6L.jpg
-            grid:
-              type: string
-              example: http://lain.bgm.tv/pic/cover/g/c2/0a/12_24O6L.jpg
-        collection:
-          description: 收藏人数
-          type: object
-          properties:
-            wish:
-              description: 想做
+              type: object
+              properties:
+                total:
+                  description: 总评分人数
+                  type: integer
+                  example: 2289
+                count:
+                  description: 各分值评分人数
+                  type: object
+                  properties:
+                    1:
+                      type: integer
+                      example: 5
+                    2:
+                      type: integer
+                      example: 3
+                    3:
+                      type: integer
+                      example: 4
+                    4:
+                      type: integer
+                      example: 6
+                    5:
+                      type: integer
+                      example: 46
+                    6:
+                      type: integer
+                      example: 267
+                    7:
+                      type: integer
+                      example: 659
+                    8:
+                      type: integer
+                      example: 885
+                    9:
+                      type: integer
+                      example: 284
+                    10:
+                      type: integer
+                      example: 130
+                score:
+                  description: 评分
+                  type: number
+                  example: 7.6
+            rank:
+              description: 排名
               type: integer
-              example: 608
-            collect:
-              description: 做过
-              type: integer
-              example: 3010
-            doing:
-              description: 在做
-              type: integer
-              example: 103
-            on_hold:
-              description: 搁置
-              type: integer
-              example: 284
-            dropped:
-              description: 抛弃
-              type: integer
-              example: 86
+              example: 573
+            collection:
+              $ref: '#/components/schemas/SubjectCollection'
     SubjectMedium:
       allOf:
         - $ref: '#/components/schemas/SubjectSmall'
@@ -1254,6 +1280,14 @@ components:
       required: false
       schema:
         $ref: '#/components/schemas/ResponseGroup'
+    app_id:
+      name: app_id
+      in: query
+      description: >-
+        [https://bgm.tv/dev/app](https://bgm.tv/dev/app) 申请到的 App ID
+      required: true
+      schema:
+        type: string
   securitySchemes:
     bangumi_auth:
       type: oauth2
