@@ -40,6 +40,8 @@
 
 `GET /user/:username/collections/:subject_type`
 
+`GET /user/:username/collections/:subject_type?app_id={your_app_id}`
+
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | username  | string | 用户名 | 也可使用 UID | ☑️ |
@@ -50,6 +52,8 @@
 获取用户所有收藏信息
 
 `GET /user/:username/collections/status`
+
+`GET /user/:username/collections/status?app_id={your_app_id}`
 
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
