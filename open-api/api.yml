@@ -1018,10 +1018,6 @@ components:
         - $ref: '#/components/schemas/SubjectBase'
         - type: object
           properties:
-            eps:
-              description: 话数
-              type: integer
-              example: 27
             eps_count:
               description: 话数
               type: integer
