@@ -43,7 +43,7 @@
 | Parameter | Type | Desc | Note | Required |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
 | username  | string | 用户名 | 也可使用 UID | ☑️ |
-| subject_type  | string | 条目类型 |  (book/anime/music/game/real)  | |
+| subject_type  | string | 条目类型 |  (book/anime/music/game/real)  | ☑️ |
 | max_results  | integer | 显示条数  | 最多 25 | |
 
 # 用户收藏统计
