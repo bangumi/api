@@ -19,9 +19,13 @@
         "medium": "http://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456",
         "small": "http://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456"
     },
-    "sign": "Awesome!"
+    "sign": "Awesome!",
+    "usergroup" : 11
 }
 ```
+
+`usergroup` 用户组定义参考 [Define](./Define.md#user-group)
+
 
 # 用户收藏
 获取用户收藏列表，默认为在看

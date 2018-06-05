@@ -11,17 +11,28 @@
     do = 在做
     on_hold = 搁置
     dropped = 抛弃
-    
+
 ### Ep Status
     watched = 看过
     queue = 想看
     drop = 抛弃
     remove = 撤销
-    
+
 ### Response Group
      Small
      Medium
      Large
+
+### User Group
+    1 = 管理员
+    2 = Bangumi 管理猿
+    3 = 天窗管理猿
+    4 = 禁言用户
+    5 = 禁止访问用户
+    8 = 人物管理猿
+    9 = 维基条目管理猿
+    10 = 用户
+    11 = 维基人
 
 ### Status Code
     200 OK
