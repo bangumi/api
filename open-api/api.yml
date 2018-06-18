@@ -430,7 +430,7 @@ paths:
       security:
         - bangumi_auth:
           - rw:collection
-  /subject/{subject_id}/update/watched_eps:
+  /subject/{subject_id}/update/{watched_eps}:
     post:
       tags:
         - 进度
