@@ -599,9 +599,9 @@ components:
       example: 抛弃
     CollectionStatus:
       description: 收藏状态
-        <br> 1 = wish = 想做
-        <br> 2 = collect = 做过
-        <br> 3 = do = 在做
+        <br> 1 = wish = 想看
+        <br> 2 = collect = 看过
+        <br> 3 = do = 在看
         <br> 4 = on_hold = 搁置
         <br> 5 = dropped = 抛弃
       type: object
