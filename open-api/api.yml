@@ -591,9 +591,9 @@ components:
       description: 收藏状态名称
       type: string
       enum:
-        - 想做
-        - 做过
-        - 在做
+        - 想看
+        - 看过
+        - 在看
         - 搁置
         - 抛弃
       example: 抛弃
