@@ -937,15 +937,15 @@ components:
       type: object
       properties:
         wish:
-          description: 想做
+          description: 想看
           type: integer
           example: 608
         collect:
-          description: 做过
+          description: 看过
           type: integer
           example: 3010
         doing:
-          description: 在做
+          description: 在看
           type: integer
           example: 103
         on_hold:
