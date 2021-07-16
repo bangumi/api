@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Bangumi API
   # description: TODO
-  version: '2018-06-05'
+  version: '2021-07-16'
 servers:
   - url: https://api.bgm.tv
 paths:
