@@ -514,10 +514,10 @@ paths:
               - update
         - name: status
           in: query
-          description: 章节状态，参考 [EpStatusType](#model-EpStatusType)
+          description: 收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)
           required: true
           schema:
-            $ref: '#/components/schemas/EpStatusType'
+            $ref: '#/components/schemas/CollectionStatusType'
         - name: comment
           in: query
           description: 简评
