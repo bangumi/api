@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "new bangumi api server",
-    "version": "update-main-repo"
+    "title": "Bangumi API",
+    "version": "v0.0.3"
   },
   "servers": [
     {
