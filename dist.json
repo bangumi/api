@@ -1,0 +1,2446 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "new bangumi api server",
+    "version": "update-main-repo"
+  },
+  "servers": [
+    {
+      "url": "https://api.bgm.tv"
+    }
+  ],
+  "paths": {
+    "/v0/persons": {
+      "get": {
+        "tags": [
+          "人物"
+        ],
+        "summary": "Get Persons",
+        "operationId": "get_persons_v0_persons_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "description": "1为个人，2为公司，3为组合",
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/PersonType"
+                }
+              ],
+              "description": "1为个人，2为公司，3为组合"
+            },
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/PersonCareer"
+              }
+            },
+            "example": "?career=mangaka&career=producer",
+            "name": "career",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Sort"
+                }
+              ],
+              "default": "id"
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Order"
+                }
+              ],
+              "default": -1
+            },
+            "name": "order",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedPerson"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/persons/{person_id}": {
+      "get": {
+        "tags": [
+          "人物"
+        ],
+        "summary": "Get Person",
+        "operationId": "get_person_v0_persons__person_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Person Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "person_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PersonDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/persons/{person_id}/subjects": {
+      "get": {
+        "tags": [
+          "人物"
+        ],
+        "summary": "get person related subjects",
+        "operationId": "get_person_subjects_v0_persons__person_id__subjects_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Person Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "person_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Person Subjects V0 Persons  Person Id  Subjects Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectInfo"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "用户信息",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回用户基础信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}/collection": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "用户收藏",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "cat",
+            "in": "query",
+            "description": "收藏类型 <br> watching = 在看的动画与三次元条目 <br> all_watching = 在看的动画三次元与书籍条目",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "watching",
+                "all_watching"
+              ]
+            }
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "收藏条目 ID <br> 批量查询收藏状态，将条目 ID 以半角逗号分隔，如 1,2,4,6",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "1,2,4,6"
+            }
+          },
+          {
+            "name": "responseGroup",
+            "in": "query",
+            "description": "medium / small <br> 默认为 medium。small 时不返回条目详细信息",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "small",
+                "medium"
+              ],
+              "default": "medium"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取用户收藏列表，默认为在看",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "description": "番剧标题",
+                        "type": "string"
+                      },
+                      "subject_id": {
+                        "description": "章节 ID",
+                        "type": "integer"
+                      },
+                      "ep_status": {
+                        "description": "完成话数",
+                        "type": "integer"
+                      },
+                      "vol_status": {
+                        "description": "完成卷数（书籍）"
+                      },
+                      "lasttouch": {
+                        "description": "上次更新时间",
+                        "type": "integer"
+                      },
+                      "subject": {
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/SubjectBase"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "eps": {
+                                "description": "话数",
+                                "type": "integer",
+                                "example": 27
+                              },
+                              "eps_count": {
+                                "description": "话数",
+                                "type": "integer",
+                                "example": 27
+                              },
+                              "collection": {
+                                "$ref": "#/components/schemas/SubjectCollection"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}/collections/{subject_type}": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "用户收藏概览",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "subject_type",
+            "in": "path",
+            "description": "条目类型，详见 [SubjectTypeName](#model-SubjectTypeName)",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SubjectTypeName"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/app_id"
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "显示条数 <br> 最多 25",
+            "schema": {
+              "type": "integer",
+              "maximum": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取用户指定类型的收藏概览，固定返回最近更新的收藏，不支持翻页",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "$ref": "#/components/schemas/SubjectType"
+                      },
+                      "name": {
+                        "$ref": "#/components/schemas/SubjectTypeName"
+                      },
+                      "name_cn": {
+                        "description": "条目类型中文名",
+                        "type": "string",
+                        "example": "动画"
+                      },
+                      "collects": {
+                        "description": "收藏列表",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "$ref": "#/components/schemas/CollectionStatus"
+                            },
+                            "count": {
+                              "type": "integer"
+                            },
+                            "list": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "subject_id": {
+                                    "description": "条目 ID",
+                                    "type": "string"
+                                  },
+                                  "subject": {
+                                    "$ref": "#/components/schemas/SubjectBase"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}/collections/status": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "用户收藏统计",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "$ref": "#/components/parameters/app_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "获取用户所有收藏信息",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "$ref": "#/components/schemas/SubjectType"
+                      },
+                      "name": {
+                        "$ref": "#/components/schemas/SubjectTypeName"
+                      },
+                      "name_cn": {
+                        "description": "条目类型中文名",
+                        "type": "string",
+                        "example": "动画"
+                      },
+                      "collects": {
+                        "description": "收藏列表",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "$ref": "#/components/schemas/CollectionStatus"
+                            },
+                            "count": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}/progress": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "用户收视进度",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/username"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "条目 ID <br> 获取指定条目收视进度",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "返回用户收视进度",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subject_id": {
+                        "description": "条目 ID",
+                        "type": "integer"
+                      },
+                      "eps": {
+                        "description": "章节列表",
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "章节 ID",
+                              "type": "integer"
+                            },
+                            "status": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "$ref": "#/components/schemas/EpStatusId"
+                                },
+                                "css_name": {
+                                  "type": "string",
+                                  "example": "Watched"
+                                },
+                                "url_name": {
+                                  "$ref": "#/components/schemas/EpStatusType"
+                                },
+                                "cn_name": {
+                                  "$ref": "#/components/schemas/EpStatusName"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "r:user"
+            ]
+          }
+        ]
+      }
+    },
+    "/subject/{subject_id}": {
+      "get": {
+        "tags": [
+          "条目"
+        ],
+        "summary": "条目信息",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subject_id"
+          },
+          {
+            "$ref": "#/components/parameters/responseGroup"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "根据 responseGroup 参数，返回以下三个模型 <br> [SubjectSmall](#model-SubjectSmall) <br> [SubjectMedium](#model-SubjectMedium) <br> [SubjectLarge](#model-SubjectLarge)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/SubjectSmall"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SubjectMedium"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SubjectLarge"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subject/{subject_id}/ep": {
+      "get": {
+        "tags": [
+          "条目"
+        ],
+        "summary": "章节数据",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subject_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "章节数据",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SubjectBase"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "eps": {
+                          "description": "章节列表",
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/Episode"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendar": {
+      "get": {
+        "tags": [
+          "条目"
+        ],
+        "summary": "每日放送",
+        "responses": {
+          "200": {
+            "description": "每日放送",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "weekday": {
+                        "type": "object",
+                        "properties": {
+                          "en": {
+                            "type": "string",
+                            "example": "Mon"
+                          },
+                          "cn": {
+                            "type": "string",
+                            "example": "星期一"
+                          },
+                          "ja": {
+                            "type": "string",
+                            "example": "月耀日"
+                          },
+                          "id": {
+                            "type": "integer",
+                            "example": 1
+                          }
+                        }
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/SubjectSmall"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/subject/{keywords}": {
+      "get": {
+        "tags": [
+          "搜索"
+        ],
+        "summary": "条目搜索",
+        "parameters": [
+          {
+            "name": "keywords",
+            "in": "path",
+            "description": "关键词 <br> 需要 URL Encode",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "条目类型，参考 [SubjectType](#model-SubjectType)",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SubjectType"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/responseGroup"
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "description": "开始条数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "description": "每页条数 <br> 最多 25",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 25
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "搜索结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "results": {
+                      "description": "总条数",
+                      "type": "integer"
+                    },
+                    "list": {
+                      "description": "结果列表",
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/SubjectSmall"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ep/{id}/status/{status}": {
+      "get": {
+        "tags": [
+          "进度"
+        ],
+        "summary": "更新收视进度",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ep_id"
+          },
+          {
+            "$ref": "#/components/parameters/ep_status"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "rw:collection"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "进度"
+        ],
+        "summary": "更新收视进度",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/ep_id"
+          },
+          {
+            "$ref": "#/components/parameters/ep_status"
+          },
+          {
+            "name": "ep_id",
+            "in": "query",
+            "description": "使用 POST 批量更新 <br> 将章节以半角逗号分隔，如 `3697,3698,3699`。请求时 URL 中的 ep_id 为最后一个章节 ID",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "3697,3698,3699"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "rw:collection"
+            ]
+          }
+        ]
+      }
+    },
+    "/subject/{subject_id}/update/watched_eps": {
+      "post": {
+        "tags": [
+          "进度"
+        ],
+        "summary": "批量更新收视进度",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subject_id"
+          },
+          {
+            "name": "watched_eps",
+            "in": "query",
+            "description": "如看到 123 话则 POST `123` <br> 书籍条目传 watched_eps 与 watched_vols 至少其一",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": 123
+            }
+          },
+          {
+            "name": "watched_vols",
+            "in": "query",
+            "description": "如看到第 3 卷则 POST `3`, 仅对书籍条目有效",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": 3
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "rw:collection"
+            ]
+          }
+        ]
+      }
+    },
+    "/collection/{subject_id}": {
+      "get": {
+        "tags": [
+          "收藏"
+        ],
+        "summary": "获取指定条目收藏信息",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subject_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Collection"
+          },
+          "400": {
+            "description": "用户未收藏该条目",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "rw:collection"
+            ]
+          }
+        ]
+      }
+    },
+    "/collection/{subject_id}/{action}": {
+      "post": {
+        "tags": [
+          "收藏"
+        ],
+        "summary": "管理收藏",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/subject_id"
+          },
+          {
+            "name": "action",
+            "in": "path",
+            "description": "收藏动作 <br> create = 添加收藏 <br> update = 更新收藏 <br> 可以统一使用 `update`，系统会自动判断需要新建还是更新收藏",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "create",
+                "update"
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "description": "收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CollectionStatusType"
+            }
+          },
+          {
+            "name": "comment",
+            "in": "query",
+            "description": "简评",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "标签 <br> 以半角空格分割",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "rating",
+            "in": "query",
+            "description": "评分 <br> 1-10",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "example": 7
+            }
+          },
+          {
+            "name": "privacy",
+            "in": "query",
+            "description": "收藏隐私 <br> 0 = 公开 <br> 1 = 私密",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "enum": [
+                0,
+                1
+              ],
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/Collection"
+          },
+          "401": {
+            "description": "未授权",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCode"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bangumi_auth": [
+              "rw:collection"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BloodType": {
+        "title": "BloodType",
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
+      "ErrorDetail": {
+        "title": "ErrorDetail",
+        "required": [
+          "title",
+          "description",
+          "detail"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "description": "can be anything"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "Order": {
+        "title": "Order",
+        "enum": [
+          1,
+          -1
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
+      "PagedPerson": {
+        "title": "PagedPerson",
+        "required": [
+          "total",
+          "limit",
+          "offset",
+          "data"
+        ],
+        "type": "object",
+        "properties": {
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            }
+          }
+        }
+      },
+      "Person": {
+        "title": "Person",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "career",
+          "locked",
+          "short_summary"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PersonType"
+          },
+          "career": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonCareer"
+            }
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "img": {
+            "title": "Img",
+            "type": "string"
+          },
+          "short_summary": {
+            "title": "Short Summary",
+            "type": "string"
+          }
+        }
+      },
+      "PersonCareer": {
+        "title": "PersonCareer",
+        "enum": [
+          "producer",
+          "mangaka",
+          "artist",
+          "seiyu",
+          "writer",
+          "illustrator",
+          "actor"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "PersonDetail": {
+        "title": "PersonDetail",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "career",
+          "locked",
+          "summary",
+          "last_modified",
+          "stat"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PersonType"
+          },
+          "career": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonCareer"
+            }
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "img": {
+            "title": "Img",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "last_modified": {
+            "title": "Last Modified",
+            "type": "string",
+            "format": "date-time"
+          },
+          "infobox": {
+            "title": "Infobox",
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string",
+            "description": "parsed from wiki, maybe null"
+          },
+          "blood_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BloodType"
+              }
+            ],
+            "description": "parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`"
+          },
+          "birth_year": {
+            "title": "Birth Year",
+            "type": "integer",
+            "description": "parsed from wiki, maybe null"
+          },
+          "birth_mon": {
+            "title": "Birth Mon",
+            "type": "integer",
+            "description": "parsed from wiki, maybe null"
+          },
+          "birth_day": {
+            "title": "Birth Day",
+            "type": "integer",
+            "description": "parsed from wiki, maybe null"
+          },
+          "stat": {
+            "$ref": "#/components/schemas/Stat"
+          }
+        }
+      },
+      "PersonType": {
+        "title": "PersonType",
+        "enum": [
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
+      "Sort": {
+        "title": "Sort",
+        "enum": [
+          "id",
+          "name",
+          "update"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "Stat": {
+        "title": "Stat",
+        "required": [
+          "comments",
+          "collects"
+        ],
+        "type": "object",
+        "properties": {
+          "comments": {
+            "title": "Comments",
+            "type": "integer"
+          },
+          "collects": {
+            "title": "Collects",
+            "type": "integer"
+          }
+        }
+      },
+      "SubjectInfo": {
+        "title": "SubjectInfo",
+        "required": [
+          "subject_id",
+          "staff",
+          "subject_name_cn"
+        ],
+        "type": "object",
+        "properties": {
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "integer"
+          },
+          "staff": {
+            "title": "Staff",
+            "type": "string"
+          },
+          "subject_name": {
+            "title": "Subject Name",
+            "type": "string"
+          },
+          "subject_name_cn": {
+            "title": "Subject Name Cn",
+            "type": "string"
+          },
+          "subject_image": {
+            "title": "Subject Image",
+            "type": "string"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "CollectionStatusId": {
+        "description": "收藏状态 ID",
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "example": 5
+      },
+      "CollectionStatusType": {
+        "description": "收藏状态类型",
+        "type": "string",
+        "enum": [
+          "wish",
+          "collect",
+          "do",
+          "on_hold",
+          "dropped"
+        ],
+        "example": "dropped"
+      },
+      "CollectionStatusName": {
+        "description": "收藏状态名称",
+        "type": "string",
+        "enum": [
+          "想做",
+          "做过",
+          "在做",
+          "搁置",
+          "抛弃"
+        ],
+        "example": "抛弃"
+      },
+      "CollectionStatus": {
+        "description": "收藏状态 <br> 1 = wish = 想做 <br> 2 = collect = 做过 <br> 3 = do = 在做 <br> 4 = on_hold = 搁置 <br> 5 = dropped = 抛弃",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/CollectionStatusId"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CollectionStatusType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/CollectionStatusName"
+          }
+        }
+      },
+      "EpStatusId": {
+        "description": "章节状态 ID",
+        "type": "integer",
+        "enum": [
+          2,
+          1,
+          3
+        ]
+      },
+      "EpStatusType": {
+        "description": "章节状态类型",
+        "type": "string",
+        "enum": [
+          "watched",
+          "queue",
+          "drop",
+          "remove"
+        ]
+      },
+      "EpStatusName": {
+        "description": "章节状态名称",
+        "type": "string",
+        "enum": [
+          "看过",
+          "想看",
+          "抛弃",
+          "撤销"
+        ]
+      },
+      "EpStatus": {
+        "description": "章节状态 <br> 2 = watched = 看过 <br> 1 = queue = 想看 <br> 3 = drop = 抛弃 <br> ? = remove = 撤销",
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/EpStatusId"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EpStatusType"
+          },
+          "name": {
+            "$ref": "#/components/schemas/EpStatusName"
+          }
+        }
+      },
+      "ResponseGroup": {
+        "description": "返回数据大小",
+        "type": "string",
+        "enum": [
+          "small",
+          "medium",
+          "large"
+        ],
+        "default": "small"
+      },
+      "MonoBase": {
+        "description": "人物（基础模型）",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "人物 ID",
+            "type": "integer"
+          },
+          "url": {
+            "description": "人物地址",
+            "type": "string"
+          },
+          "name": {
+            "description": "姓名",
+            "type": "string"
+          },
+          "images": {
+            "description": "肖像",
+            "type": "object",
+            "properties": {
+              "large": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/crt/l/ce/65/32_crt_XMJOj.jpg"
+              },
+              "medium": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/crt/m/ce/65/32_crt_XMJOj.jpg"
+              },
+              "small": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/crt/s/ce/65/32_crt_XMJOj.jpg"
+              },
+              "grid": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/crt/g/ce/65/32_crt_XMJOj.jpg"
+              }
+            }
+          }
+        }
+      },
+      "Mono": {
+        "description": "人物",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MonoBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name_cn": {
+                "description": "简体中文名",
+                "type": "string"
+              },
+              "comment": {
+                "description": "回复数量",
+                "type": "integer"
+              },
+              "collects": {
+                "description": "收藏人数",
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "MonoInfo": {
+        "description": "人物信息",
+        "type": "object",
+        "properties": {
+          "birth": {
+            "description": "生日",
+            "type": "string",
+            "example": "4月13日"
+          },
+          "height": {
+            "description": "身高",
+            "type": "string",
+            "example": "152cm"
+          },
+          "gender": {
+            "description": "性别",
+            "type": "string",
+            "example": "女"
+          },
+          "alias": {
+            "description": "别名（另外添加出来的 key 为 0 开始的数字）",
+            "type": "object",
+            "properties": {
+              "jp": {
+                "description": "日文名",
+                "type": "string"
+              },
+              "kana": {
+                "description": "纯假名",
+                "type": "string"
+              },
+              "nick": {
+                "description": "昵称",
+                "type": "string"
+              },
+              "romaji": {
+                "description": "罗马字",
+                "type": "string"
+              },
+              "zh": {
+                "description": "第二中文名",
+                "type": "string"
+              }
+            }
+          },
+          "source": {
+            "description": "引用来源",
+            "oneOf": [
+              {
+                "type": "string",
+                "example": "anidb.net"
+              },
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "example": "anidb.net"
+                }
+              }
+            ]
+          },
+          "name_cn": {
+            "description": "简体中文名",
+            "type": "string"
+          },
+          "cv": {
+            "description": "声优",
+            "type": "string"
+          }
+        }
+      },
+      "Person1": {
+        "description": "现实人物",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Mono"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "info": {
+                "$ref": "#/components/schemas/MonoInfo"
+              }
+            }
+          }
+        ]
+      },
+      "Character": {
+        "description": "虚拟角色",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Mono"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "info": {
+                "$ref": "#/components/schemas/MonoInfo"
+              },
+              "actors": {
+                "description": "声优列表",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MonoBase"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "EpisodeType": {
+        "description": "章节类型 <br> 0 = 本篇 <br> 1 = 特别篇 <br> 2 = OP <br> 3 = ED <br> 4 = 预告/宣传/广告 <br> 5 = MAD <br> 6 = 其他",
+        "type": "integer",
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "example": 0
+      },
+      "Episode": {
+        "description": "章节信息",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "章节 ID",
+            "type": "integer",
+            "example": 1027
+          },
+          "url": {
+            "description": "章节地址",
+            "type": "string",
+            "example": "http://bgm.tv/ep/1027"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EpisodeType"
+          },
+          "sort": {
+            "description": "集数",
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "description": "标题",
+            "type": "string",
+            "example": "ちぃ 目覚める"
+          },
+          "name_cn": {
+            "description": "简体中文标题",
+            "type": "string",
+            "example": "叽，觉醒了"
+          },
+          "duration": {
+            "description": "时长",
+            "type": "string",
+            "example": "24m"
+          },
+          "airdate": {
+            "description": "放送日期",
+            "type": "string",
+            "example": "2002-04-03"
+          },
+          "comment": {
+            "description": "回复数量",
+            "type": "integer",
+            "example": 9
+          },
+          "desc": {
+            "description": "简介",
+            "type": "string"
+          },
+          "status": {
+            "description": "放送状态 <br> Air = 已放送 <br> Today = 正在放送 <br> NA = 未放送",
+            "type": "string",
+            "enum": [
+              "Air",
+              "Today",
+              "NA"
+            ],
+            "example": "Air"
+          }
+        }
+      },
+      "Topic": {
+        "description": "讨论版",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "ID",
+            "type": "integer"
+          },
+          "url": {
+            "description": "地址",
+            "type": "string"
+          },
+          "title": {
+            "description": "标题",
+            "type": "string"
+          },
+          "main_id": {
+            "description": "所属对象（条目） ID",
+            "type": "integer"
+          },
+          "timestamp": {
+            "description": "发布时间",
+            "type": "integer"
+          },
+          "lastpost": {
+            "description": "最后回复时间",
+            "type": "integer"
+          },
+          "replies": {
+            "description": "回复数",
+            "type": "integer"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Blog": {
+        "description": "日志",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "ID",
+            "type": "integer"
+          },
+          "url": {
+            "description": "地址",
+            "type": "string"
+          },
+          "title": {
+            "description": "标题",
+            "type": "string"
+          },
+          "summary": {
+            "description": "概览",
+            "type": "string"
+          },
+          "image": {
+            "description": "图片",
+            "type": "string"
+          },
+          "replies": {
+            "description": "回复数",
+            "type": "integer"
+          },
+          "timestamp": {
+            "description": "发布时间",
+            "type": "integer",
+            "example": 1357144903
+          },
+          "dateline": {
+            "description": "发布时间",
+            "type": "string",
+            "example": "2013-1-2 16:41"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "SubjectType": {
+        "description": "条目类型 <br> 1 = book <br> 2 = anime <br> 3 = music <br> 4 = game <br> 6 = real",
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "example": 2
+      },
+      "SubjectTypeName": {
+        "description": "条目类型名称 <br> book <br> anime <br> music <br> game <br> real",
+        "type": "string",
+        "enum": [
+          "book",
+          "anime",
+          "music",
+          "game",
+          "real"
+        ],
+        "example": "anime"
+      },
+      "SubjectCollection": {
+        "description": "收藏人数",
+        "type": "object",
+        "properties": {
+          "wish": {
+            "description": "想做",
+            "type": "integer",
+            "example": 608
+          },
+          "collect": {
+            "description": "做过",
+            "type": "integer",
+            "example": 3010
+          },
+          "doing": {
+            "description": "在做",
+            "type": "integer",
+            "example": 103
+          },
+          "on_hold": {
+            "description": "搁置",
+            "type": "integer",
+            "example": 284
+          },
+          "dropped": {
+            "description": "抛弃",
+            "type": "integer",
+            "example": 86
+          }
+        }
+      },
+      "Subject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "条目 ID",
+            "type": "integer",
+            "example": 12
+          },
+          "url": {
+            "description": "条目地址",
+            "type": "string",
+            "example": "http://bgm.tv/subject/12"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SubjectType"
+          },
+          "name": {
+            "description": "条目名称",
+            "type": "string",
+            "example": "ちょびっツ"
+          }
+        }
+      },
+      "SubjectBase": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Subject"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "name_cn": {
+                "description": "条目中文名称",
+                "type": "string",
+                "example": "人形电脑天使心"
+              },
+              "summary": {
+                "description": "剧情简介",
+                "type": "string",
+                "example": "在不久的将来,电子技术飞速发展,电脑成为人们生活中不可缺少的一部分.主角的名字是本须和秀树,是个19岁的少年,由于考试失败,来到东京上补习班,过着贫穷潦倒的生活……\\r\\n到达东京的第一天,他很幸运的在垃圾堆捡到一个人型电脑,一直以来秀树都非常渴望拥有个人电脑.当他抱着她带返公寓后,却不知如何开机,在意想不到的地方找到开关并开启后,故事就此展开\\r\\n本须和秀树捡到了人型计算机〔唧〕。虽然不晓得她到底是不是〔Chobits〕，但她的身上似乎藏有极大的秘密。看到秀树为了钱而烦恼，唧出去找打工，没想到却找到了危险的工作！为了让秀树开心，唧开始到色情小屋打工。但她在遭到过度激烈的强迫要求之后失控。让周遭计算机因此而强制停摆。\\r\\n另一方面，秀树发现好友新保与补习班的清水老师有着不可告人的关系……"
+              },
+              "air_date": {
+                "description": "放送开始日期",
+                "type": "string",
+                "example": "2002-04-02"
+              },
+              "air_weekday": {
+                "description": "放送星期",
+                "type": "integer",
+                "example": 2
+              },
+              "images": {
+                "description": "封面",
+                "type": "object",
+                "properties": {
+                  "large": {
+                    "type": "string",
+                    "example": "http://lain.bgm.tv/pic/cover/l/c2/0a/12_24O6L.jpg"
+                  },
+                  "common": {
+                    "type": "string",
+                    "example": "http://lain.bgm.tv/pic/cover/c/c2/0a/12_24O6L.jpg"
+                  },
+                  "medium": {
+                    "type": "string",
+                    "example": "http://lain.bgm.tv/pic/cover/m/c2/0a/12_24O6L.jpg"
+                  },
+                  "small": {
+                    "type": "string",
+                    "example": "http://lain.bgm.tv/pic/cover/s/c2/0a/12_24O6L.jpg"
+                  },
+                  "grid": {
+                    "type": "string",
+                    "example": "http://lain.bgm.tv/pic/cover/g/c2/0a/12_24O6L.jpg"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SubjectSmall": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SubjectBase"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "eps": {
+                "description": "话数",
+                "type": "integer",
+                "example": 27
+              },
+              "eps_count": {
+                "description": "话数",
+                "type": "integer",
+                "example": 27
+              },
+              "rating": {
+                "description": "评分",
+                "type": "object",
+                "properties": {
+                  "total": {
+                    "description": "总评分人数",
+                    "type": "integer",
+                    "example": 2289
+                  },
+                  "count": {
+                    "description": "各分值评分人数",
+                    "type": "object",
+                    "properties": {
+                      "1": {
+                        "type": "integer",
+                        "example": 5
+                      },
+                      "2": {
+                        "type": "integer",
+                        "example": 3
+                      },
+                      "3": {
+                        "type": "integer",
+                        "example": 4
+                      },
+                      "4": {
+                        "type": "integer",
+                        "example": 6
+                      },
+                      "5": {
+                        "type": "integer",
+                        "example": 46
+                      },
+                      "6": {
+                        "type": "integer",
+                        "example": 267
+                      },
+                      "7": {
+                        "type": "integer",
+                        "example": 659
+                      },
+                      "8": {
+                        "type": "integer",
+                        "example": 885
+                      },
+                      "9": {
+                        "type": "integer",
+                        "example": 284
+                      },
+                      "10": {
+                        "type": "integer",
+                        "example": 130
+                      }
+                    }
+                  },
+                  "score": {
+                    "description": "评分",
+                    "type": "number",
+                    "example": 7.6
+                  }
+                }
+              },
+              "rank": {
+                "description": "排名",
+                "type": "integer",
+                "example": 573
+              },
+              "collection": {
+                "$ref": "#/components/schemas/SubjectCollection"
+              }
+            }
+          }
+        ]
+      },
+      "SubjectMedium": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SubjectSmall"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "crt": {
+                "description": "角色信息",
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Character"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "role_name": {
+                          "description": "角色类型",
+                          "type": "string",
+                          "example": "主角"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "staff": {
+                "description": "制作人员信息",
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/Person1"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "role_name": {
+                          "description": "人物类型",
+                          "type": "string",
+                          "example": "主角"
+                        },
+                        "jobs": {
+                          "description": "职位",
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      },
+      "SubjectLarge": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SubjectMedium"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "eps": {
+                "description": "章节列表",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Episode"
+                }
+              },
+              "topic": {
+                "description": "讨论版",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Topic"
+                }
+              },
+              "blog": {
+                "description": "评论日志",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Blog"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "User": {
+        "description": "用户信息",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "用户 id",
+            "type": "integer",
+            "example": 1
+          },
+          "url": {
+            "description": "用户主页地址",
+            "type": "string",
+            "example": "http://bgm.tv/user/sai"
+          },
+          "username": {
+            "description": "用户名",
+            "type": "string",
+            "example": "sai"
+          },
+          "nickname": {
+            "description": "昵称",
+            "type": "string",
+            "example": "Sai"
+          },
+          "avatar": {
+            "description": "头像地址",
+            "type": "object",
+            "properties": {
+              "large": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456"
+              },
+              "medium": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456"
+              },
+              "small": {
+                "type": "string",
+                "example": "http://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456"
+              }
+            }
+          },
+          "sign": {
+            "description": "签名",
+            "type": "string",
+            "example": "Awesome!"
+          },
+          "usergroup": {
+            "$ref": "#/components/schemas/UserGroup"
+          }
+        }
+      },
+      "UserGroup": {
+        "description": "用户组 <br> 1 = 管理员 <br> 2 = Bangumi 管理猿 <br> 3 = 天窗管理猿 <br> 4 = 禁言用户 <br> 5 = 禁止访问用户 <br> 8 = 人物管理猿 <br> 9 = 维基条目管理猿 <br> 10 = 用户 <br> 11 = 维基人",
+        "type": "integer",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "example": 11
+      },
+      "StatusCode": {
+        "description": "响应状态（HTTP 状态码都为 200）",
+        "type": "object",
+        "properties": {
+          "request": {
+            "description": "当前请求的地址",
+            "type": "string"
+          },
+          "code": {
+            "description": "状态码 <br> 200 OK <br> 202 Accepted <br> 304 Not Modified <br> 30401 Not Modified: Collection already exists <br> 400 Bad Request <br> 40001 Error: Nothing found with that ID <br> 401 Unauthorized <br> 40101 Error: Auth failed over 5 times <br> 40102 Error: Username is not an Email address <br> 405 Method Not Allowed <br> 404 Not Found",
+            "type": "integer",
+            "enum": [
+              200,
+              202,
+              304,
+              30401,
+              400,
+              40001,
+              401,
+              40101,
+              40102,
+              405,
+              404
+            ]
+          },
+          "error": {
+            "description": "状态信息",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Collection": {
+        "description": "条目收藏信息",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "$ref": "#/components/schemas/CollectionStatus"
+                },
+                "rating": {
+                  "description": "评分",
+                  "type": "integer"
+                },
+                "comment": {
+                  "description": "评论",
+                  "type": "string"
+                },
+                "private": {
+                  "description": "收藏隐私",
+                  "type": "integer",
+                  "enum": [
+                    0,
+                    1
+                  ]
+                },
+                "tag": {
+                  "description": "标签",
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "ep_status": {
+                  "description": "完成话数",
+                  "type": "integer"
+                },
+                "lasttouch": {
+                  "description": "上次更新时间",
+                  "type": "integer"
+                },
+                "user": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "description": "用户名 <br> 也可使用 UID",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "example": "sai"
+        }
+      },
+      "subject_id": {
+        "name": "subject_id",
+        "in": "path",
+        "description": "条目 ID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ep_id": {
+        "name": "id",
+        "in": "path",
+        "description": "章节 ID",
+        "required": true,
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "ep_status": {
+        "name": "status",
+        "in": "path",
+        "description": "收视类型，参考 [EpStatusType](#model-EpStatusType)",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/EpStatusType"
+        }
+      },
+      "responseGroup": {
+        "name": "responseGroup",
+        "in": "query",
+        "description": "返回数据大小，参考 [ResponseGroup](#model-ResponseGroup) <br> 默认为 small",
+        "required": false,
+        "schema": {
+          "$ref": "#/components/schemas/ResponseGroup"
+        }
+      },
+      "app_id": {
+        "name": "app_id",
+        "in": "query",
+        "description": "[https://bgm.tv/dev/app](https://bgm.tv/dev/app) 申请到的 App ID",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bangumi_auth": {
+        "type": "oauth2",
+        "description": "https://github.com/bangumi/api/blob/master/docs-raw/How-to-Auth.md",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://bgm.tv/oauth/authorize",
+            "tokenUrl": "https://bgm.tv/oauth/access_token",
+            "refreshUrl": "https://bgm.tv/oauth/access_token",
+            "scopes": {
+              "r:user": "读取你的账户信息（尚未实现，scope 名非真实）",
+              "rw:collection": "读写你的收藏信息（尚未实现，scope 名非真实）"
+            }
+          }
+        }
+      }
+    }
+  }
+}
