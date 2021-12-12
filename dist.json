@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Bangumi API",
-    "version": "v0.0.3"
+    "title": "new bangumi api server",
+    "version": "v0.0.5"
   },
   "servers": [
     {
@@ -28,7 +28,7 @@
             "in": "query"
           },
           {
-            "description": "1为个人，2为公司，3为组合",
+            "description": "`1`为个人，`2`为公司，`3`为组合",
             "required": false,
             "schema": {
               "allOf": [
@@ -36,7 +36,7 @@
                   "$ref": "#/components/schemas/PersonType"
                 }
               ],
-              "description": "1为个人，2为公司，3为组合"
+              "description": "`1`为个人，`2`为公司，`3`为组合"
             },
             "name": "type",
             "in": "query"
@@ -133,6 +133,7 @@
           "人物"
         ],
         "summary": "Get Person",
+        "description": "cache with 60s",
         "operationId": "get_person_v0_persons__person_id__get",
         "parameters": [
           {
@@ -1238,7 +1239,12 @@
             "type": "string"
           },
           "type": {
-            "$ref": "#/components/schemas/PersonType"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
           },
           "career": {
             "type": "array",
@@ -1246,17 +1252,27 @@
               "$ref": "#/components/schemas/PersonCareer"
             }
           },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
           "locked": {
             "title": "Locked",
             "type": "boolean"
           },
-          "img": {
-            "title": "Img",
-            "type": "string"
-          },
           "short_summary": {
             "title": "Short Summary",
             "type": "string"
+          },
+          "img": {
+            "title": "Img",
+            "type": "string",
+            "description": "use `images` instead"
           }
         }
       },
@@ -1297,7 +1313,12 @@
             "type": "string"
           },
           "type": {
-            "$ref": "#/components/schemas/PersonType"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
           },
           "career": {
             "type": "array",
@@ -1305,13 +1326,18 @@
               "$ref": "#/components/schemas/PersonCareer"
             }
           },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
           "locked": {
             "title": "Locked",
             "type": "boolean"
-          },
-          "img": {
-            "title": "Img",
-            "type": "string"
           },
           "summary": {
             "title": "Summary",
@@ -1346,20 +1372,53 @@
           "birth_year": {
             "title": "Birth Year",
             "type": "integer",
-            "description": "parsed from wiki, maybe null"
+            "description": "parsed from wiki, maybe `null`"
           },
           "birth_mon": {
             "title": "Birth Mon",
             "type": "integer",
-            "description": "parsed from wiki, maybe null"
+            "description": "parsed from wiki, maybe `null`"
           },
           "birth_day": {
             "title": "Birth Day",
             "type": "integer",
-            "description": "parsed from wiki, maybe null"
+            "description": "parsed from wiki, maybe `null`"
           },
           "stat": {
             "$ref": "#/components/schemas/Stat"
+          },
+          "img": {
+            "title": "Img",
+            "type": "string",
+            "description": "use `images` instead"
+          }
+        }
+      },
+      "PersonImages": {
+        "title": "PersonImages",
+        "required": [
+          "large",
+          "medium",
+          "small",
+          "grid"
+        ],
+        "type": "object",
+        "properties": {
+          "large": {
+            "title": "Large",
+            "type": "string"
+          },
+          "medium": {
+            "title": "Medium",
+            "type": "string"
+          },
+          "small": {
+            "title": "Small",
+            "type": "string"
+          },
+          "grid": {
+            "title": "Grid",
+            "type": "string"
           }
         }
       },
