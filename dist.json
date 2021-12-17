@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.0.6"
+    "version": "v0.1.0"
   },
   "servers": [
     {
@@ -58,7 +58,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/Sort"
+                  "$ref": "#/components/schemas/pol__api__v0__person__Sort"
                 }
               ],
               "default": "id"
@@ -71,7 +71,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/Order"
+                  "$ref": "#/components/schemas/pol__api__v0__person__Order"
                 }
               ],
               "default": -1
@@ -207,6 +207,208 @@
               "application/json": {
                 "schema": {
                   "title": "Response Get Person Subjects V0 Persons  Person Id  Subjects Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SubjectInfo"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/characters": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "Get Characters",
+        "operationId": "get_characters_v0_characters_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/pol__api__v0__character__Sort"
+                }
+              ],
+              "default": "id"
+            },
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/pol__api__v0__character__Order"
+                }
+              ],
+              "default": -1
+            },
+            "name": "order",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PagedCharacter"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/characters/{character_id}": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "Get Character Detail",
+        "description": "cache with 60s",
+        "operationId": "get_character_detail_v0_characters__character_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Character Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "character_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CharacterDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/characters/{character_id}/subjects": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "get character related subjects",
+        "operationId": "get_person_subjects_v0_characters__character_id__subjects_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Character Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "character_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Person Subjects V0 Characters  Character Id  Subjects Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/SubjectInfo"
@@ -1142,6 +1344,138 @@
         "type": "integer",
         "description": "An enumeration."
       },
+      "Character": {
+        "title": "Character",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "locked",
+          "short_summary"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "角色，机体，组织..."
+          },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "short_summary": {
+            "title": "Short Summary",
+            "type": "string"
+          }
+        }
+      },
+      "CharacterDetail": {
+        "title": "CharacterDetail",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "locked",
+          "summary",
+          "stat"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "角色，机体，组织..."
+          },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "infobox": {
+            "title": "Infobox",
+            "type": "array",
+            "items": {
+              "type": "object"
+            },
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
+          },
+          "gender": {
+            "title": "Gender",
+            "type": "string",
+            "description": "parsed from wiki, maybe null"
+          },
+          "blood_type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BloodType"
+              }
+            ],
+            "description": "parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`"
+          },
+          "birth_year": {
+            "title": "Birth Year",
+            "type": "integer",
+            "description": "parsed from wiki, maybe `null`"
+          },
+          "birth_mon": {
+            "title": "Birth Mon",
+            "type": "integer",
+            "description": "parsed from wiki, maybe `null`"
+          },
+          "birth_day": {
+            "title": "Birth Day",
+            "type": "integer",
+            "description": "parsed from wiki, maybe `null`"
+          },
+          "stat": {
+            "$ref": "#/components/schemas/Stat"
+          }
+        }
+      },
       "ErrorDetail": {
         "title": "ErrorDetail",
         "required": [
@@ -1178,14 +1512,36 @@
           }
         }
       },
-      "Order": {
-        "title": "Order",
-        "enum": [
-          1,
-          -1
+      "PagedCharacter": {
+        "title": "PagedCharacter",
+        "required": [
+          "total",
+          "limit",
+          "offset",
+          "data"
         ],
-        "type": "integer",
-        "description": "An enumeration."
+        "type": "object",
+        "properties": {
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Character"
+            }
+          }
+        }
       },
       "PagedPerson": {
         "title": "PagedPerson",
@@ -1346,6 +1702,7 @@
           "last_modified": {
             "title": "Last Modified",
             "type": "string",
+            "description": "currently it's latest user comment time, it will be replaced by wiki modified date in the future",
             "format": "date-time"
           },
           "infobox": {
@@ -1432,16 +1789,6 @@
         "type": "integer",
         "description": "An enumeration."
       },
-      "Sort": {
-        "title": "Sort",
-        "enum": [
-          "id",
-          "name",
-          "update"
-        ],
-        "type": "string",
-        "description": "An enumeration."
-      },
       "Stat": {
         "title": "Stat",
         "required": [
@@ -1516,6 +1863,43 @@
             "type": "string"
           }
         }
+      },
+      "pol__api__v0__character__Order": {
+        "title": "Order",
+        "enum": [
+          1,
+          -1
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
+      "pol__api__v0__character__Sort": {
+        "title": "Sort",
+        "enum": [
+          "id",
+          "name"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "pol__api__v0__person__Order": {
+        "title": "Order",
+        "enum": [
+          1,
+          -1
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
+      "pol__api__v0__person__Sort": {
+        "title": "Sort",
+        "enum": [
+          "id",
+          "name",
+          "update"
+        ],
+        "type": "string",
+        "description": "An enumeration."
       },
       "CollectionStatusId": {
         "description": "收藏状态 ID",
@@ -1774,7 +2158,7 @@
           }
         ]
       },
-      "Character": {
+      "Character1": {
         "description": "虚拟角色",
         "allOf": [
           {
@@ -2196,7 +2580,7 @@
                 "items": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/Character"
+                      "$ref": "#/components/schemas/Character1"
                     },
                     {
                       "type": "object",
