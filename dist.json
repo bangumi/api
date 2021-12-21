@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.2.0"
+    "version": "v0.2.1"
   },
   "servers": [
     {
@@ -379,97 +379,6 @@
         }
       }
     },
-    "/v0/characters": {
-      "get": {
-        "tags": [
-          "角色"
-        ],
-        "summary": "Get Characters",
-        "operationId": "get_characters_v0_characters_get",
-        "parameters": [
-          {
-            "required": false,
-            "schema": {
-              "title": "Name",
-              "type": "string"
-            },
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/pol__api__v0__character__Sort"
-                }
-              ],
-              "default": "id"
-            },
-            "name": "sort",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Order"
-                }
-              ],
-              "default": -1
-            },
-            "name": "order",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Limit",
-              "maximum": 50,
-              "exclusiveMinimum": 0,
-              "type": "integer",
-              "default": 30
-            },
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Offset",
-              "minimum": 0,
-              "type": "integer",
-              "default": 0
-            },
-            "name": "offset",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedCharacter"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/v0/characters/{character_id}": {
       "get": {
         "tags": [
@@ -564,123 +473,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorDetail"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v0/persons": {
-      "get": {
-        "tags": [
-          "人物"
-        ],
-        "summary": "Get Persons",
-        "operationId": "get_persons_v0_persons_get",
-        "parameters": [
-          {
-            "required": false,
-            "schema": {
-              "title": "Name",
-              "type": "string"
-            },
-            "name": "name",
-            "in": "query"
-          },
-          {
-            "description": "`1`为个人，`2`为公司，`3`为组合",
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/PersonType"
-                }
-              ],
-              "description": "`1`为个人，`2`为公司，`3`为组合"
-            },
-            "name": "type",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/PersonCareer"
-              }
-            },
-            "example": "?career=mangaka&career=producer",
-            "name": "career",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/pol__api__v0__person__Sort"
-                }
-              ],
-              "default": "id"
-            },
-            "name": "sort",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/Order"
-                }
-              ],
-              "default": -1
-            },
-            "name": "order",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Limit",
-              "maximum": 50,
-              "exclusiveMinimum": 0,
-              "type": "integer",
-              "default": 30
-            },
-            "name": "limit",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Offset",
-              "minimum": 0,
-              "type": "integer",
-              "default": 0
-            },
-            "name": "offset",
-            "in": "query"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PagedPerson"
                 }
               }
             }
@@ -1713,52 +1505,6 @@
         "type": "integer",
         "description": "An enumeration."
       },
-      "Character": {
-        "title": "Character",
-        "required": [
-          "id",
-          "name",
-          "type",
-          "short_summary",
-          "locked"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "title": "Id",
-            "type": "integer"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "type": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PersonType"
-              }
-            ],
-            "description": "角色，机体，组织..."
-          },
-          "images": {
-            "title": "Images",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PersonImages"
-              }
-            ],
-            "description": "object with some size of images, this object maybe `null`"
-          },
-          "short_summary": {
-            "title": "Short Summary",
-            "type": "string"
-          },
-          "locked": {
-            "title": "Locked",
-            "type": "boolean"
-          }
-        }
-      },
       "CharacterDetail": {
         "title": "CharacterDetail",
         "required": [
@@ -2132,46 +1878,6 @@
           }
         }
       },
-      "Order": {
-        "title": "Order",
-        "enum": [
-          1,
-          -1
-        ],
-        "type": "integer",
-        "description": "An enumeration."
-      },
-      "PagedCharacter": {
-        "title": "PagedCharacter",
-        "required": [
-          "total",
-          "limit",
-          "offset",
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "total": {
-            "title": "Total",
-            "type": "integer"
-          },
-          "limit": {
-            "title": "Limit",
-            "type": "integer"
-          },
-          "offset": {
-            "title": "Offset",
-            "type": "integer"
-          },
-          "data": {
-            "title": "Data",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Character"
-            }
-          }
-        }
-      },
       "PagedEpisode": {
         "title": "PagedEpisode",
         "required": [
@@ -2200,95 +1906,6 @@
             "items": {
               "$ref": "#/components/schemas/Episode"
             }
-          }
-        }
-      },
-      "PagedPerson": {
-        "title": "PagedPerson",
-        "required": [
-          "total",
-          "limit",
-          "offset",
-          "data"
-        ],
-        "type": "object",
-        "properties": {
-          "total": {
-            "title": "Total",
-            "type": "integer"
-          },
-          "limit": {
-            "title": "Limit",
-            "type": "integer"
-          },
-          "offset": {
-            "title": "Offset",
-            "type": "integer"
-          },
-          "data": {
-            "title": "Data",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Person"
-            }
-          }
-        }
-      },
-      "Person": {
-        "title": "Person",
-        "required": [
-          "id",
-          "name",
-          "type",
-          "career",
-          "short_summary",
-          "locked"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "title": "Id",
-            "type": "integer"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "type": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PersonType"
-              }
-            ],
-            "description": "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
-          },
-          "career": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PersonCareer"
-            }
-          },
-          "images": {
-            "title": "Images",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/PersonImages"
-              }
-            ],
-            "description": "object with some size of images, this object maybe `null`"
-          },
-          "short_summary": {
-            "title": "Short Summary",
-            "type": "string"
-          },
-          "img": {
-            "title": "Img",
-            "type": "string",
-            "description": "use `images` instead"
-          },
-          "locked": {
-            "title": "Locked",
-            "type": "boolean"
           }
         }
       },
@@ -2783,25 +2400,6 @@
           }
         }
       },
-      "pol__api__v0__character__Sort": {
-        "title": "Sort",
-        "enum": [
-          "id",
-          "name"
-        ],
-        "type": "string",
-        "description": "An enumeration."
-      },
-      "pol__api__v0__person__Sort": {
-        "title": "Sort",
-        "enum": [
-          "id",
-          "name",
-          "update"
-        ],
-        "type": "string",
-        "description": "An enumeration."
-      },
       "CollectionStatusId": {
         "description": "收藏状态 ID",
         "type": "integer",
@@ -3043,7 +2641,7 @@
           }
         }
       },
-      "Person1": {
+      "Person": {
         "description": "现实人物",
         "allOf": [
           {
@@ -3059,7 +2657,7 @@
           }
         ]
       },
-      "Character1": {
+      "Character": {
         "description": "虚拟角色",
         "allOf": [
           {
@@ -3481,7 +3079,7 @@
                 "items": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/Character1"
+                      "$ref": "#/components/schemas/Character"
                     },
                     {
                       "type": "object",
@@ -3502,7 +3100,7 @@
                 "items": {
                   "allOf": [
                     {
-                      "$ref": "#/components/schemas/Person1"
+                      "$ref": "#/components/schemas/Person"
                     },
                     {
                       "type": "object",
