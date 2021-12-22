@@ -96,12 +96,7 @@ POST https://bgm.tv/oauth/access_token
 
 ### 4.使用 Access Token 访问 API
 
-之后便可使用获取的 Access Token 访问需要授权的 API，如：
-```
-GET /collection/1?access_token={YOUR_ACCESS_TOKEN}
-```
-
-虽然可以直接使用参数方式带上 Access Token，但建议直接在 HTTP Header 中通过 Authorization Header 带上 Access Token 信息：
+在 HTTP Header 中通过 Authorization Header 携带 Access Token 信息访问需要授权的 API：
 
 ```
 Authorization: Bearer YOUR_ACCESS_TOKEN
@@ -113,6 +108,15 @@ Authorization: Bearer YOUR_ACCESS_TOKEN
 curl -H "Authorization: Bearer YOUR_ACCESS_TOKEN" http://api.chobits.sai.cc/collection/1
 ```
 
+**注意**
+
+新的 API(/v0) 不再允许使用 query string 传递 Access Token
+
+请求旧 API 时也可以通过 query string 携带 Access Token 访问需要授权的 API：
+
+```
+GET /collection/1?access_token={YOUR_ACCESS_TOKEN}
+```
 
 ## 授权有效期刷新
 在 `/oauth/access_token`  API 的返回中，我们提供了 Refresh Token 以便第三方应用延续 Access Token 的有效期
