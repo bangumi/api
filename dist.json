@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.2.2"
+    "version": "v0.2.3"
   },
   "servers": [
     {
@@ -92,7 +92,7 @@
                   "title": "Response Get Subject Persons V0 Subjects  Subject Id  Persons Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RelPerson"
+                    "$ref": "#/components/schemas/RelatedPerson"
                   }
                 }
               }
@@ -149,7 +149,7 @@
                   "title": "Response Get Subject Characters V0 Subjects  Subject Id  Characters Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RelCharacter"
+                    "$ref": "#/components/schemas/RelatedCharacter"
                   }
                 }
               }
@@ -206,7 +206,7 @@
                   "title": "Response Get Subject Relations V0 Subjects  Subject Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/RelSubject"
+                    "$ref": "#/components/schemas/pol__api__v0__models__subject__RelatedSubject"
                   }
                 }
               }
@@ -298,7 +298,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PagedEpisode"
+                  "$ref": "#/components/schemas/Paged_Episode_"
                 }
               }
             }
@@ -461,7 +461,7 @@
                   "title": "Response Get Person Subjects V0 Characters  Character Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SubjectInfo"
+                    "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
                   }
                 }
               }
@@ -572,7 +572,7 @@
                   "title": "Response Get Person Subjects V0 Persons  Person Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/SubjectInfo"
+                    "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
                   }
                 }
               }
@@ -1896,8 +1896,8 @@
           }
         }
       },
-      "PagedEpisode": {
-        "title": "PagedEpisode",
+      "Paged_Episode_": {
+        "title": "Paged[Episode]",
         "required": [
           "total",
           "limit",
@@ -2115,8 +2115,8 @@
           }
         }
       },
-      "RelCharacter": {
-        "title": "RelCharacter",
+      "RelatedCharacter": {
+        "title": "RelatedCharacter",
         "required": [
           "id",
           "name",
@@ -2156,8 +2156,8 @@
           }
         }
       },
-      "RelPerson": {
-        "title": "RelPerson",
+      "RelatedPerson": {
+        "title": "RelatedPerson",
         "required": [
           "id",
           "name",
@@ -2197,42 +2197,6 @@
               }
             ],
             "description": "object with some size of images, this object maybe `null`"
-          },
-          "relation": {
-            "title": "Relation",
-            "type": "string"
-          }
-        }
-      },
-      "RelSubject": {
-        "title": "RelSubject",
-        "required": [
-          "id",
-          "type",
-          "name",
-          "name_cn",
-          "relation"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "title": "Id",
-            "type": "integer"
-          },
-          "type": {
-            "title": "Type",
-            "type": "integer"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "name_cn": {
-            "title": "Name Cn",
-            "type": "string"
-          },
-          "images": {
-            "$ref": "#/components/schemas/Images"
           },
           "relation": {
             "title": "Relation",
@@ -2348,37 +2312,6 @@
           }
         }
       },
-      "SubjectInfo": {
-        "title": "SubjectInfo",
-        "required": [
-          "subject_id",
-          "staff",
-          "subject_name_cn"
-        ],
-        "type": "object",
-        "properties": {
-          "subject_id": {
-            "title": "Subject Id",
-            "type": "integer"
-          },
-          "staff": {
-            "title": "Staff",
-            "type": "string"
-          },
-          "subject_name": {
-            "title": "Subject Name",
-            "type": "string"
-          },
-          "subject_name_cn": {
-            "title": "Subject Name Cn",
-            "type": "string"
-          },
-          "subject_image": {
-            "title": "Subject Image",
-            "type": "string"
-          }
-        }
-      },
       "V": {
         "title": "V",
         "required": [
@@ -2414,6 +2347,73 @@
           },
           "type": {
             "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "pol__api__v0__models__RelatedSubject": {
+        "title": "RelatedSubject",
+        "required": [
+          "id",
+          "staff",
+          "name_cn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "staff": {
+            "title": "Staff",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "name_cn": {
+            "title": "Name Cn",
+            "type": "string"
+          },
+          "image": {
+            "title": "Image",
+            "type": "string"
+          }
+        }
+      },
+      "pol__api__v0__models__subject__RelatedSubject": {
+        "title": "RelatedSubject",
+        "required": [
+          "id",
+          "type",
+          "name",
+          "name_cn",
+          "relation"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "type": {
+            "title": "Type",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "name_cn": {
+            "title": "Name Cn",
+            "type": "string"
+          },
+          "images": {
+            "$ref": "#/components/schemas/Images"
+          },
+          "relation": {
+            "title": "Relation",
             "type": "string"
           }
         }
