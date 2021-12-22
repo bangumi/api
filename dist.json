@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.2.1"
+    "version": "v0.2.2"
   },
   "servers": [
     {
@@ -1640,13 +1640,14 @@
         "required": [
           "id",
           "type",
-          "sort",
           "name",
           "name_cn",
-          "duration",
+          "sort",
           "airdate",
           "comment",
-          "desc"
+          "duration",
+          "desc",
+          "disc"
         ],
         "type": "object",
         "properties": {
@@ -1656,28 +1657,26 @@
           },
           "type": {
             "title": "Type",
-            "type": "integer"
-          },
-          "sort": {
-            "title": "Sort",
-            "type": "integer"
+            "type": "integer",
+            "description": "`0` 本篇，`1` SP，`2` OP，`3` ED"
           },
           "name": {
             "title": "Name",
             "type": "string"
           },
-          "ep": {
-            "title": "Ep",
-            "type": "integer",
-            "description": "条目内的集数, 从`1`开始"
-          },
           "name_cn": {
             "title": "Name Cn",
             "type": "string"
           },
-          "duration": {
-            "title": "Duration",
-            "type": "string"
+          "sort": {
+            "title": "Sort",
+            "type": "number",
+            "description": "同类条目的排序和集数"
+          },
+          "ep": {
+            "title": "Ep",
+            "type": "number",
+            "description": "条目内的集数, 从`1`开始。非本篇剧集的此字段无意义"
           },
           "airdate": {
             "title": "Airdate",
@@ -1687,9 +1686,19 @@
             "title": "Comment",
             "type": "integer"
           },
+          "duration": {
+            "title": "Duration",
+            "type": "string"
+          },
           "desc": {
             "title": "Desc",
-            "type": "string"
+            "type": "string",
+            "description": "简介"
+          },
+          "disc": {
+            "title": "Disc",
+            "type": "integer",
+            "description": "音乐曲目的碟片数"
           }
         }
       },
@@ -1698,13 +1707,14 @@
         "required": [
           "id",
           "type",
-          "sort",
           "name",
           "name_cn",
-          "duration",
+          "sort",
           "airdate",
           "comment",
+          "duration",
           "desc",
+          "disc",
           "subject_id"
         ],
         "type": "object",
@@ -1715,28 +1725,26 @@
           },
           "type": {
             "title": "Type",
-            "type": "integer"
-          },
-          "sort": {
-            "title": "Sort",
-            "type": "integer"
+            "type": "integer",
+            "description": "`0` 本篇，`1` SP，`2` OP，`3` ED"
           },
           "name": {
             "title": "Name",
             "type": "string"
           },
-          "ep": {
-            "title": "Ep",
-            "type": "integer",
-            "description": "条目内的集数, 从`1`开始"
-          },
           "name_cn": {
             "title": "Name Cn",
             "type": "string"
           },
-          "duration": {
-            "title": "Duration",
-            "type": "string"
+          "sort": {
+            "title": "Sort",
+            "type": "number",
+            "description": "同类条目的排序和集数"
+          },
+          "ep": {
+            "title": "Ep",
+            "type": "number",
+            "description": "条目内的集数, 从`1`开始。非本篇剧集的此字段无意义"
           },
           "airdate": {
             "title": "Airdate",
@@ -1746,9 +1754,19 @@
             "title": "Comment",
             "type": "integer"
           },
+          "duration": {
+            "title": "Duration",
+            "type": "string"
+          },
           "desc": {
             "title": "Desc",
-            "type": "string"
+            "type": "string",
+            "description": "简介"
+          },
+          "disc": {
+            "title": "Disc",
+            "type": "integer",
+            "description": "音乐曲目的碟片数"
           },
           "subject_id": {
             "title": "Subject Id",
