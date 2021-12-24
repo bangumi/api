@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.2.3"
+    "version": "v0.3.0"
   },
   "servers": [
     {
@@ -61,7 +61,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/subjects/{subject_id}/persons": {
@@ -599,6 +604,43 @@
             }
           }
         }
+      }
+    },
+    "/v0/me": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "Get Subject",
+        "description": "返回当前 Access Token 对应的用户信息",
+        "operationId": "get_subject_v0_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Me"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/user/{username}": {
@@ -1494,6 +1536,29 @@
   },
   "components": {
     "schemas": {
+      "Avatar": {
+        "title": "Avatar",
+        "required": [
+          "large",
+          "medium",
+          "small"
+        ],
+        "type": "object",
+        "properties": {
+          "large": {
+            "title": "Large",
+            "type": "string"
+          },
+          "medium": {
+            "title": "Medium",
+            "type": "string"
+          },
+          "small": {
+            "title": "Small",
+            "type": "string"
+          }
+        }
+      },
       "BloodType": {
         "title": "BloodType",
         "enum": [
@@ -1896,6 +1961,47 @@
           }
         }
       },
+      "Me": {
+        "title": "Me",
+        "required": [
+          "id",
+          "url",
+          "username",
+          "nickname",
+          "user_group",
+          "avatar",
+          "sign"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string"
+          },
+          "nickname": {
+            "title": "Nickname",
+            "type": "string"
+          },
+          "user_group": {
+            "$ref": "#/components/schemas/UserGroup"
+          },
+          "avatar": {
+            "$ref": "#/components/schemas/Avatar"
+          },
+          "sign": {
+            "title": "Sign",
+            "type": "string"
+          }
+        }
+      },
       "Paged_Episode_": {
         "title": "Paged[Episode]",
         "required": [
@@ -2237,7 +2343,8 @@
           "eps",
           "total_episodes",
           "rating",
-          "collection"
+          "collection",
+          "tags"
         ],
         "type": "object",
         "properties": {
@@ -2309,8 +2416,49 @@
           },
           "collection": {
             "$ref": "#/components/schemas/Collection"
+          },
+          "tags": {
+            "title": "Tags",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
           }
         }
+      },
+      "Tag": {
+        "title": "Tag",
+        "required": [
+          "name",
+          "count"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        }
+      },
+      "UserGroup": {
+        "title": "UserGroup",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          8,
+          9,
+          10,
+          11
+        ],
+        "type": "integer",
+        "description": "An enumeration."
       },
       "V": {
         "title": "V",
@@ -3225,11 +3373,11 @@
             "example": "Awesome!"
           },
           "usergroup": {
-            "$ref": "#/components/schemas/UserGroup"
+            "$ref": "#/components/schemas/UserGroup1"
           }
         }
       },
-      "UserGroup": {
+      "UserGroup1": {
         "description": "用户组 <br> 1 = 管理员 <br> 2 = Bangumi 管理猿 <br> 3 = 天窗管理猿 <br> 4 = 禁言用户 <br> 5 = 禁止访问用户 <br> 8 = 人物管理猿 <br> 9 = 维基条目管理猿 <br> 10 = 用户 <br> 11 = 维基人",
         "type": "integer",
         "enum": [
@@ -3275,6 +3423,18 @@
             "type": "string"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "OptionalHTTPBearer": {
+        "type": "http",
+        "description": "You don't need a access token to access this API but you may not access some private or sensitive resource.",
+        "scheme": "bearer"
+      },
+      "HTTPBearer": {
+        "type": "http",
+        "description": "You can create a personal access token at [https://bgm.tv/dev/app](https://bgm.tv/dev/app)",
+        "scheme": "bearer"
       }
     },
     "responses": {
@@ -3382,23 +3542,6 @@
         "required": true,
         "schema": {
           "type": "string"
-        }
-      }
-    },
-    "securitySchemes": {
-      "bangumi_auth": {
-        "type": "oauth2",
-        "description": "https://github.com/bangumi/api/blob/master/docs-raw/How-to-Auth.md",
-        "flows": {
-          "authorizationCode": {
-            "authorizationUrl": "https://bgm.tv/oauth/authorize",
-            "tokenUrl": "https://bgm.tv/oauth/access_token",
-            "refreshUrl": "https://bgm.tv/oauth/access_token",
-            "scopes": {
-              "r:user": "读取你的账户信息（尚未实现，scope 名非真实）",
-              "rw:collection": "读写你的收藏信息（尚未实现，scope 名非真实）"
-            }
-          }
         }
       }
     }
