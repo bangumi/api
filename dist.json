@@ -2,6 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
+    "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token",
     "version": "v0.3.5"
   },
   "servers": [
@@ -1605,7 +1606,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
@@ -2096,7 +2097,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
@@ -3412,12 +3413,12 @@
     "securitySchemes": {
       "OptionalHTTPBearer": {
         "type": "http",
-        "description": "You don't need a access token to access this API but you may not access some private or sensitive resource.",
+        "description": "不强制要求用户认证，但是可能看不到某些敏感内容内容（如 NSFW 或者“仅自己可见”）",
         "scheme": "bearer"
       },
       "HTTPBearer": {
         "type": "http",
-        "description": "You can create a personal access token at [https://bgm.tv/dev/app](https://bgm.tv/dev/app)",
+        "description": "需要使用 access token 进行认证",
         "scheme": "bearer"
       }
     },
