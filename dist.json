@@ -1605,7 +1605,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
@@ -2096,7 +2096,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
