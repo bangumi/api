@@ -1,0 +1,11 @@
+{
+    "inputs": [
+        {
+            "inputFile": "./fastapi.json"
+        },
+        {
+            "inputFile": "./open-api/api.yml"
+        }
+    ],
+    "output": "./dist.json"
+}
