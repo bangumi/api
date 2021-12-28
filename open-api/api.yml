@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Bangumi API
   # description: TODO
-  version: '2018-06-05'
+  version: "2018-06-05"
 servers:
   - url: https://api.bgm.tv
 paths:
@@ -12,21 +12,21 @@ paths:
         - 用户
       summary: 用户信息
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
       responses:
         200:
           description: 返回用户基础信息
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
   /user/{username}/collection:
     get:
       tags:
         - 用户
       summary: 用户收藏
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
         - name: cat
           in: query
           description: 收藏类型
@@ -83,7 +83,7 @@ paths:
                       type: integer
                     subject:
                       allOf:
-                        - $ref: '#/components/schemas/SubjectBase'
+                        - $ref: "#/components/schemas/SubjectBase"
                         - type: object
                           properties:
                             eps:
@@ -95,21 +95,21 @@ paths:
                               type: integer
                               example: 27
                             collection:
-                              $ref: '#/components/schemas/SubjectCollection'
+                              $ref: "#/components/schemas/SubjectCollection"
   /user/{username}/collections/{subject_type}:
     get:
       tags:
         - 用户
       summary: 用户收藏概览
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
         - name: subject_type
           in: path
           description: 条目类型，详见 [SubjectTypeName](#model-SubjectTypeName)
           required: true
           schema:
-            $ref: '#/components/schemas/SubjectTypeName'
-        - $ref: '#/components/parameters/app_id'
+            $ref: "#/components/schemas/SubjectTypeName"
+        - $ref: "#/components/parameters/app_id"
         - name: max_results
           in: query
           description: 显示条数
@@ -128,9 +128,9 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: '#/components/schemas/SubjectType'
+                      $ref: "#/components/schemas/SubjectType"
                     name:
-                      $ref: '#/components/schemas/SubjectTypeName'
+                      $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
                       description: 条目类型中文名
                       type: string
@@ -142,7 +142,7 @@ paths:
                         type: object
                         properties:
                           status:
-                            $ref: '#/components/schemas/CollectionStatus'
+                            $ref: "#/components/schemas/CollectionStatus"
                           count:
                             type: integer
                           list:
@@ -154,15 +154,15 @@ paths:
                                   description: 条目 ID
                                   type: string
                                 subject:
-                                  $ref: '#/components/schemas/SubjectBase'
+                                  $ref: "#/components/schemas/SubjectBase"
   /user/{username}/collections/status:
     get:
       tags:
         - 用户
       summary: 用户收藏统计
       parameters:
-        - $ref: '#/components/parameters/username'
-        - $ref: '#/components/parameters/app_id'
+        - $ref: "#/components/parameters/username"
+        - $ref: "#/components/parameters/app_id"
       responses:
         200:
           description: 获取用户所有收藏信息
@@ -174,9 +174,9 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: '#/components/schemas/SubjectType'
+                      $ref: "#/components/schemas/SubjectType"
                     name:
-                      $ref: '#/components/schemas/SubjectTypeName'
+                      $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
                       description: 条目类型中文名
                       type: string
@@ -188,7 +188,7 @@ paths:
                         type: object
                         properties:
                           status:
-                            $ref: '#/components/schemas/CollectionStatus'
+                            $ref: "#/components/schemas/CollectionStatus"
                           count:
                             type: integer
   /user/{username}/progress:
@@ -197,7 +197,7 @@ paths:
         - 用户
       summary: 用户收视进度
       parameters:
-        - $ref: '#/components/parameters/username'
+        - $ref: "#/components/parameters/username"
         - name: subject_id
           in: query
           description: 条目 ID
@@ -230,31 +230,30 @@ paths:
                             type: object
                             properties:
                               id:
-                                $ref: '#/components/schemas/EpStatusId'
+                                $ref: "#/components/schemas/EpStatusId"
                               css_name:
                                 type: string
                                 example: Watched
                               url_name:
-                                $ref: '#/components/schemas/EpStatusType'
+                                $ref: "#/components/schemas/EpStatusType"
                               cn_name:
-                                $ref: '#/components/schemas/EpStatusName'
+                                $ref: "#/components/schemas/EpStatusName"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-           - r:user
+        - OptionalHTTPBearer: []
   /subject/{subject_id}:
     get:
       tags:
         - 条目
       summary: 条目信息
       parameters:
-        - $ref: '#/components/parameters/subject_id'
-        - $ref: '#/components/parameters/responseGroup'
+        - $ref: "#/components/parameters/subject_id"
+        - $ref: "#/components/parameters/responseGroup"
       responses:
         200:
           description: 根据 responseGroup 参数，返回以下三个模型
@@ -266,16 +265,16 @@ paths:
               schema:
                 type: object
                 oneOf:
-                  - $ref: '#/components/schemas/SubjectSmall'
-                  - $ref: '#/components/schemas/SubjectMedium'
-                  - $ref: '#/components/schemas/SubjectLarge'
+                  - $ref: "#/components/schemas/SubjectSmall"
+                  - $ref: "#/components/schemas/SubjectMedium"
+                  - $ref: "#/components/schemas/SubjectLarge"
   /subject/{subject_id}/ep:
     get:
       tags:
         - 条目
       summary: 章节数据
       parameters:
-        - $ref: '#/components/parameters/subject_id'
+        - $ref: "#/components/parameters/subject_id"
       responses:
         200:
           description: 章节数据
@@ -283,14 +282,14 @@ paths:
             application/json:
               schema:
                 allOf:
-                  - $ref: '#/components/schemas/SubjectBase'
+                  - $ref: "#/components/schemas/SubjectBase"
                   - type: object
                     properties:
                       eps:
                         description: 章节列表
                         type: array
                         items:
-                          $ref: '#/components/schemas/Episode'
+                          $ref: "#/components/schemas/Episode"
   /calendar:
     get:
       tags:
@@ -324,7 +323,7 @@ paths:
                     items:
                       type: array
                       items:
-                        $ref: '#/components/schemas/SubjectSmall'
+                        $ref: "#/components/schemas/SubjectSmall"
   /search/subject/{keywords}:
     get:
       tags:
@@ -343,8 +342,8 @@ paths:
           description: 条目类型，参考 [SubjectType](#model-SubjectType)
           required: false
           schema:
-            $ref: '#/components/schemas/SubjectType'
-        - $ref: '#/components/parameters/responseGroup'
+            $ref: "#/components/schemas/SubjectType"
+        - $ref: "#/components/parameters/responseGroup"
         - name: start
           in: query
           description: 开始条数
@@ -374,38 +373,37 @@ paths:
                     description: 结果列表
                     type: array
                     items:
-                      $ref: '#/components/schemas/SubjectSmall'
+                      $ref: "#/components/schemas/SubjectSmall"
   /ep/{id}/status/{status}:
     get:
       tags:
         - 进度
       summary: 更新收视进度
       parameters:
-        - $ref: '#/components/parameters/ep_id'
-        - $ref: '#/components/parameters/ep_status'
+        - $ref: "#/components/parameters/ep_id"
+        - $ref: "#/components/parameters/ep_status"
       responses:
         200:
           description: 成功
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-          - rw:collection
+        - HTTPBearer: []
     post:
       tags:
         - 进度
       summary: 更新收视进度
       parameters:
-        - $ref: '#/components/parameters/ep_id'
-        - $ref: '#/components/parameters/ep_status'
+        - $ref: "#/components/parameters/ep_id"
+        - $ref: "#/components/parameters/ep_status"
         - name: ep_id
           in: query
           description: 使用 POST 批量更新
@@ -420,23 +418,22 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-          - rw:collection
+        - HTTPBearer: []
   /subject/{subject_id}/update/watched_eps:
     post:
       tags:
         - 进度
       summary: 批量更新收视进度
       parameters:
-        - $ref: '#/components/parameters/subject_id'
+        - $ref: "#/components/parameters/subject_id"
         - name: watched_eps
           in: query
           description: 如看到 123 话则 POST `123`
@@ -458,48 +455,46 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-          - rw:collection
+        - HTTPBearer: []
   /collection/{subject_id}:
     get:
       tags:
         - 收藏
       summary: 获取指定条目收藏信息
       parameters:
-        - $ref: '#/components/parameters/subject_id'
+        - $ref: "#/components/parameters/subject_id"
       responses:
         200:
-          $ref: '#/components/responses/Collection'
+          $ref: "#/components/responses/Collection"
         400:
           description: 用户未收藏该条目
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-          - rw:collection
+        - OptionalHTTPBearer: []
   /collection/{subject_id}/{action}:
     post:
       tags:
         - 收藏
       summary: 管理收藏
       parameters:
-        - $ref: '#/components/parameters/subject_id'
+        - $ref: "#/components/parameters/subject_id"
         - name: action
           in: path
           description: 收藏动作
@@ -517,7 +512,7 @@ paths:
           description: 收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)
           required: true
           schema:
-            $ref: '#/components/schemas/CollectionStatusType'
+            $ref: "#/components/schemas/CollectionStatusType"
         - name: comment
           in: query
           description: 简评
@@ -555,16 +550,15 @@ paths:
             default: 0
       responses:
         200:
-          $ref: '#/components/responses/Collection'
+          $ref: "#/components/responses/Collection"
         401:
           description: 未授权
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/StatusCode'
+                $ref: "#/components/schemas/StatusCode"
       security:
-        - bangumi_auth:
-          - rw:collection
+        - HTTPBearer: []
 components:
   schemas:
     CollectionStatusId:
@@ -607,11 +601,11 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/CollectionStatusId'
+          $ref: "#/components/schemas/CollectionStatusId"
         type:
-          $ref: '#/components/schemas/CollectionStatusType'
+          $ref: "#/components/schemas/CollectionStatusType"
         name:
-          $ref: '#/components/schemas/CollectionStatusName'
+          $ref: "#/components/schemas/CollectionStatusName"
     EpStatusId:
       description: 章节状态 ID
       type: integer
@@ -644,11 +638,11 @@ components:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/EpStatusId'
+          $ref: "#/components/schemas/EpStatusId"
         type:
-          $ref: '#/components/schemas/EpStatusType'
+          $ref: "#/components/schemas/EpStatusType"
         name:
-          $ref: '#/components/schemas/EpStatusName'
+          $ref: "#/components/schemas/EpStatusName"
     ResponseGroup:
       description: 返回数据大小
       type: string
@@ -689,7 +683,7 @@ components:
     Mono:
       description: 人物
       allOf:
-        - $ref: '#/components/schemas/MonoBase'
+        - $ref: "#/components/schemas/MonoBase"
         - type: object
           properties:
             name_cn:
@@ -754,24 +748,24 @@ components:
     Person:
       description: 现实人物
       allOf:
-        - $ref: '#/components/schemas/Mono'
+        - $ref: "#/components/schemas/Mono"
         - type: object
           properties:
             info:
-              $ref: '#/components/schemas/MonoInfo'
+              $ref: "#/components/schemas/MonoInfo"
     Character:
       description: 虚拟角色
       allOf:
-        - $ref: '#/components/schemas/Mono'
+        - $ref: "#/components/schemas/Mono"
         - type: object
           properties:
             info:
-              $ref: '#/components/schemas/MonoInfo'
+              $ref: "#/components/schemas/MonoInfo"
             actors:
               description: 声优列表
               type: array
               items:
-                $ref: '#/components/schemas/MonoBase'
+                $ref: "#/components/schemas/MonoBase"
     EpisodeType:
       description: 章节类型
         <br> 0 = 本篇
@@ -804,7 +798,7 @@ components:
           type: string
           example: http://bgm.tv/ep/1027
         type:
-          $ref: '#/components/schemas/EpisodeType'
+          $ref: "#/components/schemas/EpisodeType"
         sort:
           description: 集数
           type: integer
@@ -824,7 +818,7 @@ components:
         airdate:
           description: 放送日期
           type: string
-          example: '2002-04-03'
+          example: "2002-04-03"
         comment:
           description: 回复数量
           type: integer
@@ -869,7 +863,7 @@ components:
           description: 回复数
           type: integer
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
     Blog:
       description: 日志
       type: object
@@ -901,7 +895,7 @@ components:
           type: string
           example: 2013-1-2 16:41
         user:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
     SubjectType:
       description: 条目类型
         <br> 1 = book
@@ -968,14 +962,14 @@ components:
           type: string
           example: http://bgm.tv/subject/12
         type:
-          $ref: '#/components/schemas/SubjectType'
+          $ref: "#/components/schemas/SubjectType"
         name:
           description: 条目名称
           type: string
           example: ちょびっツ
     SubjectBase:
       allOf:
-        - $ref: '#/components/schemas/Subject'
+        - $ref: "#/components/schemas/Subject"
         - type: object
           properties:
             name_cn:
@@ -989,7 +983,7 @@ components:
             air_date:
               description: 放送开始日期
               type: string
-              example: '2002-04-02'
+              example: "2002-04-02"
             air_weekday:
               description: 放送星期
               type: integer
@@ -1015,7 +1009,7 @@ components:
                   example: http://lain.bgm.tv/pic/cover/g/c2/0a/12_24O6L.jpg
     SubjectSmall:
       allOf:
-        - $ref: '#/components/schemas/SubjectBase'
+        - $ref: "#/components/schemas/SubjectBase"
         - type: object
           properties:
             eps:
@@ -1077,10 +1071,10 @@ components:
               type: integer
               example: 573
             collection:
-              $ref: '#/components/schemas/SubjectCollection'
+              $ref: "#/components/schemas/SubjectCollection"
     SubjectMedium:
       allOf:
-        - $ref: '#/components/schemas/SubjectSmall'
+        - $ref: "#/components/schemas/SubjectSmall"
         - type: object
           properties:
             crt:
@@ -1088,7 +1082,7 @@ components:
               type: array
               items:
                 allOf:
-                  - $ref: '#/components/schemas/Character'
+                  - $ref: "#/components/schemas/Character"
                   - type: object
                     properties:
                       role_name:
@@ -1100,7 +1094,7 @@ components:
               type: array
               items:
                 allOf:
-                  - $ref: '#/components/schemas/Person'
+                  - $ref: "#/components/schemas/Person"
                   - type: object
                     properties:
                       role_name:
@@ -1114,24 +1108,24 @@ components:
                           type: string
     SubjectLarge:
       allOf:
-        - $ref: '#/components/schemas/SubjectMedium'
+        - $ref: "#/components/schemas/SubjectMedium"
         - type: object
           properties:
             eps:
               description: 章节列表
               type: array
               items:
-                $ref: '#/components/schemas/Episode'
+                $ref: "#/components/schemas/Episode"
             topic:
               description: 讨论版
               type: array
               items:
-                $ref: '#/components/schemas/Topic'
+                $ref: "#/components/schemas/Topic"
             blog:
               description: 评论日志
               type: array
               items:
-                $ref: '#/components/schemas/Blog'
+                $ref: "#/components/schemas/Blog"
     User:
       description: 用户信息
       type: object
@@ -1170,7 +1164,7 @@ components:
           type: string
           example: Awesome!
         usergroup:
-          $ref: '#/components/schemas/UserGroup'
+          $ref: "#/components/schemas/UserGroup"
     UserGroup:
       description: >-
         用户组
@@ -1241,7 +1235,7 @@ components:
             type: object
             properties:
               status:
-                $ref: '#/components/schemas/CollectionStatus'
+                $ref: "#/components/schemas/CollectionStatus"
               rating:
                 description: 评分
                 type: integer
@@ -1266,7 +1260,7 @@ components:
                 description: 上次更新时间
                 type: integer
               user:
-                $ref: '#/components/schemas/User'
+                $ref: "#/components/schemas/User"
   parameters:
     username:
       name: username
@@ -1297,7 +1291,7 @@ components:
       description: 收视类型，参考 [EpStatusType](#model-EpStatusType)
       required: true
       schema:
-        $ref: '#/components/schemas/EpStatusType'
+        $ref: "#/components/schemas/EpStatusType"
     responseGroup:
       name: responseGroup
       in: query
@@ -1305,7 +1299,7 @@ components:
         <br> 默认为 small
       required: false
       schema:
-        $ref: '#/components/schemas/ResponseGroup'
+        $ref: "#/components/schemas/ResponseGroup"
     app_id:
       name: app_id
       in: query
@@ -1315,15 +1309,15 @@ components:
       schema:
         type: string
   securitySchemes:
-    bangumi_auth:
-      type: oauth2
-      description: https://github.com/bangumi/api/blob/master/docs-raw/How-to-Auth.md
-      flows:
-        authorizationCode:
-          authorizationUrl: https://bgm.tv/oauth/authorize
-          tokenUrl: https://bgm.tv/oauth/access_token
-          refreshUrl: https://bgm.tv/oauth/access_token
-          scopes:
-            # TODO 未定义
-            r:user: 读取你的账户信息（尚未实现，scope 名非真实）
-            rw:collection: 读写你的收藏信息（尚未实现，scope 名非真实）
+    OptionalHTTPBearer:
+      type: "http"
+      description: |
+        Some api like getting a subject doesn't require any authorization. 
+        But only authorized user can see NSFW recoed, non-authorized user get 404 response.
+        You can create a access token here [https://bgm.tv/dev/app](https://bgm.tv/dev/app)
+      scheme: "bearer"
+
+    HTTPBearer:
+      type: "http"
+      description: "require a authorization"
+      scheme: "bearer"
