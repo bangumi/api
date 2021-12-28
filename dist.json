@@ -3,7 +3,7 @@
   "info": {
     "title": "new bangumi api server",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token",
-    "version": "v0.3.5"
+    "version": "v0.3.6"
   },
   "servers": [
     {
@@ -494,6 +494,62 @@
         }
       }
     },
+    "/v0/characters/{character_id}/persons": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "get character related persons",
+        "operationId": "get_character_persons_v0_characters__character_id__persons_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Character Id",
+              "type": "integer"
+            },
+            "name": "character_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Character Persons V0 Characters  Character Id  Persons Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CharacterPerson"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v0/persons/{person_id}": {
       "get": {
         "tags": [
@@ -575,6 +631,62 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/persons/{person_id}/characters": {
+      "get": {
+        "tags": [
+          "人物"
+        ],
+        "summary": "get person related characters",
+        "operationId": "get_person_characters_v0_persons__person_id__characters_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Person Id",
+              "type": "integer"
+            },
+            "name": "person_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Get Person Characters V0 Persons  Person Id  Characters Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersonCharacter"
                   }
                 }
               }
@@ -1606,7 +1718,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
@@ -1638,6 +1750,57 @@
           },
           "stat": {
             "$ref": "#/components/schemas/Stat"
+          }
+        }
+      },
+      "CharacterPerson": {
+        "title": "CharacterPerson",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "subject_id",
+          "subject_name",
+          "subject_name_cn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "角色，机体，组织..."
+          },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "integer"
+          },
+          "subject_name": {
+            "title": "Subject Name",
+            "type": "string"
+          },
+          "subject_name_cn": {
+            "title": "Subject Name Cn",
+            "type": "string"
           }
         }
       },
@@ -2032,6 +2195,57 @@
         "type": "string",
         "description": "An enumeration."
       },
+      "PersonCharacter": {
+        "title": "PersonCharacter",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "subject_id",
+          "subject_name",
+          "subject_name_cn"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "角色，机体，组织..."
+          },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "integer"
+          },
+          "subject_name": {
+            "title": "Subject Name",
+            "type": "string"
+          },
+          "subject_name_cn": {
+            "title": "Subject Name Cn",
+            "type": "string"
+          }
+        }
+      },
       "PersonDetail": {
         "title": "PersonDetail",
         "required": [
@@ -2097,7 +2311,7 @@
             "items": {
               "type": "object"
             },
-            "description": "server parsed infobox, a map from key to string or tuple\nnull if server infobox is not valid"
+            "description": "server parsed infobox, a map from key to string or tuple\\nnull if server infobox is not valid"
           },
           "gender": {
             "title": "Gender",
