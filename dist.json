@@ -1009,9 +1009,7 @@
         },
         "security": [
           {
-            "OptionalHTTPBearer": [
-              "r:user"
-            ]
+            "OptionalHTTPBearer": []
           }
         ]
       }
