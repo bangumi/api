@@ -3,7 +3,7 @@
   "info": {
     "title": "new bangumi api server",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token",
-    "version": "v0.3.6"
+    "version": "v0.3.7"
   },
   "servers": [
     {
