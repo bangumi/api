@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "new bangumi api server",
-    "version": "v0.3.4"
+    "version": "v0.3.5"
   },
   "servers": [
     {
@@ -397,7 +397,6 @@
             "required": true,
             "schema": {
               "title": "Character Id",
-              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "character_id",
@@ -450,7 +449,6 @@
             "required": true,
             "schema": {
               "title": "Character Id",
-              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "character_id",
@@ -508,7 +506,6 @@
             "required": true,
             "schema": {
               "title": "Person Id",
-              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "person_id",
@@ -561,7 +558,6 @@
             "required": true,
             "schema": {
               "title": "Person Id",
-              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "person_id",
