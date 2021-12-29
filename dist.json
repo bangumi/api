@@ -3,7 +3,7 @@
   "info": {
     "title": "new bangumi api server",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token",
-    "version": "v0.3.7"
+    "version": "v0.3.8"
   },
   "servers": [
     {
@@ -1690,10 +1690,10 @@
           "type": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/PersonType"
+                "$ref": "#/components/schemas/CharacterType"
               }
             ],
-            "description": "角色，机体，组织..."
+            "description": "角色，机体，舰船，组织..."
           },
           "images": {
             "title": "Images",
@@ -1776,10 +1776,10 @@
           "type": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/PersonType"
+                "$ref": "#/components/schemas/CharacterType"
               }
             ],
-            "description": "角色，机体，组织..."
+            "description": "角色，机体，舰船，组织..."
           },
           "images": {
             "title": "Images",
@@ -1803,6 +1803,17 @@
             "type": "string"
           }
         }
+      },
+      "CharacterType": {
+        "title": "CharacterType",
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "type": "integer",
+        "description": "An enumeration."
       },
       "Collection": {
         "title": "Collection",
@@ -2218,10 +2229,10 @@
           "type": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/PersonType"
+                "$ref": "#/components/schemas/CharacterType"
               }
             ],
-            "description": "角色，机体，组织..."
+            "description": "角色，机体，舰船，组织..."
           },
           "images": {
             "title": "Images",
@@ -2441,10 +2452,10 @@
           "type": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/PersonType"
+                "$ref": "#/components/schemas/CharacterType"
               }
             ],
-            "description": "角色，机体，组织..."
+            "description": "角色，机体，舰船，组织..."
           },
           "images": {
             "title": "Images",
