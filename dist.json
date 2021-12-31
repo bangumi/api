@@ -3,7 +3,7 @@
   "info": {
     "title": "new bangumi api server",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token",
-    "version": "v0.3.8"
+    "version": "v0.3.9"
   },
   "servers": [
     {
@@ -329,7 +329,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/episodes/{episode_id}": {
@@ -382,7 +387,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/characters/{character_id}": {
@@ -2163,32 +2173,30 @@
       },
       "Paged_Episode_": {
         "title": "Paged[Episode]",
-        "required": [
-          "total",
-          "limit",
-          "offset",
-          "data"
-        ],
         "type": "object",
         "properties": {
           "total": {
             "title": "Total",
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
           "limit": {
             "title": "Limit",
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
           "offset": {
             "title": "Offset",
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
           "data": {
             "title": "Data",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Episode"
-            }
+            },
+            "default": []
           }
         }
       },
