@@ -1,0 +1,34 @@
+name: build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: node-hashFiles('yarn.lock') }}
+
+      - run: yarn
+        if: steps.cache-primes.outputs.cache-hit != 'true'
+
+      - run: yarn build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          publish_dir: ./public
+          force_orphan: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}
