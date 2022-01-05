@@ -338,7 +338,7 @@ paths:
         - airdate: 播出日期/发售日期。
         - rating: 用于搜索指定评分的条目。
         - rank: 用于搜索指定排名的条目。
-        - nsfw: 使用 `only` 在NSFW条目内搜索， 使用 `exclude` 排除NSFW条目。在提供了 Access Token 的情况下默认包含NSFW条目。无token不会返回NSFW条目。
+        - nsfw: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。
         - game_platform: 游戏的发行平台，多值之间为`或`关系。
 
         计划支持:
