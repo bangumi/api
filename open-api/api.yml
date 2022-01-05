@@ -323,6 +323,71 @@ paths:
                       type: array
                       items:
                         $ref: "#/components/schemas/SubjectSmall"
+  "/v0/search/subjects":
+    get:
+      tags:
+        - 搜索
+      summary: 条目搜索
+      description: |
+        ## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动
+        搜索条件直接在包含在 `q` 中，类似 [github 搜索](https://github.com/search/advanced?q=repo%3Abangumi%2Fapi+stars%3A%3E100&type=Repositories)
+
+        支持的筛选条件包括:
+        - type: 条目类型，参照 `SubjectType` enum。
+        - tag: 标签，可以多次出现。多值之间为`且`关系。
+        - airdate: 播出日期/发售日期。
+        - rating: 用于搜索指定评分的条目。
+        - rank: 用于搜索指定排名的条目。
+        - nsfw: 使用 `only` 在NSFW条目内搜索， 使用 `exclude` 排除NSFW条目。在提供了 Access Token 的情况下默认包含NSFW条目。无token不会返回NSFW条目。
+        - game_platform: 游戏的发行平台，多值之间为`或`关系。
+
+        计划支持:
+        - 标记人数
+        - 两人/多人合作作品
+        - 评分人数
+
+      parameters:
+        - name: q
+          in: query
+          description: |
+            example:
+
+            - `叛逆的鲁鲁修 tag:中二 airdate:>2003-05-09 nsfw:exclude`
+
+            - `nsfw:only airdate:>2002-05-09 airdate:<2021-01-09`
+
+            - `type:2 tag:校园 tag:爱情`
+
+          required: true
+          schema:
+            type: string
+
+        - name: order
+          in: query
+          description: 可以使用筛选条件配合 `order=rank` 的方式来筛选排行榜结果。
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+      responses:
+        200:
+          description: 返回搜索结果
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchResult"
+
   /search/subject/{keywords}:
     get:
       tags:
@@ -1225,6 +1290,57 @@ components:
         error:
           description: 状态信息
           type: string
+    SearchResult:
+      description: 用户信息
+      type: object
+      properties:
+        total:
+          description: 搜索结果数量
+          type: integer
+          example: 100
+        limit:
+          description: 当前分页参数
+          type: integer
+          example: 100
+        offset:
+          description: 当前分页参数
+          type: integer
+          example: 100
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                description: 条目ID
+                type: integer
+                example: 8
+              type:
+                $ref: "#/components/schemas/SubjectType"
+              url:
+                description: 条目页面
+                type: string
+                example: https://bgm.tv/subject/8
+              images:
+                description: 条目图片
+                type: object
+                properties:
+                  large:
+                    type: string
+                    example: https://lain.bgm.tv/pic/cover/l/c9/f0/8_wK0z3.jpg
+                  medium:
+                    type: string
+                    example: https://lain.bgm.tv/pic/cover/m/c9/f0/8_wK0z3.jpg
+                  small:
+                    type: string
+                    example: https://lain.bgm.tv/pic/cover/s/c9/f0/8_wK0z3.jpg
+                  common:
+                    type: string
+                    example: https://lain.bgm.tv/pic/cover/c/c9/f0/8_wK0z3.jpg
+                  grid:
+                    type: string
+                    example: https://lain.bgm.tv/pic/cover/g/c9/f0/8_wK0z3.jpg
+
   responses:
     Collection:
       description: 条目收藏信息
