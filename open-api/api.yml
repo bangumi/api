@@ -247,6 +247,7 @@ paths:
         - OptionalHTTPBearer: []
   /subject/{subject_id}:
     get:
+      deprecated: true
       tags:
         - 条目
       summary: 条目信息
@@ -269,6 +270,7 @@ paths:
                   - $ref: "#/components/schemas/SubjectLarge"
   /subject/{subject_id}/ep:
     get:
+      deprecated: true
       tags:
         - 条目
       summary: 章节数据
