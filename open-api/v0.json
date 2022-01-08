@@ -715,6 +715,244 @@
         }
       }
     },
+    "/v0/revisions/persons": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Person Revisions",
+        "operationId": "get_person_revisions_v0_revisions_persons_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Person Id",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "person_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_Revision_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/persons/{revision_id}": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Person Revision",
+        "operationId": "get_person_revision_v0_revisions_persons__revision_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Revision Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "revision_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedRevision"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/characters": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Character Revisions",
+        "operationId": "get_character_revisions_v0_revisions_characters_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Character Id",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "character_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_Revision_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/characters/{revision_id}": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Character Revision",
+        "operationId": "get_character_revision_v0_revisions_characters__revision_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Revision Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "revision_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedRevision"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v0/me": {
       "get": {
         "tags": [
@@ -967,6 +1205,62 @@
           "dropped": {
             "title": "Dropped",
             "type": "integer"
+          }
+        }
+      },
+      "Creator": {
+        "title": "Creator",
+        "required": [
+          "username",
+          "nickname"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "title": "Username",
+            "type": "string"
+          },
+          "nickname": {
+            "title": "Nickname",
+            "type": "string"
+          }
+        },
+        "description": "意义同<a href=\"#model-Me\">Me</a>"
+      },
+      "DetailedRevision": {
+        "title": "DetailedRevision",
+        "required": [
+          "id",
+          "type",
+          "creator",
+          "summary",
+          "created_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "type": {
+            "title": "Type",
+            "type": "integer"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/Creator"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "data": {
+            "title": "Data",
+            "description": "编辑修改内容"
           }
         }
       },
@@ -1265,7 +1559,8 @@
           },
           "username": {
             "title": "Username",
-            "type": "string"
+            "type": "string",
+            "description": "唯一用户名，初始与uid相同，可修改"
           },
           "nickname": {
             "title": "Nickname",
@@ -1307,6 +1602,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Episode"
+            },
+            "default": []
+          }
+        }
+      },
+      "Paged_Revision_": {
+        "title": "Paged[Revision]",
+        "type": "object",
+        "properties": {
+          "total": {
+            "title": "Total",
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer",
+            "default": 0
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer",
+            "default": 0
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Revision"
             },
             "default": []
           }
@@ -1637,6 +1961,39 @@
           "relation": {
             "title": "Relation",
             "type": "string"
+          }
+        }
+      },
+      "Revision": {
+        "title": "Revision",
+        "required": [
+          "id",
+          "type",
+          "creator",
+          "summary",
+          "created_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "type": {
+            "title": "Type",
+            "type": "integer"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/Creator"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
