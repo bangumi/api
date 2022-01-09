@@ -1306,7 +1306,7 @@
           5
         ],
         "type": "integer",
-        "description": "An enumeration."
+        "description": "- `1`: 想看\n- `2`: 看过\n- `3`: 在看\n- `4`: 搁置\n- `5`: 抛弃"
       },
       "Creator": {
         "title": "Creator",
@@ -2252,7 +2252,7 @@
           6
         ],
         "type": "integer",
-        "description": "An enumeration."
+        "description": "条目类型\n- `1` 为 书籍\n- `2` 为 动画\n- `3` 为 音乐\n- `4` 为 游戏\n- `6` 为 三次元\n\n没有 `5`"
       },
       "Tag": {
         "title": "Tag",
