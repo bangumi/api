@@ -398,6 +398,7 @@
             "required": true,
             "schema": {
               "title": "Character Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "character_id",
@@ -450,6 +451,7 @@
             "required": true,
             "schema": {
               "title": "Character Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "character_id",
@@ -506,6 +508,7 @@
             "required": true,
             "schema": {
               "title": "Character Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "character_id",
@@ -563,6 +566,7 @@
             "required": true,
             "schema": {
               "title": "Person Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "person_id",
@@ -615,6 +619,7 @@
             "required": true,
             "schema": {
               "title": "Person Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "person_id",
@@ -671,6 +676,7 @@
             "required": true,
             "schema": {
               "title": "Person Id",
+              "exclusiveMinimum": 0,
               "type": "integer"
             },
             "name": "person_id",
@@ -713,6 +719,125 @@
             }
           }
         }
+      }
+    },
+    "/v0/me": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "Get User",
+        "description": "返回当前 Access Token 对应的用户信息",
+        "operationId": "get_user_v0_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Me"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v0/user/{username}/collections": {
+      "get": {
+        "tags": [
+          "用户",
+          "社区"
+        ],
+        "summary": "获取用户收藏",
+        "description": "获取对应用户的收藏，查看私有收藏需要access token。\n设置了 username 的用户无法通过数字ID查询",
+        "operationId": "get_subject_v0_user__username__collections_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Username",
+              "type": "string"
+            },
+            "name": "username",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_UserCollection_"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "用户不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/revisions/persons": {
@@ -952,43 +1077,6 @@
           }
         }
       }
-    },
-    "/v0/me": {
-      "get": {
-        "tags": [
-          "用户"
-        ],
-        "summary": "Get Subject",
-        "description": "返回当前 Access Token 对应的用户信息",
-        "operationId": "get_subject_v0_me_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Me"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "unauthorized",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDetail"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "HTTPBearer": []
-          }
-        ]
-      }
     }
   },
   "components": {
@@ -1207,6 +1295,18 @@
             "type": "integer"
           }
         }
+      },
+      "CollectionType": {
+        "title": "CollectionType",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "type": "integer",
+        "description": "An enumeration."
       },
       "Creator": {
         "title": "Creator",
@@ -1631,6 +1731,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Revision"
+            },
+            "default": []
+          }
+        }
+      },
+      "Paged_UserCollection_": {
+        "title": "Paged[UserCollection]",
+        "type": "object",
+        "properties": {
+          "total": {
+            "title": "Total",
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer",
+            "default": 0
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer",
+            "default": 0
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserCollection"
             },
             "default": []
           }
@@ -2113,6 +2242,18 @@
           }
         }
       },
+      "SubjectType": {
+        "title": "SubjectType",
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          6
+        ],
+        "type": "integer",
+        "description": "An enumeration."
+      },
       "Tag": {
         "title": "Tag",
         "required": [
@@ -2128,6 +2269,65 @@
           "count": {
             "title": "Count",
             "type": "integer"
+          }
+        }
+      },
+      "UserCollection": {
+        "title": "UserCollection",
+        "required": [
+          "subject_id",
+          "subject_type",
+          "rate",
+          "type",
+          "tags",
+          "ep_status",
+          "vol_status",
+          "updated_at",
+          "private"
+        ],
+        "type": "object",
+        "properties": {
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "integer"
+          },
+          "subject_type": {
+            "$ref": "#/components/schemas/SubjectType"
+          },
+          "rate": {
+            "title": "Rate",
+            "type": "integer"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CollectionType"
+          },
+          "comment": {
+            "title": "Comment",
+            "type": "string"
+          },
+          "tags": {
+            "title": "Tags",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "ep_status": {
+            "title": "Ep Status",
+            "type": "integer"
+          },
+          "vol_status": {
+            "title": "Vol Status",
+            "type": "integer"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "private": {
+            "title": "Private",
+            "type": "boolean"
           }
         }
       },
