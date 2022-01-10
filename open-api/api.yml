@@ -2,6 +2,10 @@ openapi: 3.0.0
 info:
   title: Bangumi API
   description: "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token"
+  version: "2022-01-11"
+  contact:
+    name: Bangumi API
+    url: https://github.com/bangumi/api/
 servers:
   - url: https://api.bgm.tv
 paths:
@@ -249,52 +253,6 @@ paths:
                 $ref: "#/components/schemas/StatusCode"
       security:
         - OptionalHTTPBearer: []
-  /subject/{subject_id}:
-    get:
-      deprecated: true
-      tags:
-        - 条目
-      summary: 条目信息
-      parameters:
-        - $ref: "#/components/parameters/subject_id"
-        - $ref: "#/components/parameters/responseGroup"
-      responses:
-        200:
-          description: 根据 responseGroup 参数，返回以下三个模型
-            <br> [SubjectSmall](#model-SubjectSmall)
-            <br> [SubjectMedium](#model-SubjectMedium)
-            <br> [SubjectLarge](#model-SubjectLarge)
-          content:
-            application/json:
-              schema:
-                type: object
-                oneOf:
-                  - $ref: "#/components/schemas/SubjectSmall"
-                  - $ref: "#/components/schemas/SubjectMedium"
-                  - $ref: "#/components/schemas/SubjectLarge"
-  /subject/{subject_id}/ep:
-    get:
-      deprecated: true
-      tags:
-        - 条目
-      summary: 章节数据
-      parameters:
-        - $ref: "#/components/parameters/subject_id"
-      responses:
-        200:
-          description: 章节数据
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/SubjectBase"
-                  - type: object
-                    properties:
-                      eps:
-                        description: 章节列表
-                        type: array
-                        items:
-                          $ref: "#/components/schemas/Episode"
   /calendar:
     get:
       tags:
@@ -498,6 +456,7 @@ paths:
       tags:
         - 收藏
       summary: 管理收藏
+      description: "管理收藏"
       parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: action
@@ -634,273 +593,13 @@ components:
         - 想看
         - 抛弃
         - 撤销
-    EpStatus:
-      description: 章节状态
-        <br> 2 = watched = 看过
-        <br> 1 = queue = 想看
-        <br> 3 = drop = 抛弃
-        <br> ? = remove = 撤销
-      type: object
-      properties:
-        id:
-          $ref: "#/components/schemas/EpStatusId"
-        type:
-          $ref: "#/components/schemas/EpStatusType"
-        name:
-          $ref: "#/components/schemas/EpStatusName"
     ResponseGroup:
       description: 返回数据大小
       type: string
       enum:
         - small
         - medium
-        - large
       default: small
-    MonoBase:
-      description: 人物（基础模型）
-      type: object
-      properties:
-        id:
-          description: 人物 ID
-          type: integer
-        url:
-          description: 人物地址
-          type: string
-        name:
-          description: 姓名
-          type: string
-        images:
-          description: 肖像
-          type: object
-          properties:
-            large:
-              type: string
-              example: http://lain.bgm.tv/pic/crt/l/ce/65/32_crt_XMJOj.jpg
-            medium:
-              type: string
-              example: http://lain.bgm.tv/pic/crt/m/ce/65/32_crt_XMJOj.jpg
-            small:
-              type: string
-              example: http://lain.bgm.tv/pic/crt/s/ce/65/32_crt_XMJOj.jpg
-            grid:
-              type: string
-              example: http://lain.bgm.tv/pic/crt/g/ce/65/32_crt_XMJOj.jpg
-    Mono:
-      description: 人物
-      allOf:
-        - $ref: "#/components/schemas/MonoBase"
-        - type: object
-          properties:
-            name_cn:
-              description: 简体中文名
-              type: string
-            comment:
-              description: 回复数量
-              type: integer
-            collects:
-              description: 收藏人数
-              type: integer
-    MonoInfo:
-      description: 人物信息
-      type: object
-      properties:
-        birth:
-          description: 生日
-          type: string
-          example: 4月13日
-        height:
-          description: 身高
-          type: string
-          example: 152cm
-        gender:
-          description: 性别
-          type: string
-          example: 女
-        alias:
-          description: 别名（另外添加出来的 key 为 0 开始的数字）
-          type: object
-          properties:
-            jp:
-              description: 日文名
-              type: string
-            kana:
-              description: 纯假名
-              type: string
-            nick:
-              description: 昵称
-              type: string
-            romaji:
-              description: 罗马字
-              type: string
-            zh:
-              description: 第二中文名
-              type: string
-        source:
-          description: 引用来源
-          oneOf:
-            - type: string
-              example: anidb.net
-            - type: array
-              items:
-                type: string
-                example: anidb.net
-        name_cn:
-          description: 简体中文名
-          type: string
-        cv:
-          description: 声优
-          type: string
-    Person:
-      description: 现实人物
-      allOf:
-        - $ref: "#/components/schemas/Mono"
-        - type: object
-          properties:
-            info:
-              $ref: "#/components/schemas/MonoInfo"
-    Character:
-      description: 虚拟角色
-      allOf:
-        - $ref: "#/components/schemas/Mono"
-        - type: object
-          properties:
-            info:
-              $ref: "#/components/schemas/MonoInfo"
-            actors:
-              description: 声优列表
-              type: array
-              items:
-                $ref: "#/components/schemas/MonoBase"
-    EpisodeType:
-      description: 章节类型
-        <br> 0 = 本篇
-        <br> 1 = 特别篇
-        <br> 2 = OP
-        <br> 3 = ED
-        <br> 4 = 预告/宣传/广告
-        <br> 5 = MAD
-        <br> 6 = 其他
-      type: integer
-      enum:
-        - 0
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 6
-      example: 0
-    Episode:
-      description: 章节信息
-      type: object
-      properties:
-        id:
-          description: 章节 ID
-          type: integer
-          example: 1027
-        url:
-          description: 章节地址
-          type: string
-          example: http://bgm.tv/ep/1027
-        type:
-          $ref: "#/components/schemas/EpisodeType"
-        sort:
-          description: 集数
-          type: integer
-          example: 1
-        name:
-          description: 标题
-          type: string
-          example: ちぃ 目覚める
-        name_cn:
-          description: 简体中文标题
-          type: string
-          example: 叽，觉醒了
-        duration:
-          description: 时长
-          type: string
-          example: 24m
-        airdate:
-          description: 放送日期
-          type: string
-          example: "2002-04-03"
-        comment:
-          description: 回复数量
-          type: integer
-          example: 9
-        desc:
-          description: 简介
-          type: string
-        status:
-          description: 放送状态
-            <br> Air = 已放送
-            <br> Today = 正在放送
-            <br> NA = 未放送
-          type: string
-          enum:
-            - Air
-            - Today
-            - NA
-          example: Air
-    Topic:
-      description: 讨论版
-      type: object
-      properties:
-        id:
-          description: ID
-          type: integer
-        url:
-          description: 地址
-          type: string
-        title:
-          description: 标题
-          type: string
-        main_id:
-          description: 所属对象（条目） ID
-          type: integer
-        timestamp:
-          description: 发布时间
-          type: integer
-        lastpost:
-          description: 最后回复时间
-          type: integer
-        replies:
-          description: 回复数
-          type: integer
-        user:
-          $ref: "#/components/schemas/User"
-    Blog:
-      description: 日志
-      type: object
-      properties:
-        id:
-          description: ID
-          type: integer
-        url:
-          description: 地址
-          type: string
-        title:
-          description: 标题
-          type: string
-        summary:
-          description: 概览
-          type: string
-        image:
-          description: 图片
-          type: string
-        replies:
-          description: 回复数
-          type: integer
-        timestamp:
-          description: 发布时间
-          type: integer
-          example: 1357144903
-        dateline:
-          description: 发布时间
-          type: string
-          example: 2013-1-2 16:41
-        user:
-          $ref: "#/components/schemas/User"
     SubjectType:
       description: 条目类型
         <br> 1 = book
@@ -1037,34 +736,34 @@ components:
                   description: 各分值评分人数
                   type: object
                   properties:
-                    1:
+                    "1":
                       type: integer
                       example: 5
-                    2:
+                    "2":
                       type: integer
                       example: 3
-                    3:
+                    "3":
                       type: integer
                       example: 4
-                    4:
+                    "4":
                       type: integer
                       example: 6
-                    5:
+                    "5":
                       type: integer
                       example: 46
-                    6:
+                    "6":
                       type: integer
                       example: 267
-                    7:
+                    "7":
                       type: integer
                       example: 659
-                    8:
+                    "8":
                       type: integer
                       example: 885
-                    9:
+                    "9":
                       type: integer
                       example: 284
-                    10:
+                    "10":
                       type: integer
                       example: 130
                 score:
@@ -1077,60 +776,6 @@ components:
               example: 573
             collection:
               $ref: "#/components/schemas/SubjectCollection"
-    SubjectMedium:
-      allOf:
-        - $ref: "#/components/schemas/SubjectSmall"
-        - type: object
-          properties:
-            crt:
-              description: 角色信息
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/Character"
-                  - type: object
-                    properties:
-                      role_name:
-                        description: 角色类型
-                        type: string
-                        example: 主角
-            staff:
-              description: 制作人员信息
-              type: array
-              items:
-                allOf:
-                  - $ref: "#/components/schemas/Person"
-                  - type: object
-                    properties:
-                      role_name:
-                        description: 人物类型
-                        type: string
-                        example: 主角
-                      jobs:
-                        description: 职位
-                        type: array
-                        items:
-                          type: string
-    SubjectLarge:
-      allOf:
-        - $ref: "#/components/schemas/SubjectMedium"
-        - type: object
-          properties:
-            eps:
-              description: 章节列表
-              type: array
-              items:
-                $ref: "#/components/schemas/Episode"
-            topic:
-              description: 讨论版
-              type: array
-              items:
-                $ref: "#/components/schemas/Topic"
-            blog:
-              description: 评论日志
-              type: array
-              items:
-                $ref: "#/components/schemas/Blog"
     User:
       description: 用户信息
       type: object
