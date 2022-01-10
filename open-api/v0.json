@@ -761,8 +761,7 @@
     "/v0/users/{username}/collections": {
       "get": {
         "tags": [
-          "用户",
-          "社区"
+          "用户"
         ],
         "summary": "获取用户收藏",
         "description": "获取对应用户的收藏，查看私有收藏需要access token。",
@@ -778,6 +777,34 @@
             },
             "name": "username",
             "in": "path"
+          },
+          {
+            "description": "条目类型，默认为全部\n\n具体含义见 [SubjectType](#model-SubjectType)",
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/SubjectType"
+                }
+              ],
+              "description": "条目类型，默认为全部\n\n具体含义见 [SubjectType](#model-SubjectType)"
+            },
+            "name": "subject_type",
+            "in": "query"
+          },
+          {
+            "description": "收藏类型，默认为全部\n\n具体含义见 [CollectionType](#model-CollectionType)",
+            "required": false,
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/CollectionType"
+                }
+              ],
+              "description": "收藏类型，默认为全部\n\n具体含义见 [CollectionType](#model-CollectionType)"
+            },
+            "name": "type",
+            "in": "query"
           },
           {
             "required": false,
