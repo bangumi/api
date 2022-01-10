@@ -758,21 +758,23 @@
         ]
       }
     },
-    "/v0/user/{username}/collections": {
+    "/v0/users/{username}/collections": {
       "get": {
         "tags": [
           "用户",
           "社区"
         ],
         "summary": "获取用户收藏",
-        "description": "获取对应用户的收藏，查看私有收藏需要access token。\n设置了 username 的用户无法通过数字ID查询",
-        "operationId": "get_subject_v0_user__username__collections_get",
+        "description": "获取对应用户的收藏，查看私有收藏需要access token。",
+        "operationId": "get_user_collection_v0_users__username__collections_get",
         "parameters": [
           {
+            "description": "设置了 username 后无法使用UID",
             "required": true,
             "schema": {
               "title": "Username",
-              "type": "string"
+              "type": "string",
+              "description": "设置了 username 后无法使用UID"
             },
             "name": "username",
             "in": "path"
