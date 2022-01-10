@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: Bangumi API
   description: "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token"
-  version: "2022-01-11"
+  version: "dev"
   contact:
     name: Bangumi API
     url: https://github.com/bangumi/api/

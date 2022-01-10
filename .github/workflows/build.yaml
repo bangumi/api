@@ -21,6 +21,7 @@ jobs:
           path: ./node_modules
           key: node-hashFiles('yarn.lock') }}
 
+      - run: node .github/scripts/write-date.js
       - run: yarn
         if: steps.cache-primes.outputs.cache-hit != 'true'
 
