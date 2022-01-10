@@ -21,6 +21,7 @@ paths:
                 $ref: "#/components/schemas/User"
   /user/{username}/collection:
     get:
+      deprecated: true
       tags:
         - 用户
       summary: 用户收藏
@@ -97,6 +98,7 @@ paths:
                               $ref: "#/components/schemas/SubjectCollection"
   /user/{username}/collections/{subject_type}:
     get:
+      deprecated: true
       tags:
         - 用户
       summary: 用户收藏概览
@@ -156,6 +158,7 @@ paths:
                                   $ref: "#/components/schemas/SubjectBase"
   /user/{username}/collections/status:
     get:
+      deprecated: true
       tags:
         - 用户
       summary: 用户收藏统计
@@ -192,6 +195,7 @@ paths:
                             type: integer
   /user/{username}/progress:
     get:
+      deprecated: true
       tags:
         - 用户
       summary: 用户收视进度
