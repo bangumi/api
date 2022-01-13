@@ -6,9 +6,9 @@
         "tags": [
           "条目"
         ],
-        "summary": "Get Subject",
+        "summary": "获取条目",
         "description": "cache with 300s",
-        "operationId": "get_subject_v0_subjects__subject_id__get",
+        "operationId": "get_subject_by_id_v0_subjects__subject_id__get",
         "parameters": [
           {
             "required": true,
@@ -114,7 +114,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/subjects/{subject_id}/characters": {
@@ -171,7 +176,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/subjects/{subject_id}/subjects": {
@@ -228,7 +238,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/episodes": {
@@ -1106,6 +1121,244 @@
           }
         }
       }
+    },
+    "/v0/revisions/subjects": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Subject Revisions",
+        "operationId": "get_subject_revisions_v0_revisions_subjects_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Subject Id",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "subject_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_Revision_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/subjects/{revision_id}": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Subject Revision",
+        "operationId": "get_subject_revision_v0_revisions_subjects__revision_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Revision Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "revision_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedRevision"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/episodes": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Episode Revisions",
+        "operationId": "get_episode_revisions_v0_revisions_episodes_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Episode Id",
+              "type": "integer",
+              "default": 0
+            },
+            "name": "episode_id",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_Revision_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/revisions/episodes/{revision_id}": {
+      "get": {
+        "tags": [
+          "编辑历史"
+        ],
+        "summary": "Get Episode Revision",
+        "operationId": "get_episode_revision_v0_revisions_episodes__revision_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Revision Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "revision_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetailedRevision"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1361,7 +1614,6 @@
         "required": [
           "id",
           "type",
-          "creator",
           "summary",
           "created_at"
         ],
@@ -2127,7 +2379,6 @@
         "required": [
           "id",
           "type",
-          "creator",
           "summary",
           "created_at"
         ],
