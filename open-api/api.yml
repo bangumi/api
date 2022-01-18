@@ -457,7 +457,7 @@ paths:
         - 收藏
       summary: 管理收藏
       description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded。可选参数都得放在body里，必须是content-type对应的形式，不能采用Raw。"
-      parameters:
+      body:
         - $ref: "#/components/parameters/subject_id"
         - name: action
           in: path
