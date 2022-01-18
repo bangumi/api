@@ -456,7 +456,7 @@ paths:
       tags:
         - 收藏
       summary: 管理收藏
-      description: "管理收藏"
+      description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded。可选参数都得放在body里，必须是content-type对应的形式，不能采用Raw。"
       parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: action
@@ -494,6 +494,7 @@ paths:
           in: query
           description: 评分
             <br> 1-10
+            <br> 不填默认重置为未评分
           required: false
           schema:
             type: integer
@@ -505,6 +506,7 @@ paths:
           description: 收藏隐私
             <br> 0 = 公开
             <br> 1 = 私密
+            <br> 不填默认重置为公开
           required: false
           schema:
             type: integer
