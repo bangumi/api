@@ -456,8 +456,40 @@ paths:
       tags:
         - 收藏
       summary: 管理收藏
-      description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded。可选参数都得放在body里，必须是content-type对应的形式，不能采用Raw。"
-      body:
+      description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded，参数都得放在body里。"
+      requestBody:
+            description: "必须是content-type对应的形式，不能采用Raw"
+            required: true
+            content:
+               application/x-www-form-urlencoded:
+                  schema:
+                    type: object
+                    properties:
+                      status:          # <!--- form field name
+                        type: "#/components/schemas/CollectionStatusType"
+                        description: 收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)
+                      comment:
+                        type: string
+                        description: 简评
+                      tags:    # <!--- form field name
+                        type: string
+                        description: 标签
+                                    <br> 以半角空格分割
+                      rating:    # <!--- form field name
+                        type: integer
+                        description: 评分
+                                    <br> 1-10
+                                    <br> 不填默认重置为未评分
+                      privacy:    # <!--- form field name
+                        type: integer
+                        description: 收藏隐私
+                                    <br> 0 = 公开
+                                    <br> 1 = 私密
+                                    <br> 不填默认为0
+                    required:
+                      - status
+      
+      parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: action
           in: path
@@ -471,49 +503,7 @@ paths:
             enum:
               - create
               - update
-        - name: status
-          in: query
-          description: 收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)
-          required: true
-          schema:
-            $ref: "#/components/schemas/CollectionStatusType"
-        - name: comment
-          in: query
-          description: 简评
-          required: false
-          schema:
-            type: string
-        - name: tags
-          in: query
-          description: 标签
-            <br> 以半角空格分割
-          required: false
-          schema:
-            type: string
-        - name: rating
-          in: query
-          description: 评分
-            <br> 1-10
-            <br> 不填默认重置为未评分
-          required: false
-          schema:
-            type: integer
-            minimum: 1
-            maximum: 10
-            example: 7
-        - name: privacy
-          in: query
-          description: 收藏隐私
-            <br> 0 = 公开
-            <br> 1 = 私密
-            <br> 不填默认重置为公开
-          required: false
-          schema:
-            type: integer
-            enum:
-              - 0
-              - 1
-            default: 0
+              
       responses:
         200:
           $ref: "#/components/responses/Collection"
