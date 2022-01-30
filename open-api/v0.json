@@ -893,11 +893,11 @@
         "operationId": "get_person_revisions_v0_revisions_persons_get",
         "parameters": [
           {
-            "required": false,
+            "required": true,
             "schema": {
               "title": "Person Id",
-              "type": "integer",
-              "default": 0
+              "exclusiveMinimum": 0,
+              "type": "integer"
             },
             "name": "person_id",
             "in": "query"
@@ -1012,11 +1012,11 @@
         "operationId": "get_character_revisions_v0_revisions_characters_get",
         "parameters": [
           {
-            "required": false,
+            "required": true,
             "schema": {
               "title": "Character Id",
-              "type": "integer",
-              "default": 0
+              "exclusiveMinimum": 0,
+              "type": "integer"
             },
             "name": "character_id",
             "in": "query"
@@ -1131,11 +1131,11 @@
         "operationId": "get_subject_revisions_v0_revisions_subjects_get",
         "parameters": [
           {
-            "required": false,
+            "required": true,
             "schema": {
               "title": "Subject Id",
-              "type": "integer",
-              "default": 0
+              "exclusiveMinimum": 0,
+              "type": "integer"
             },
             "name": "subject_id",
             "in": "query"
@@ -1250,11 +1250,11 @@
         "operationId": "get_episode_revisions_v0_revisions_episodes_get",
         "parameters": [
           {
-            "required": false,
+            "required": true,
             "schema": {
               "title": "Episode Id",
-              "type": "integer",
-              "default": 0
+              "exclusiveMinimum": 0,
+              "type": "integer"
             },
             "name": "episode_id",
             "in": "query"
