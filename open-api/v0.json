@@ -1359,6 +1359,153 @@
           }
         }
       }
+    },
+    "/v0/indices/{index_id}": {
+      "get": {
+        "tags": [
+          "目录"
+        ],
+        "summary": "Get Index By Id",
+        "operationId": "get_index_by_id_v0_indices__index_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Index Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "index_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Index"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/v0/indices/{index_id}/subjects": {
+      "get": {
+        "tags": [
+          "目录"
+        ],
+        "summary": "Get Index Subjects",
+        "operationId": "get_index_subjects_v0_indices__index_id__subjects_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Index Id",
+              "exclusiveMinimum": 0,
+              "type": "integer"
+            },
+            "name": "index_id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SubjectType"
+            },
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "maximum": 50,
+              "exclusiveMinimum": 0,
+              "type": "integer",
+              "default": 30
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Offset",
+              "minimum": 0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "offset",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Paged_IndexSubject_"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -1864,6 +2011,109 @@
           }
         }
       },
+      "Index": {
+        "title": "Index",
+        "required": [
+          "id",
+          "title",
+          "desc",
+          "stat",
+          "created_at",
+          "creator",
+          "ban"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "desc": {
+            "title": "Desc",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer",
+            "description": "收录条目总数",
+            "default": 0
+          },
+          "stat": {
+            "title": "Stat",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Stat"
+              }
+            ],
+            "description": "目录评论及收藏数"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "$ref": "#/components/schemas/Creator"
+          },
+          "ban": {
+            "title": "Ban",
+            "type": "boolean"
+          }
+        }
+      },
+      "IndexSubject": {
+        "title": "IndexSubject",
+        "required": [
+          "id",
+          "type",
+          "name",
+          "comment",
+          "added_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "type": {
+            "title": "Type",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "images": {
+            "$ref": "#/components/schemas/Images"
+          },
+          "infobox": {
+            "title": "Infobox",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
+          },
+          "date": {
+            "title": "Date",
+            "type": "string"
+          },
+          "comment": {
+            "title": "Comment",
+            "type": "string"
+          },
+          "added_at": {
+            "title": "Added At",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "description": "同名字段意义同<a href=\"#model-Subject\">Subject</a>"
+      },
       "Item": {
         "title": "Item",
         "required": [
@@ -1983,6 +2233,35 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Episode"
+            },
+            "default": []
+          }
+        }
+      },
+      "Paged_IndexSubject_": {
+        "title": "Paged[IndexSubject]",
+        "type": "object",
+        "properties": {
+          "total": {
+            "title": "Total",
+            "type": "integer",
+            "default": 0
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer",
+            "default": 0
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer",
+            "default": 0
+          },
+          "data": {
+            "title": "Data",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/IndexSubject"
             },
             "default": []
           }
