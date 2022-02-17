@@ -26,7 +26,6 @@ jobs:
           TZ: "Asia/Shanghai"
 
       - run: yarn
-        if: steps.cache-primes.outputs.cache-hit != 'true'
 
       - run: yarn build
 
