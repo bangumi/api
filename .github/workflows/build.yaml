@@ -21,11 +21,11 @@ jobs:
           path: ./node_modules
           key: node-hashFiles('yarn.lock') }}
 
+      - run: yarn
+
       - run: node .github/scripts/write-date.js
         env:
           TZ: "Asia/Shanghai"
-
-      - run: yarn
 
       - run: yarn build
 
