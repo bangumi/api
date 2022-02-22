@@ -2325,6 +2325,64 @@
           }
         }
       },
+      "Person": {
+        "title": "Person",
+        "required": [
+          "id",
+          "name",
+          "type",
+          "career",
+          "short_summary",
+          "locked"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonType"
+              }
+            ],
+            "description": "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+          },
+          "career": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PersonCareer"
+            }
+          },
+          "images": {
+            "title": "Images",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PersonImages"
+              }
+            ],
+            "description": "object with some size of images, this object maybe `null`"
+          },
+          "short_summary": {
+            "title": "Short Summary",
+            "type": "string"
+          },
+          "img": {
+            "title": "Img",
+            "type": "string",
+            "description": "use `images` instead"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          }
+        }
+      },
       "PersonCareer": {
         "title": "PersonCareer",
         "enum": [
@@ -2602,6 +2660,15 @@
           "relation": {
             "title": "Relation",
             "type": "string"
+          },
+          "actors": {
+            "title": "Actors",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Person"
+            },
+            "description": "演员列表",
+            "default": []
           }
         }
       },
