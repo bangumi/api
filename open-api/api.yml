@@ -1,7 +1,12 @@
 openapi: 3.0.0
 info:
   title: Bangumi API
-  description: "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA"
+  description: |
+    你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token
+
+    ## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA
+
+    各种请求库的默认 UA 在未来可能会被禁用。
   version: "dev"
   contact:
     name: Bangumi API
@@ -465,30 +470,30 @@ paths:
             schema:
               type: object
               properties:
-                status:          # <!--- form field name
+                status: # <!--- form field name
                   $ref: "#/components/schemas/CollectionStatusType"
                   description: 收藏状态，参考 [CollectionStatusType](#model-CollectionStatusType)
                 comment:
                   type: string
                   description: 简评
-                tags:    # <!--- form field name
+                tags: # <!--- form field name
                   type: string
                   description: 标签
-                              <br> 以半角空格分割
-                rating:    # <!--- form field name
+                    <br> 以半角空格分割
+                rating: # <!--- form field name
                   type: integer
                   description: 评分
-                              <br> 1-10
-                              <br> 不填默认重置为未评分
-                privacy:    # <!--- form field name
+                    <br> 1-10
+                    <br> 不填默认重置为未评分
+                privacy: # <!--- form field name
                   type: integer
                   description: 收藏隐私
-                              <br> 0 = 公开
-                              <br> 1 = 私密
-                              <br> 不填默认为0
+                    <br> 0 = 公开
+                    <br> 1 = 私密
+                    <br> 不填默认为0
               required:
                 - status
-      
+
       parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: action
@@ -503,7 +508,7 @@ paths:
             enum:
               - create
               - update
-              
+
       responses:
         200:
           $ref: "#/components/responses/Collection"
