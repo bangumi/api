@@ -266,7 +266,7 @@
             "in": "query"
           },
           {
-            "description": "`0`,`1`,`2`,`3`代表`本篇`，`sp`，`op`，`ed`",
+            "description": "参照章节的`type`",
             "required": false,
             "schema": {
               "allOf": [
@@ -274,7 +274,7 @@
                   "$ref": "#/components/schemas/EpType"
                 }
               ],
-              "description": "`0`,`1`,`2`,`3`代表`本篇`，`sp`，`op`，`ed`"
+              "description": "参照章节的`type`"
             },
             "name": "type",
             "in": "query"
@@ -1798,10 +1798,13 @@
           0,
           1,
           2,
-          3
+          3,
+          4,
+          5,
+          6
         ],
         "type": "integer",
-        "description": "An enumeration."
+        "description": "本篇 = 0\n特别篇 = 1\nOP = 2\nED = 3\n预告/宣传/广告 = 4\nMAD = 5\n其他 = 6"
       },
       "Episode": {
         "title": "Episode",
