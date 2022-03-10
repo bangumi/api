@@ -7,7 +7,7 @@
             "inputFile": "./open-api/api.yml"
         },
         {
-            "inputFile": "./open-api/v0.json"
+            "inputFile": "./open-api/v0.yaml"
         }
     ],
     "output": "./public/dist.json"
