@@ -1,0 +1,2186 @@
+openapi: 3.0.2
+info:
+  title: ""
+  version: ""
+paths:
+  "/v0/subjects/{subject_id}":
+    get:
+      tags:
+        - 条目
+      summary: 获取条目
+      description: cache with 300s
+      operationId: get_subject_by_id_v0_subjects__subject_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Subject ID
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Subject"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/subjects/{subject_id}/persons":
+    get:
+      tags:
+        - 条目
+      summary: Get Subject Persons
+      operationId: get_subject_persons_v0_subjects__subject_id__persons_get
+      parameters:
+        - required: true
+          schema:
+            title: Subject Id
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Subject Persons V0 Subjects  Subject Id  Persons
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RelatedPerson"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/subjects/{subject_id}/characters":
+    get:
+      tags:
+        - 条目
+      summary: Get Subject Characters
+      operationId: get_subject_characters_v0_subjects__subject_id__characters_get
+      parameters:
+        - required: true
+          schema:
+            title: Subject Id
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Subject Characters V0 Subjects  Subject Id  Characters
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/RelatedCharacter"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/subjects/{subject_id}/subjects":
+    get:
+      tags:
+        - 条目
+      summary: Get Subject Relations
+      operationId: get_subject_relations_v0_subjects__subject_id__subjects_get
+      parameters:
+        - required: true
+          schema:
+            title: Subject Id
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Subject Relations V0 Subjects  Subject Id  Subjects
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/pol__api__v0__models__subject__RelatedSubject"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/episodes":
+    get:
+      tags:
+        - 章节
+      summary: Get Episodes
+      operationId: get_episodes_v0_episodes_get
+      parameters:
+        - required: true
+          schema:
+            title: Subject Id
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: query
+        - description: 参照章节的`type`
+          required: false
+          schema:
+            allOf:
+              - "$ref": "#/components/schemas/EpType"
+            description: 参照章节的`type`
+          name: type
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 200
+            minimum: 0
+            type: integer
+            default: 100
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_Episode_"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/episodes/{episode_id}":
+    get:
+      tags:
+        - 章节
+      summary: Get Episode
+      operationId: get_episode_v0_episodes__episode_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Episode Id
+            type: integer
+          name: episode_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/EpisodeDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/characters/{character_id}":
+    get:
+      tags:
+        - 角色
+      summary: Get Character Detail
+      description: cache with 60s
+      operationId: get_character_detail_v0_characters__character_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Character Id
+            minimum: 0
+            type: integer
+          name: character_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/CharacterDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/characters/{character_id}/subjects":
+    get:
+      tags:
+        - 角色
+      summary: get character related subjects
+      operationId: get_person_subjects_v0_characters__character_id__subjects_get
+      parameters:
+        - required: true
+          schema:
+            title: Character Id
+            minimum: 0
+            type: integer
+          name: character_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Person Subjects V0 Characters  Character Id  Subjects
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/characters/{character_id}/persons":
+    get:
+      tags:
+        - 角色
+      summary: get character related persons
+      operationId: get_character_persons_v0_characters__character_id__persons_get
+      parameters:
+        - required: true
+          schema:
+            title: Character Id
+            minimum: 0
+            type: integer
+          name: character_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Character Persons V0 Characters  Character Id  Persons
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/CharacterPerson"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/persons/{person_id}":
+    get:
+      tags:
+        - 人物
+      summary: Get Person
+      description: cache with 60s
+      operationId: get_person_v0_persons__person_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Person Id
+            minimum: 0
+            type: integer
+          name: person_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/PersonDetail"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/persons/{person_id}/subjects":
+    get:
+      tags:
+        - 人物
+      summary: get person related subjects
+      operationId: get_person_subjects_v0_persons__person_id__subjects_get
+      parameters:
+        - required: true
+          schema:
+            title: Person Id
+            minimum: 0
+            type: integer
+          name: person_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Person Subjects V0 Persons  Person Id  Subjects
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/persons/{person_id}/characters":
+    get:
+      tags:
+        - 人物
+      summary: get person related characters
+      operationId: get_person_characters_v0_persons__person_id__characters_get
+      parameters:
+        - required: true
+          schema:
+            title: Person Id
+            minimum: 0
+            type: integer
+          name: person_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title:
+                  Response Get Person Characters V0 Persons  Person Id  Characters
+                  Get
+                type: array
+                items:
+                  "$ref": "#/components/schemas/PersonCharacter"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/me":
+    get:
+      tags:
+        - 用户
+      summary: Get User
+      description: 返回当前 Access Token 对应的用户信息
+      operationId: get_user_v0_me_get
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Me"
+        "403":
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - HTTPBearer: []
+  "/v0/users/{username}/collections":
+    get:
+      tags:
+        - 用户
+      summary: 获取用户收藏
+      description: 获取对应用户的收藏，查看私有收藏需要access token。
+      operationId: get_user_collection_v0_users__username__collections_get
+      parameters:
+        - description: 设置了 username 后无法使用UID
+          required: true
+          schema:
+            title: Username
+            type: string
+            description: 设置了 username 后无法使用UID
+          name: username
+          in: path
+        - description: |-
+            条目类型，默认为全部
+
+            具体含义见 [SubjectType](#model-SubjectType)
+          required: false
+          schema:
+            allOf:
+              - "$ref": "#/components/schemas/SubjectType"
+            description: |-
+              条目类型，默认为全部
+
+              具体含义见 [SubjectType](#model-SubjectType)
+          name: subject_type
+          in: query
+        - description: |-
+            收藏类型，默认为全部
+
+            具体含义见 [CollectionType](#model-CollectionType)
+          required: false
+          schema:
+            allOf:
+              - "$ref": "#/components/schemas/CollectionType"
+            description: |-
+              收藏类型，默认为全部
+
+              具体含义见 [CollectionType](#model-CollectionType)
+          name: type
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_UserCollection_"
+        "404":
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/revisions/persons":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Person Revisions
+      operationId: get_person_revisions_v0_revisions_persons_get
+      parameters:
+        - required: true
+          schema:
+            title: Person Id
+            minimum: 0
+            type: integer
+          name: person_id
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_Revision_"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/persons/{revision_id}":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Person Revision
+      operationId: get_person_revision_v0_revisions_persons__revision_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Revision Id
+            minimum: 0
+            type: integer
+          name: revision_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetailedRevision"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/characters":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Character Revisions
+      operationId: get_character_revisions_v0_revisions_characters_get
+      parameters:
+        - required: true
+          schema:
+            title: Character Id
+            minimum: 0
+            type: integer
+          name: character_id
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_Revision_"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/characters/{revision_id}":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Character Revision
+      operationId: get_character_revision_v0_revisions_characters__revision_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Revision Id
+            minimum: 0
+            type: integer
+          name: revision_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetailedRevision"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/subjects":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Subject Revisions
+      operationId: get_subject_revisions_v0_revisions_subjects_get
+      parameters:
+        - required: true
+          schema:
+            title: Subject Id
+            minimum: 0
+            type: integer
+          name: subject_id
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_Revision_"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/subjects/{revision_id}":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Subject Revision
+      operationId: get_subject_revision_v0_revisions_subjects__revision_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Revision Id
+            minimum: 0
+            type: integer
+          name: revision_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetailedRevision"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/episodes":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Episode Revisions
+      operationId: get_episode_revisions_v0_revisions_episodes_get
+      parameters:
+        - required: true
+          schema:
+            title: Episode Id
+            minimum: 0
+            type: integer
+          name: episode_id
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_Revision_"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/revisions/episodes/{revision_id}":
+    get:
+      tags:
+        - 编辑历史
+      summary: Get Episode Revision
+      operationId: get_episode_revision_v0_revisions_episodes__revision_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Revision Id
+            minimum: 0
+            type: integer
+          name: revision_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/DetailedRevision"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+  "/v0/indices/{index_id}":
+    get:
+      tags:
+        - 目录
+      summary: Get Index By Id
+      operationId: get_index_by_id_v0_indices__index_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Index Id
+            minimum: 0
+            type: integer
+          name: index_id
+          in: path
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Index"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+  "/v0/indices/{index_id}/subjects":
+    get:
+      tags:
+        - 目录
+      summary: Get Index Subjects
+      operationId: get_index_subjects_v0_indices__index_id__subjects_get
+      parameters:
+        - required: true
+          schema:
+            title: Index Id
+            minimum: 0
+            type: integer
+          name: index_id
+          in: path
+        - required: false
+          schema:
+            "$ref": "#/components/schemas/SubjectType"
+          name: type
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 50
+            minimum: 0
+            type: integer
+            default: 30
+          name: limit
+          in: query
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          name: offset
+          in: query
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Paged_IndexSubject_"
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+        "400":
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+      security:
+        - OptionalHTTPBearer: []
+components:
+  schemas:
+    Avatar:
+      title: Avatar
+      required:
+        - large
+        - medium
+        - small
+      type: object
+      properties:
+        large:
+          title: Large
+          type: string
+        medium:
+          title: Medium
+          type: string
+        small:
+          title: Small
+          type: string
+    BloodType:
+      title: BloodType
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      description: An enumeration.
+    CharacterDetail:
+      title: CharacterDetail
+      required:
+        - id
+        - name
+        - type
+        - summary
+        - locked
+        - stat
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/CharacterType"
+          description: 角色，机体，舰船，组织...
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        summary:
+          title: Summary
+          type: string
+        locked:
+          title: Locked
+          type: boolean
+        infobox:
+          title: Infobox
+          type: array
+          items:
+            type: object
+          description: |-
+            server parsed infobox, a map from key to string or tuple
+            null if server infobox is not valid
+        gender:
+          title: Gender
+          type: string
+          description: parsed from wiki, maybe null
+        blood_type:
+          allOf:
+            - "$ref": "#/components/schemas/BloodType"
+          description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`
+        birth_year:
+          title: Birth Year
+          type: integer
+          description: parsed from wiki, maybe `null`
+        birth_mon:
+          title: Birth Mon
+          type: integer
+          description: parsed from wiki, maybe `null`
+        birth_day:
+          title: Birth Day
+          type: integer
+          description: parsed from wiki, maybe `null`
+        stat:
+          "$ref": "#/components/schemas/Stat"
+    CharacterPerson:
+      title: CharacterPerson
+      required:
+        - id
+        - name
+        - type
+        - subject_id
+        - subject_name
+        - subject_name_cn
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/CharacterType"
+          description: 角色，机体，舰船，组织...
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        subject_id:
+          title: Subject Id
+          type: integer
+        subject_name:
+          title: Subject Name
+          type: string
+        subject_name_cn:
+          title: Subject Name Cn
+          type: string
+    CharacterType:
+      title: CharacterType
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+      type: integer
+      description: An enumeration.
+    Collection:
+      title: Collection
+      required:
+        - wish
+        - collect
+        - doing
+        - on_hold
+        - dropped
+      type: object
+      properties:
+        wish:
+          title: Wish
+          type: integer
+        collect:
+          title: Collect
+          type: integer
+        doing:
+          title: Doing
+          type: integer
+        on_hold:
+          title: On Hold
+          type: integer
+        dropped:
+          title: Dropped
+          type: integer
+    CollectionType:
+      title: CollectionType
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+      type: integer
+      description: |-
+        - `1`: 想看
+        - `2`: 看过
+        - `3`: 在看
+        - `4`: 搁置
+        - `5`: 抛弃
+    Creator:
+      title: Creator
+      required:
+        - username
+        - nickname
+      type: object
+      properties:
+        username:
+          title: Username
+          type: string
+        nickname:
+          title: Nickname
+          type: string
+      description: 意义同<a href="#model-Me">Me</a>
+    DetailedRevision:
+      title: DetailedRevision
+      required:
+        - id
+        - type
+        - summary
+        - created_at
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+        creator:
+          "$ref": "#/components/schemas/Creator"
+        summary:
+          title: Summary
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        data:
+          title: Data
+          description: 编辑修改内容
+    EpType:
+      title: EpType
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+      type: integer
+      description: |-
+        本篇 = 0
+        特别篇 = 1
+        OP = 2
+        ED = 3
+        预告/宣传/广告 = 4
+        MAD = 5
+        其他 = 6
+    Episode:
+      title: Episode
+      required:
+        - id
+        - type
+        - name
+        - name_cn
+        - sort
+        - airdate
+        - comment
+        - duration
+        - desc
+        - disc
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+          description: "`0` 本篇，`1` SP，`2` OP，`3` ED"
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        sort:
+          title: Sort
+          type: number
+          description: 同类条目的排序和集数
+        ep:
+          title: Ep
+          type: number
+          description: 条目内的集数, 从`1`开始。非本篇剧集的此字段无意义
+        airdate:
+          title: Airdate
+          type: string
+        comment:
+          title: Comment
+          type: integer
+        duration:
+          title: Duration
+          type: string
+        desc:
+          title: Desc
+          type: string
+          description: 简介
+        disc:
+          title: Disc
+          type: integer
+          description: 音乐曲目的碟片数
+    EpisodeDetail:
+      title: EpisodeDetail
+      required:
+        - id
+        - type
+        - name
+        - name_cn
+        - sort
+        - airdate
+        - comment
+        - duration
+        - desc
+        - disc
+        - subject_id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+          description: "`0` 本篇，`1` SP，`2` OP，`3` ED"
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        sort:
+          title: Sort
+          type: number
+          description: 同类条目的排序和集数
+        ep:
+          title: Ep
+          type: number
+          description: 条目内的集数, 从`1`开始。非本篇剧集的此字段无意义
+        airdate:
+          title: Airdate
+          type: string
+        comment:
+          title: Comment
+          type: integer
+        duration:
+          title: Duration
+          type: string
+        desc:
+          title: Desc
+          type: string
+          description: 简介
+        disc:
+          title: Disc
+          type: integer
+          description: 音乐曲目的碟片数
+        subject_id:
+          title: Subject Id
+          type: integer
+    ErrorDetail:
+      title: ErrorDetail
+      required:
+        - title
+        - description
+        - detail
+      type: object
+      properties:
+        title:
+          title: Title
+          type: string
+        description:
+          title: Description
+          type: string
+        detail:
+          title: Detail
+          type: object
+          properties:
+            "error":
+              type: string
+              description: error message
+            "path":
+              type: string
+              description: request path
+    Images:
+      title: Images
+      required:
+        - large
+        - common
+        - medium
+        - small
+        - grid
+      type: object
+      properties:
+        large:
+          title: Large
+          type: string
+        common:
+          title: Common
+          type: string
+        medium:
+          title: Medium
+          type: string
+        small:
+          title: Small
+          type: string
+        grid:
+          title: Grid
+          type: string
+    Index:
+      title: Index
+      required:
+        - id
+        - title
+        - desc
+        - stat
+        - created_at
+        - creator
+        - ban
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        title:
+          title: Title
+          type: string
+        desc:
+          title: Desc
+          type: string
+        total:
+          title: Total
+          type: integer
+          description: 收录条目总数
+          default: 0
+        stat:
+          title: Stat
+          allOf:
+            - "$ref": "#/components/schemas/Stat"
+          description: 目录评论及收藏数
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+        creator:
+          "$ref": "#/components/schemas/Creator"
+        ban:
+          title: Ban
+          type: boolean
+    IndexSubject:
+      title: IndexSubject
+      required:
+        - id
+        - type
+        - name
+        - comment
+        - added_at
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+        name:
+          title: Name
+          type: string
+        images:
+          "$ref": "#/components/schemas/Images"
+        infobox:
+          title: Infobox
+          type: array
+          items:
+            "$ref": "#/components/schemas/Item"
+        date:
+          title: Date
+          type: string
+        comment:
+          title: Comment
+          type: string
+        added_at:
+          title: Added At
+          type: string
+          format: date-time
+      description: 同名字段意义同<a href="#model-Subject">Subject</a>
+    Item:
+      title: Item
+      required:
+        - key
+        - value
+      type: object
+      properties:
+        key:
+          title: Key
+          type: string
+        value:
+          title: Value
+          anyOf:
+            - type: string
+            - type: array
+              items:
+                anyOf:
+                  - "$ref": "#/components/schemas/KV"
+                  - "$ref": "#/components/schemas/V"
+    KV:
+      title: KV
+      required:
+        - k
+        - v
+      type: object
+      properties:
+        k:
+          title: K
+          type: string
+        v:
+          title: V
+          type: string
+    Me:
+      title: Me
+      required:
+        - id
+        - url
+        - username
+        - nickname
+        - user_group
+        - avatar
+        - sign
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        url:
+          title: Url
+          type: string
+        username:
+          title: Username
+          type: string
+          description: 唯一用户名，初始与uid相同，可修改
+        nickname:
+          title: Nickname
+          type: string
+        user_group:
+          "$ref": "#/components/schemas/UserGroup"
+        avatar:
+          "$ref": "#/components/schemas/Avatar"
+        sign:
+          title: Sign
+          type: string
+    Paged_Episode_:
+      title: Paged[Episode]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            "$ref": "#/components/schemas/Episode"
+          default: []
+    Paged_IndexSubject_:
+      title: Paged[IndexSubject]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            "$ref": "#/components/schemas/IndexSubject"
+          default: []
+    Paged_Revision_:
+      title: Paged[Revision]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            "$ref": "#/components/schemas/Revision"
+          default: []
+    Paged_UserCollection_:
+      title: Paged[UserCollection]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserCollection"
+          default: []
+    Person:
+      title: Person
+      required:
+        - id
+        - name
+        - type
+        - career
+        - short_summary
+        - locked
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/PersonType"
+          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+        career:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PersonCareer"
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        short_summary:
+          title: Short Summary
+          type: string
+        locked:
+          title: Locked
+          type: boolean
+    PersonCareer:
+      title: PersonCareer
+      enum:
+        - producer
+        - mangaka
+        - artist
+        - seiyu
+        - writer
+        - illustrator
+        - actor
+      type: string
+      description: An enumeration.
+    PersonCharacter:
+      title: PersonCharacter
+      required:
+        - id
+        - name
+        - type
+        - subject_id
+        - subject_name
+        - subject_name_cn
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/CharacterType"
+          description: 角色，机体，舰船，组织...
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        subject_id:
+          title: Subject Id
+          type: integer
+        subject_name:
+          title: Subject Name
+          type: string
+        subject_name_cn:
+          title: Subject Name Cn
+          type: string
+    PersonDetail:
+      title: PersonDetail
+      required:
+        - id
+        - name
+        - type
+        - career
+        - summary
+        - locked
+        - last_modified
+        - stat
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/PersonType"
+          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+        career:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PersonCareer"
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        summary:
+          title: Summary
+          type: string
+        locked:
+          title: Locked
+          type: boolean
+        last_modified:
+          title: Last Modified
+          type: string
+          description:
+            currently it's latest user comment time, it will be replaced
+            by wiki modified date in the future
+          format: date-time
+        infobox:
+          title: Infobox
+          type: array
+          items:
+            type: object
+          description: |-
+            server parsed infobox, a map from key to string or tuple
+            null if server infobox is not valid
+        gender:
+          title: Gender
+          type: string
+          description: parsed from wiki, maybe null
+        blood_type:
+          allOf:
+            - "$ref": "#/components/schemas/BloodType"
+          description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`
+        birth_year:
+          title: Birth Year
+          type: integer
+          description: parsed from wiki, maybe `null`
+        birth_mon:
+          title: Birth Mon
+          type: integer
+          description: parsed from wiki, maybe `null`
+        birth_day:
+          title: Birth Day
+          type: integer
+          description: parsed from wiki, maybe `null`
+        stat:
+          "$ref": "#/components/schemas/Stat"
+    PersonImages:
+      title: PersonImages
+      required:
+        - large
+        - medium
+        - small
+        - grid
+      type: object
+      properties:
+        large:
+          title: Large
+          type: string
+        medium:
+          title: Medium
+          type: string
+        small:
+          title: Small
+          type: string
+        grid:
+          title: Grid
+          type: string
+    PersonType:
+      title: PersonType
+      enum:
+        - 1
+        - 2
+        - 3
+      type: integer
+      description: An enumeration.
+    Rating:
+      title: Rating
+      required:
+        - rank
+        - total
+        - count
+        - score
+      type: object
+      properties:
+        rank:
+          title: Rank
+          type: integer
+        total:
+          title: Total
+          type: integer
+        count:
+          title: Count
+          type: object
+          properties:
+            "1":
+              type: integer
+            "2":
+              type: integer
+            "3":
+              type: integer
+            "4":
+              type: integer
+            "5":
+              type: integer
+            "6":
+              type: integer
+            "7":
+              type: integer
+            "8":
+              type: integer
+            "9":
+              type: integer
+            "10":
+              type: integer
+        score:
+          title: Score
+          type: number
+    RelatedCharacter:
+      title: RelatedCharacter
+      required:
+        - id
+        - name
+        - type
+        - relation
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/CharacterType"
+          description: 角色，机体，舰船，组织...
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        relation:
+          title: Relation
+          type: string
+        actors:
+          title: Actors
+          type: array
+          items:
+            "$ref": "#/components/schemas/Person"
+          description: 演员列表
+          default: []
+    RelatedPerson:
+      title: RelatedPerson
+      required:
+        - id
+        - name
+        - type
+        - career
+        - relation
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          allOf:
+            - "$ref": "#/components/schemas/PersonType"
+          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+        career:
+          type: array
+          items:
+            "$ref": "#/components/schemas/PersonCareer"
+        images:
+          title: Images
+          allOf:
+            - "$ref": "#/components/schemas/PersonImages"
+          description: object with some size of images, this object maybe `null`
+        relation:
+          title: Relation
+          type: string
+    Revision:
+      title: Revision
+      required:
+        - id
+        - type
+        - summary
+        - created_at
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+        creator:
+          "$ref": "#/components/schemas/Creator"
+        summary:
+          title: Summary
+          type: string
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+    Stat:
+      title: Stat
+      required:
+        - comments
+        - collects
+      type: object
+      properties:
+        comments:
+          title: Comments
+          type: integer
+        collects:
+          title: Collects
+          type: integer
+    Subject:
+      title: Subject
+      required:
+        - id
+        - type
+        - name
+        - name_cn
+        - summary
+        - nsfw
+        - locked
+        - platform
+        - volumes
+        - eps
+        - total_episodes
+        - rating
+        - collection
+        - tags
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        summary:
+          title: Summary
+          type: string
+        nsfw:
+          title: Nsfw
+          type: boolean
+        locked:
+          title: Locked
+          type: boolean
+        date:
+          title: Date
+          type: string
+          description: air date in `YYYY-MM-DD` format
+        platform:
+          title: Platform
+          type: string
+          description: TV, Web, 欧美剧, PS4...
+        images:
+          "$ref": "#/components/schemas/Images"
+        infobox:
+          title: Infobox
+          type: array
+          items:
+            "$ref": "#/components/schemas/Item"
+        volumes:
+          title: Volumes
+          type: integer
+          description: 书籍条目的册数，由旧服务端从wiki中解析
+        eps:
+          title: Eps
+          type: integer
+          description: 由旧服务端从wiki中解析，对于书籍条目为`话数`
+        total_episodes:
+          title: Total Episodes
+          type: integer
+          description: 数据库中的章节数量
+        rating:
+          "$ref": "#/components/schemas/Rating"
+        collection:
+          "$ref": "#/components/schemas/Collection"
+        tags:
+          title: Tags
+          type: array
+          items:
+            "$ref": "#/components/schemas/Tag"
+    SubjectType:
+      title: SubjectType
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 6
+      type: integer
+      description: |-
+        条目类型
+        - `1` 为 书籍
+        - `2` 为 动画
+        - `3` 为 音乐
+        - `4` 为 游戏
+        - `6` 为 三次元
+
+        没有 `5`
+    Tag:
+      title: Tag
+      required:
+        - name
+        - count
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        count:
+          title: Count
+          type: integer
+    UserCollection:
+      title: UserCollection
+      required:
+        - subject_id
+        - subject_type
+        - rate
+        - type
+        - tags
+        - ep_status
+        - vol_status
+        - updated_at
+        - private
+      type: object
+      properties:
+        subject_id:
+          title: Subject Id
+          type: integer
+        subject_type:
+          "$ref": "#/components/schemas/SubjectType"
+        rate:
+          title: Rate
+          type: integer
+        type:
+          "$ref": "#/components/schemas/CollectionType"
+        comment:
+          title: Comment
+          type: string
+        tags:
+          title: Tags
+          type: array
+          items:
+            type: string
+        ep_status:
+          title: Ep Status
+          type: integer
+        vol_status:
+          title: Vol Status
+          type: integer
+        updated_at:
+          title: Updated At
+          type: string
+          format: date-time
+        private:
+          title: Private
+          type: boolean
+    UserGroup:
+      title: UserGroup
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 8
+        - 9
+        - 10
+        - 11
+      type: integer
+      description: An enumeration.
+    V:
+      title: V
+      required:
+        - v
+      type: object
+      properties:
+        v:
+          title: V
+          type: string
+    ValidationError:
+      title: ValidationError
+      required:
+        - loc
+        - msg
+        - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            type: string
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    pol__api__v0__models__RelatedSubject:
+      title: RelatedSubject
+      required:
+        - id
+        - staff
+        - name_cn
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        staff:
+          title: Staff
+          type: string
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        image:
+          title: Image
+          type: string
+    pol__api__v0__models__subject__RelatedSubject:
+      title: RelatedSubject
+      required:
+        - id
+        - type
+        - name
+        - name_cn
+        - relation
+      type: object
+      properties:
+        id:
+          title: Id
+          type: integer
+        type:
+          title: Type
+          type: integer
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        images:
+          "$ref": "#/components/schemas/Images"
+        relation:
+          title: Relation
+          type: string
+  securitySchemes:
+    OptionalHTTPBearer:
+      type: http
+      description: 不强制要求用户认证，但是可能看不到某些敏感内容内容（如 NSFW 或者仅用户自己可见的收藏）
+      scheme: Bearer
+    HTTPBearer:
+      type: http
+      description: 需要使用 access token 进行认证
+      scheme: Bearer
