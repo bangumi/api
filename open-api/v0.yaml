@@ -498,7 +498,7 @@ paths:
   "/v0/users/{username}/collections":
     get:
       tags:
-        - 用户
+        - 收藏
       summary: 获取用户收藏
       description: 获取对应用户的收藏，查看私有收藏需要access token。
       operationId: get_user_collection_v0_users__username__collections_get
