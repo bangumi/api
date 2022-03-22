@@ -641,7 +641,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/DetailedRevision"
+                "$ref": "#/components/schemas/PersonRevision"
         "404":
           description: Not Found
           content:
@@ -1192,6 +1192,71 @@ components:
         data:
           title: Data
           description: 编辑修改内容
+    PersonRevision:
+      title: PersonRevision
+      allOf:
+        - "$ref": "#/components/schemas/Revision"
+        - type: object
+          properties:
+            data:
+              title: Data
+              additionalProperties:
+                "$ref": "#/components/schemas/PersonRevisionDataItem"
+    PersonRevisionDataItem:
+      title: PersonRevisionDataItem
+      required:
+        - prsn_infobox
+        - prsn_summary
+        - profession
+        - extra
+        - prsn_name
+      type: object
+      properties:
+        prsn_infobox:
+          title: Person Infobox
+          type: string
+        prsn_summary:
+          title: Person Summary
+          type: string
+        profession:
+          "$ref": "#/components/schemas/PersonRevisionProfession"
+        extra:
+          "$ref": "#/components/schemas/PersonRevisionExtra"
+        prsn_name:
+          title: Person Name
+          type: string
+    PersonRevisionProfession:
+      title: PersonRevisionProfession
+      type: object
+      properties:
+        producer:
+          title: Producer
+          type: string
+        mangaka:
+          title: Mangaka
+          type: string
+        artist:
+          title: Artist
+          type: string
+        seiyu:
+          title: Seiyu
+          type: string
+        writer:
+          title: Writer
+          type: string
+        illustrator:
+          title: Illustrator
+          type: string
+        actor:
+          title: Actor
+          type: string
+    PersonRevisionExtra:
+      title: PersonRevisionExtra
+      type: object
+      properties:
+        img:
+          title: Image
+          type: string
     EpType:
       title: EpType
       enum:
@@ -1380,6 +1445,7 @@ components:
         - created_at
         - creator
         - ban
+        - nsfw
       type: object
       properties:
         id:
@@ -1409,6 +1475,9 @@ components:
           "$ref": "#/components/schemas/Creator"
         ban:
           title: Ban
+          type: boolean
+        nsfw:
+          title: 目录是否包括 nsfw 条目
           type: boolean
     IndexSubject:
       title: IndexSubject
