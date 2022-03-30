@@ -179,6 +179,7 @@ paths:
             allOf:
               - "$ref": "#/components/schemas/EpType"
             description: 参照章节的`type`
+            type: integer
           name: type
           in: query
         - required: false
@@ -523,6 +524,7 @@ paths:
               条目类型，默认为全部
 
               具体含义见 [SubjectType](#model-SubjectType)
+            type: integer
           name: subject_type
           in: query
         - description: |-
@@ -537,6 +539,7 @@ paths:
               收藏类型，默认为全部
 
               具体含义见 [CollectionType](#model-CollectionType)
+            type: integer
           name: type
           in: query
         - required: false
@@ -1023,11 +1026,13 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/CharacterType"
           description: 角色，机体，舰船，组织...
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`
@@ -1050,6 +1055,7 @@ components:
           type: string
           description: parsed from wiki, maybe null
         blood_type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/BloodType"
           description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`
@@ -1085,11 +1091,13 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/CharacterType"
           description: 角色，机体，舰船，组织...
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`
@@ -1191,6 +1199,7 @@ components:
           format: date-time
         data:
           title: Data
+          type: string
           description: 编辑修改内容
     PersonRevision:
       title: PersonRevision
@@ -1200,6 +1209,7 @@ components:
           properties:
             data:
               title: Data
+              type: object
               additionalProperties:
                 "$ref": "#/components/schemas/PersonRevisionDataItem"
     PersonRevisionDataItem:
@@ -1464,6 +1474,7 @@ components:
           default: 0
         stat:
           title: Stat
+          type: object
           allOf:
             - "$ref": "#/components/schemas/Stat"
           description: 目录评论及收藏数
@@ -1528,6 +1539,7 @@ components:
           type: string
         value:
           title: Value
+          type: object
           anyOf:
             - type: string
             - type: array
@@ -1686,6 +1698,7 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/PersonType"
           description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
@@ -1695,6 +1708,7 @@ components:
             "$ref": "#/components/schemas/PersonCareer"
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`
@@ -1734,6 +1748,7 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/CharacterType"
           description: 角色，机体，舰船，组织...
@@ -1771,6 +1786,7 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/PersonType"
           description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
@@ -1780,6 +1796,7 @@ components:
             "$ref": "#/components/schemas/PersonCareer"
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`
@@ -1809,6 +1826,7 @@ components:
           type: string
           description: parsed from wiki, maybe null
         blood_type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/BloodType"
           description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, CD, O`
@@ -1913,11 +1931,13 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/CharacterType"
           description: 角色，机体，舰船，组织...
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`
@@ -1948,6 +1968,7 @@ components:
           title: Name
           type: string
         type:
+          type: integer
           allOf:
             - "$ref": "#/components/schemas/PersonType"
           description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
@@ -1957,6 +1978,7 @@ components:
             "$ref": "#/components/schemas/PersonCareer"
         images:
           title: Images
+          type: object
           allOf:
             - "$ref": "#/components/schemas/PersonImages"
           description: object with some size of images, this object maybe `null`

@@ -19,6 +19,7 @@ paths:
       tags:
         - 用户
       summary: 用户信息
+      operationId: get_user_by_username
       parameters:
         - $ref: "#/components/parameters/username"
       responses:
@@ -34,6 +35,7 @@ paths:
       tags:
         - 用户
       summary: 用户收藏
+      operationId: get_user_collection_by_username
       parameters:
         - $ref: "#/components/parameters/username"
         - name: cat
@@ -111,6 +113,7 @@ paths:
       tags:
         - 用户
       summary: 用户收藏概览
+      operationId: get_user_collection_by_subject_type_by_username
       parameters:
         - $ref: "#/components/parameters/username"
         - name: subject_type
@@ -171,6 +174,7 @@ paths:
       tags:
         - 用户
       summary: 用户收藏统计
+      operationId: get_user_collections_status_by_username
       parameters:
         - $ref: "#/components/parameters/username"
         - $ref: "#/components/parameters/app_id"
@@ -208,6 +212,7 @@ paths:
       tags:
         - 用户
       summary: 用户收视进度
+      operationId: get_user_progress_by_username
       parameters:
         - $ref: "#/components/parameters/username"
         - name: subject_id
@@ -263,6 +268,7 @@ paths:
       tags:
         - 条目
       summary: 每日放送
+      operationId: get_calendar
       responses:
         200:
           description: 每日放送
@@ -297,6 +303,7 @@ paths:
       tags:
         - 搜索
       summary: 条目搜索
+      operationId: get_search_subject_by_keywords
       parameters:
         - name: keywords
           in: path
@@ -347,6 +354,7 @@ paths:
       tags:
         - 进度
       summary: 更新收视进度
+      operationId: get_episode_status_by_episode_id_by_status
       parameters:
         - $ref: "#/components/parameters/ep_id"
         - $ref: "#/components/parameters/ep_status"
@@ -369,6 +377,7 @@ paths:
       tags:
         - 进度
       summary: 更新收视进度
+      operationId: post_update_episode_status_by_episode_id_by_status
       parameters:
         - $ref: "#/components/parameters/ep_id"
         - $ref: "#/components/parameters/ep_status"
@@ -400,6 +409,7 @@ paths:
       tags:
         - 进度
       summary: 批量更新收视进度
+      operationId: post_batch_update_episode_status_by_subject_id
       parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: watched_eps
@@ -437,6 +447,7 @@ paths:
       tags:
         - 收藏
       summary: 获取指定条目收藏信息
+      operationId: get_collection_by_subject_id
       parameters:
         - $ref: "#/components/parameters/subject_id"
       responses:
@@ -461,6 +472,7 @@ paths:
       tags:
         - 收藏
       summary: 管理收藏
+      operationId: post_update_collection_by_subject_id_with_action
       description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded，参数都得放在body里。"
       requestBody:
         description: "必须是content-type对应的形式，不能采用Raw"
@@ -552,6 +564,15 @@ components:
         - 搁置
         - 抛弃
       example: 抛弃
+      x-ms-enum:
+        name: CollectionStatusName
+        modelAsString: false
+        values:
+          - Todo
+          - Done
+          - Doing
+          - Suspended
+          - Abandoned
     CollectionStatus:
       description: 收藏状态
         <br> 1 = wish = 想做
@@ -590,6 +611,14 @@ components:
         - 想看
         - 抛弃
         - 撤销
+      x-ms-enum:
+        name: EpStatusName
+        modelAsString: false
+        values:
+          - Watched
+          - Wish
+          - Abandoned
+          - Undo
     ResponseGroup:
       description: 返回数据大小
       type: string
@@ -597,6 +626,12 @@ components:
         - small
         - medium
       default: small
+      x-ms-enum:
+        name: ResponseGroup
+        modelAsString: false
+        values:
+          - Small
+          - Medium
     SubjectType:
       description: 条目类型
         <br> 1 = book
@@ -627,6 +662,15 @@ components:
         - game
         - real
       example: anime
+      x-ms-enum:
+        name: SubjectTypeName
+        modelAsString: false
+        values:
+          - Book
+          - Anime
+          - Music
+          - Game
+          - Real
     SubjectCollection:
       description: 收藏人数
       type: object
