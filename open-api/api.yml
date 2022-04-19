@@ -573,6 +573,12 @@ components:
           - Doing
           - Suspended
           - Abandoned
+      x-enum-varnames:
+        - Todo
+        - Done
+        - Doing
+        - Suspended
+        - Abandoned
     CollectionStatus:
       description: 收藏状态
         <br> 1 = wish = 想做
@@ -619,6 +625,11 @@ components:
           - Wish
           - Abandoned
           - Undo
+      x-enum-varnames:
+        - Watched
+        - Wish
+        - Abandoned
+        - Undo
     ResponseGroup:
       description: 返回数据大小
       type: string
@@ -632,6 +643,9 @@ components:
         values:
           - Small
           - Medium
+      x-enum-varnames:
+        - Small
+        - Medium
     SubjectType:
       description: 条目类型
         <br> 1 = book
@@ -671,6 +685,12 @@ components:
           - Music
           - Game
           - Real
+      x-enum-varnames:
+        - Book
+        - Anime
+        - Music
+        - Game
+        - Real
     SubjectCollection:
       description: 收藏人数
       type: object

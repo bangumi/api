@@ -1,1 +1,1 @@
-{"info":{"title":"Bangumi API","description":"你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n各种请求库的默认 UA 在未来可能会被禁用。\n","version":"2022-03-27","contact":{"name":"Bangumi API","url":"https://github.com/bangumi/api/"}}}
+{"info":{"title":"Bangumi API","description":"你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n各种请求库的默认 UA 在未来可能会被禁用。\n","version":"2022-04-19","contact":{"name":"Bangumi API","url":"https://github.com/bangumi/api/"}}}
