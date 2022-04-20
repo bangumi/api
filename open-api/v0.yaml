@@ -9,7 +9,7 @@ paths:
         - 条目
       summary: 获取条目
       description: cache with 300s
-      operationId: get_subject_by_id_v0_subjects__subject_id__get
+      operationId: getSubjectById
       parameters:
         - required: true
           schema:
@@ -44,7 +44,7 @@ paths:
       tags:
         - 条目
       summary: Get Subject Persons
-      operationId: get_subject_persons_v0_subjects__subject_id__persons_get
+      operationId: getRelatedPersonsBySubjectId
       parameters:
         - required: true
           schema:
@@ -84,7 +84,7 @@ paths:
       tags:
         - 条目
       summary: Get Subject Characters
-      operationId: get_subject_characters_v0_subjects__subject_id__characters_get
+      operationId: getRelatedCharactersBySubjectId
       parameters:
         - required: true
           schema:
@@ -124,7 +124,7 @@ paths:
       tags:
         - 条目
       summary: Get Subject Relations
-      operationId: get_subject_relations_v0_subjects__subject_id__subjects_get
+      operationId: getRelatedSubjectsBySubjectId
       parameters:
         - required: true
           schema:
@@ -164,7 +164,7 @@ paths:
       tags:
         - 章节
       summary: Get Episodes
-      operationId: get_episodes_v0_episodes_get
+      operationId: getEpisodes
       parameters:
         - required: true
           schema:
@@ -225,7 +225,7 @@ paths:
       tags:
         - 章节
       summary: Get Episode
-      operationId: get_episode_v0_episodes__episode_id__get
+      operationId: getEpisodeById
       parameters:
         - required: true
           schema:
@@ -260,7 +260,7 @@ paths:
         - 角色
       summary: Get Character Detail
       description: cache with 60s
-      operationId: get_character_detail_v0_characters__character_id__get
+      operationId: getCharacterById
       parameters:
         - required: true
           schema:
@@ -293,7 +293,7 @@ paths:
       tags:
         - 角色
       summary: get character related subjects
-      operationId: get_person_subjects_v0_characters__character_id__subjects_get
+      operationId: getRelatedSubjectsByCharacterId
       parameters:
         - required: true
           schema:
@@ -331,7 +331,7 @@ paths:
       tags:
         - 角色
       summary: get character related persons
-      operationId: get_character_persons_v0_characters__character_id__persons_get
+      operationId: getRelatedPersonsByCharacterId
       parameters:
         - required: true
           schema:
@@ -370,7 +370,7 @@ paths:
         - 人物
       summary: Get Person
       description: cache with 60s
-      operationId: get_person_v0_persons__person_id__get
+      operationId: getPersonById
       parameters:
         - required: true
           schema:
@@ -403,7 +403,7 @@ paths:
       tags:
         - 人物
       summary: get person related subjects
-      operationId: get_person_subjects_v0_persons__person_id__subjects_get
+      operationId: getRelatedSubjectsByPersonId
       parameters:
         - required: true
           schema:
@@ -441,7 +441,7 @@ paths:
       tags:
         - 人物
       summary: get person related characters
-      operationId: get_person_characters_v0_persons__person_id__characters_get
+      operationId: getRelatedPersonsByPersonId
       parameters:
         - required: true
           schema:
@@ -480,7 +480,7 @@ paths:
         - 用户
       summary: Get User
       description: 返回当前 Access Token 对应的用户信息
-      operationId: get_user_v0_me_get
+      operationId: getUser
       responses:
         "200":
           description: Successful Response
@@ -502,7 +502,7 @@ paths:
         - 收藏
       summary: 获取用户收藏
       description: 获取对应用户的收藏，查看私有收藏需要access token。
-      operationId: get_user_collection_v0_users__username__collections_get
+      operationId: getUserCollectionsByUsername
       parameters:
         - description: 设置了 username 后无法使用UID
           required: true
@@ -585,7 +585,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Person Revisions
-      operationId: get_person_revisions_v0_revisions_persons_get
+      operationId: getPersonRevisions
       parameters:
         - required: true
           schema:
@@ -629,7 +629,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Person Revision
-      operationId: get_person_revision_v0_revisions_persons__revision_id__get
+      operationId: getPersonRevisionByRevisionId
       parameters:
         - required: true
           schema:
@@ -662,7 +662,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Character Revisions
-      operationId: get_character_revisions_v0_revisions_characters_get
+      operationId: getCharacterRevisions
       parameters:
         - required: true
           schema:
@@ -706,7 +706,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Character Revision
-      operationId: get_character_revision_v0_revisions_characters__revision_id__get
+      operationId: getCharacterRevisionByRevisionId
       parameters:
         - required: true
           schema:
@@ -739,7 +739,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Subject Revisions
-      operationId: get_subject_revisions_v0_revisions_subjects_get
+      operationId: getSubjectRevisions
       parameters:
         - required: true
           schema:
@@ -783,7 +783,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Subject Revision
-      operationId: get_subject_revision_v0_revisions_subjects__revision_id__get
+      operationId: getSubjectRevisionByRevisionId
       parameters:
         - required: true
           schema:
@@ -798,7 +798,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/DetailedRevision"
+                "$ref": "#/components/schemas/SubjectRevision"
         "404":
           description: Not Found
           content:
@@ -816,7 +816,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Episode Revisions
-      operationId: get_episode_revisions_v0_revisions_episodes_get
+      operationId: getEpisodeRevisions
       parameters:
         - required: true
           schema:
@@ -860,7 +860,7 @@ paths:
       tags:
         - 编辑历史
       summary: Get Episode Revision
-      operationId: get_episode_revision_v0_revisions_episodes__revision_id__get
+      operationId: getEpisodeRevisionByRevisionId
       parameters:
         - required: true
           schema:
@@ -893,7 +893,7 @@ paths:
       tags:
         - 目录
       summary: Get Index By Id
-      operationId: get_index_by_id_v0_indices__index_id__get
+      operationId: getIndexById
       parameters:
         - required: true
           schema:
@@ -928,7 +928,7 @@ paths:
       tags:
         - 目录
       summary: Get Index Subjects
-      operationId: get_index_subjects_v0_indices__index_id__subjects_get
+      operationId: getIndexSubjectsByIndexId
       parameters:
         - required: true
           schema:
@@ -1266,6 +1266,59 @@ components:
       properties:
         img:
           title: Image
+          type: string
+    SubjectRevision:
+      title: SubjectRevision
+      allOf:
+        - "$ref": "#/components/schemas/Revision"
+        - type: object
+          properties:
+            data:
+              "$ref": "#/components/schemas/SubjectRevisionData"
+    SubjectRevisionData:
+      title: SubjectRevisionData
+      required:
+        - field_eps
+        - field_infobox
+        - field_summary
+        - name
+        - name_cn
+        - platform
+        - subject_id
+        - type
+        - type_id
+        - vote_field
+      type: object
+      properties:
+        field_eps:
+          title: Field EPs
+          type: integer
+        field_infobox:
+          title: Field Infobox
+          type: string
+        field_summary:
+          title: Field Summary
+          type: string
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name CN
+          type: string
+        platform:
+          title: Platform
+          type: integer
+        subject_id:
+          title: Subject ID
+          type: integer
+        type:
+          title: Type
+          type: integer
+        type_id:
+          title: Type ID
+          type: integer
+        vote_field:
+          title: Vote Field
           type: string
     EpType:
       title: EpType
