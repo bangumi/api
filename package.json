@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "build": "openapi-merge-cli --config config.json"
+    "build": "openapi-merge-cli --config config.json",
+    "build:local": "node .github/scripts/write-date.js && npm run build"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
