@@ -16,6 +16,7 @@ servers:
 paths:
   /user/{username}:
     get:
+      deprecated: true
       tags:
         - 用户
       summary: 用户信息
