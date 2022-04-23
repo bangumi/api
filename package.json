@@ -2,8 +2,9 @@
   "scripts": {
     "fillVersion": "node .github/scripts/write-date.js",
     "resetVersion": "node .github/scripts/reset-version-json.js",
+    "resolveRef": "node .github/scripts/remove-dup.js",
     "build": "openapi-merge-cli --config config.json",
-    "build:local": "npm run fillVersion && npm run build && npm run resetVersion"
+    "build:local": "npm run resolveRef && npm run fillVersion && npm run build && npm run resetVersion"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",
