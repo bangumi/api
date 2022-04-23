@@ -499,7 +499,14 @@ paths:
                 "$ref": "#/components/schemas/User"
 
         "400":
-          description: unauthorized
+          description: username 太长
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+
+        "404":
+          description: 对应用户不存在
           content:
             application/json:
               schema:
@@ -1546,7 +1553,6 @@ components:
       required:
         - title
         - description
-        - detail
       type: object
       properties:
         title:
@@ -1707,6 +1713,21 @@ components:
           type: string
 
     User:
+      example:
+        {
+          "avatar":
+            {
+              "large": "https://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456",
+              "medium": "https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456",
+              "small": "https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456",
+            },
+          "sign": "Awesome!",
+          "url": "https://bgm.tv/user/sai",
+          "username": "sai",
+          "nickname": "Sai🖖",
+          "id": 1,
+          "user_group": 1,
+        }
       title: User
       required:
         - id
