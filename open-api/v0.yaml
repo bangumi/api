@@ -445,7 +445,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Person Id
+            title: Person ID
             minimum: 0
             type: integer
           name: person_id
@@ -474,20 +474,51 @@ paths:
             application/json:
               schema:
                 "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/me":
+
+  "/v0/users/{username}":
     get:
       tags:
         - 用户
-      summary: Get User
-      description: 返回当前 Access Token 对应的用户信息
-      operationId: getUser
+      summary: Get User by name
+      description: 获取用户信息，设置了 username 之后无法使用 UID 查询。
+      operationId: getUserByName
+      parameters:
+        - required: true
+          schema:
+            title: username
+            type: string
+            maxLength: 32
+          name: username
+          in: path
       responses:
         "200":
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Me"
+                "$ref": "#/components/schemas/User"
+
+        "400":
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorDetail"
+
+  "/v0/me":
+    get:
+      tags:
+        - 用户
+      summary: Get User
+      description: 返回当前 Access Token 对应的用户信息
+      operationId: getMyself
+      responses:
+        "200":
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/User"
         "403":
           description: unauthorized
           content:
@@ -496,6 +527,7 @@ paths:
                 "$ref": "#/components/schemas/ErrorDetail"
       security:
         - HTTPBearer: []
+
   "/v0/users/{username}/collections":
     get:
       tags:
@@ -1673,8 +1705,9 @@ components:
         v:
           title: V
           type: string
-    Me:
-      title: Me
+
+    User:
+      title: User
       required:
         - id
         - url
@@ -1686,15 +1719,15 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         url:
-          title: Url
+          title: URL
           type: string
         username:
           title: Username
           type: string
-          description: 唯一用户名，初始与uid相同，可修改
+          description: 唯一用户名，初始与 UID 相同，可修改一次
         nickname:
           title: Nickname
           type: string
@@ -1704,6 +1737,7 @@ components:
           "$ref": "#/components/schemas/Avatar"
         sign:
           title: Sign
+          description: 个人签名
           type: string
     Paged_Episode_:
       title: Paged[Episode]
