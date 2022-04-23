@@ -715,7 +715,7 @@ components:
           description: 抛弃
           type: integer
           example: 86
-    Subject:
+    SubjectLegacy:
       type: object
       properties:
         id:
@@ -734,7 +734,7 @@ components:
           example: ちょびっツ
     SubjectBase:
       allOf:
-        - $ref: "#/components/schemas/Subject"
+        - $ref: "#/components/schemas/SubjectLegacy"
         - type: object
           properties:
             name_cn:
@@ -875,31 +875,7 @@ components:
           type: string
           example: Awesome!
         usergroup:
-          $ref: "#/components/schemas/UserGroup"
-    UserGroup:
-      description: >-
-        用户组
-        <br> 1 = 管理员
-        <br> 2 = Bangumi 管理猿
-        <br> 3 = 天窗管理猿
-        <br> 4 = 禁言用户
-        <br> 5 = 禁止访问用户
-        <br> 8 = 人物管理猿
-        <br> 9 = 维基条目管理猿
-        <br> 10 = 用户
-        <br> 11 = 维基人
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 8
-        - 9
-        - 10
-        - 11
-      example: 11
+          $ref: "v0.yaml#/components/schemas/UserGroup"
     StatusCode:
       description: 响应状态（HTTP 状态码都为 200）
       type: object
