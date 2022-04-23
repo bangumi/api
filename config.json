@@ -4,7 +4,7 @@
             "inputFile": "./open-api/version.json"
         },
         {
-            "inputFile": "./open-api/api-gen.json"
+            "inputFile": "./open-api/api-gen.yml"
         },
         {
             "inputFile": "./open-api/v0.yaml"

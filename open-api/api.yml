@@ -141,7 +141,7 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: "#/components/schemas/SubjectType"
+                      $ref: "v0.yaml#/components/schemas/SubjectType"
                     name:
                       $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
@@ -317,7 +317,7 @@ paths:
           description: 条目类型，参考 [SubjectType](#model-SubjectType)
           required: false
           schema:
-            $ref: "#/components/schemas/SubjectType"
+            $ref: "v0.yaml#/components/schemas/SubjectType"
         - $ref: "#/components/parameters/responseGroup"
         - name: start
           in: query
@@ -661,21 +661,6 @@ components:
       x-enum-varnames:
         - Small
         - Medium
-    SubjectType:
-      description: 条目类型
-        <br> 1 = book
-        <br> 2 = anime
-        <br> 3 = music
-        <br> 4 = game
-        <br> 6 = real
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 6
-      example: 2
     SubjectTypeName:
       description: 条目类型名称
         <br> book
@@ -742,7 +727,7 @@ components:
           type: string
           example: http://bgm.tv/subject/12
         type:
-          $ref: "#/components/schemas/SubjectType"
+          $ref: "v0.yaml#/components/schemas/SubjectType"
         name:
           description: 条目名称
           type: string
@@ -890,31 +875,7 @@ components:
           type: string
           example: Awesome!
         usergroup:
-          $ref: "#/components/schemas/UserGroup"
-    UserGroup:
-      description: >-
-        用户组
-        <br> 1 = 管理员
-        <br> 2 = Bangumi 管理猿
-        <br> 3 = 天窗管理猿
-        <br> 4 = 禁言用户
-        <br> 5 = 禁止访问用户
-        <br> 8 = 人物管理猿
-        <br> 9 = 维基条目管理猿
-        <br> 10 = 用户
-        <br> 11 = 维基人
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 8
-        - 9
-        - 10
-        - 11
-      example: 11
+          $ref: "v0.yaml#/components/schemas/UserGroup"
     StatusCode:
       description: 响应状态（HTTP 状态码都为 200）
       type: object

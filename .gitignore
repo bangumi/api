@@ -3,3 +3,4 @@
 node_modules/
 public/dist.json
 open-api/api-gen.json
+open-api/api-gen.yml
