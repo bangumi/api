@@ -303,7 +303,7 @@ paths:
       tags:
         - 搜索
       summary: 条目搜索
-      operationId: getSearchSubjectBykeywords
+      operationId: searchSubjectByKeywords
       parameters:
         - name: keywords
           in: path
