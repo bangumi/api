@@ -141,7 +141,7 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: "#/components/schemas/SubjectType"
+                      $ref: "v0.yaml#/components/schemas/SubjectType"
                     name:
                       $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
@@ -189,7 +189,7 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: "#/components/schemas/SubjectType"
+                      $ref: "v0.yaml#/components/schemas/SubjectType"
                     name:
                       $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
@@ -317,7 +317,7 @@ paths:
           description: 条目类型，参考 [SubjectType](#model-SubjectType)
           required: false
           schema:
-            $ref: "#/components/schemas/SubjectType"
+            $ref: "v0.yaml#/components/schemas/SubjectType"
         - $ref: "#/components/parameters/responseGroup"
         - name: start
           in: query
@@ -544,6 +544,21 @@ components:
         - 4
         - 5
       example: 5
+      x-ms-enum:
+        name: CollectionStatusId
+        modelAsString: false
+        values:
+          - Wish
+          - Collect
+          - Doing
+          - OnHold
+          - Dropped
+      x-enum-varnames:
+        - Wish
+        - Collect
+        - Doing
+        - OnHold
+        - Dropped
     CollectionStatusType:
       description: 收藏状态类型
       type: string
@@ -568,24 +583,24 @@ components:
         name: CollectionStatusName
         modelAsString: false
         values:
-          - Todo
-          - Done
+          - Wish
+          - Collect
           - Doing
-          - Suspended
-          - Abandoned
+          - OnHold
+          - Dropped
       x-enum-varnames:
-        - Todo
-        - Done
+        - Wish
+        - Collect
         - Doing
-        - Suspended
-        - Abandoned
+        - OnHold
+        - Dropped
     CollectionStatus:
       description: 收藏状态
-        <br> 1 = wish = 想做
-        <br> 2 = collect = 做过
-        <br> 3 = do = 在做
-        <br> 4 = on_hold = 搁置
-        <br> 5 = dropped = 抛弃
+        - 1 = wish = 想做
+        - 2 = collect = 做过
+        - 3 = do = 在做
+        - 4 = on_hold = 搁置
+        - 5 = dropped = 抛弃
       type: object
       properties:
         id:
@@ -622,14 +637,14 @@ components:
         modelAsString: false
         values:
           - Watched
-          - Wish
-          - Abandoned
-          - Undo
+          - Queue
+          - Drop
+          - Remove
       x-enum-varnames:
         - Watched
-        - Wish
-        - Abandoned
-        - Undo
+        - Queue
+        - Drop
+        - Remove
     ResponseGroup:
       description: 返回数据大小
       type: string
@@ -646,21 +661,6 @@ components:
       x-enum-varnames:
         - Small
         - Medium
-    SubjectType:
-      description: 条目类型
-        <br> 1 = book
-        <br> 2 = anime
-        <br> 3 = music
-        <br> 4 = game
-        <br> 6 = real
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 6
-      example: 2
     SubjectTypeName:
       description: 条目类型名称
         <br> book
@@ -727,7 +727,7 @@ components:
           type: string
           example: http://bgm.tv/subject/12
         type:
-          $ref: "#/components/schemas/SubjectType"
+          $ref: "v0.yaml#/components/schemas/SubjectType"
         name:
           description: 条目名称
           type: string
