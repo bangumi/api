@@ -14,22 +14,6 @@ info:
 servers:
   - url: https://api.bgm.tv
 paths:
-  /user/{username}:
-    get:
-      deprecated: true
-      tags:
-        - 用户
-      summary: 用户信息
-      operationId: getUserByUsername
-      parameters:
-        - $ref: "#/components/parameters/username"
-      responses:
-        200:
-          description: 返回用户基础信息
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
   /user/{username}/collection:
     get:
       deprecated: true
