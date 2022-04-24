@@ -760,7 +760,7 @@ paths:
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/DetailedRevision"
+                "$ref": "#/components/schemas/CharacterRevision"
         "404":
           description: Not Found
           content:
@@ -1311,7 +1311,7 @@ components:
         profession:
           "$ref": "#/components/schemas/PersonRevisionProfession"
         extra:
-          "$ref": "#/components/schemas/PersonRevisionExtra"
+          "$ref": "#/components/schemas/RevisionExtra"
         prsn_name:
           title: Person Name
           type: string
@@ -1340,8 +1340,8 @@ components:
         actor:
           title: Actor
           type: string
-    PersonRevisionExtra:
-      title: PersonRevisionExtra
+    RevisionExtra:
+      title: RevisionExtra
       type: object
       properties:
         img:
@@ -1400,6 +1400,36 @@ components:
         vote_field:
           title: Vote Field
           type: string
+    CharacterRevision:
+      title: CharacterRevision
+      allOf:
+        - "$ref": "#/components/schemas/Revision"
+        - type: object
+          properties:
+            data:
+              title: Data
+              additionalProperties:
+                "$ref": "#/components/schemas/CharacterRevisionDataItem"
+    CharacterRevisionDataItem:
+      title: CharacterRevisionDataItem
+      required:
+        - infobox
+        - summary
+        - name
+        - extra
+      type: object
+      properties:
+        infobox:
+          title: Character Infobox
+          type: string
+        summary:
+          title: Character Summary
+          type: string
+        name:
+          title: Character Name
+          type: string
+        extra:
+          "$ref": "#/components/schemas/RevisionExtra"
     EpType:
       title: EpType
       enum:
