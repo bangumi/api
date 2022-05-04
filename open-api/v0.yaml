@@ -441,7 +441,7 @@ paths:
       tags:
         - 人物
       summary: get person related characters
-      operationId: getRelatedPersonsByPersonId
+      operationId: getRelatedCharactersByPersonId
       parameters:
         - required: true
           schema:
