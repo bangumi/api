@@ -1,9 +1,9 @@
 openapi: 3.0.2
 info:
-  title: ""
-  version: ""
+  title: ''
+  version: ''
 paths:
-  "/v0/subjects/{subject_id}":
+  /v0/subjects/{subject_id}:
     get:
       tags:
         - 条目
@@ -19,27 +19,27 @@ paths:
           name: subject_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Subject"
-        "400":
+                $ref: '#/components/schemas/Subject'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "404":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/subjects/{subject_id}/persons":
+  /v0/subjects/{subject_id}/persons:
     get:
       tags:
         - 条目
@@ -54,32 +54,32 @@ paths:
           name: subject_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
+                title: >-
                   Response Get Subject Persons V0 Subjects  Subject Id  Persons
                   Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/RelatedPerson"
-        "400":
+                  $ref: '#/components/schemas/RelatedPerson'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "404":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/subjects/{subject_id}/characters":
+  /v0/subjects/{subject_id}/characters:
     get:
       tags:
         - 条目
@@ -94,32 +94,32 @@ paths:
           name: subject_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
-                  Response Get Subject Characters V0 Subjects  Subject Id  Characters
-                  Get
+                title: >-
+                  Response Get Subject Characters V0 Subjects  Subject Id 
+                  Characters Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/RelatedCharacter"
-        "400":
+                  $ref: '#/components/schemas/RelatedCharacter'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "404":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
           description: Not Found
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/subjects/{subject_id}/subjects":
+  /v0/subjects/{subject_id}/subjects:
     get:
       tags:
         - 条目
@@ -134,32 +134,33 @@ paths:
           name: subject_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
-                  Response Get Subject Relations V0 Subjects  Subject Id  Subjects
-                  Get
+                title: >-
+                  Response Get Subject Relations V0 Subjects  Subject Id 
+                  Subjects Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/pol__api__v0__models__subject__RelatedSubject"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                  $ref: >-
+                    #/components/schemas/pol__api__v0__models__subject__RelatedSubject
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/episodes":
+  /v0/episodes:
     get:
       tags:
         - 章节
@@ -177,7 +178,7 @@ paths:
           required: false
           schema:
             allOf:
-              - "$ref": "#/components/schemas/EpType"
+              - $ref: '#/components/schemas/EpType'
             description: 参照章节的`type`
             type: integer
           name: type
@@ -200,27 +201,27 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_Episode_"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/Paged_Episode_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/episodes/{episode_id}":
+  /v0/episodes/{episode_id}:
     get:
       tags:
         - 章节
@@ -234,27 +235,27 @@ paths:
           name: episode_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/EpisodeDetail"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/EpisodeDetail'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/characters/{character_id}":
+  /v0/characters/{character_id}:
     get:
       tags:
         - 角色
@@ -270,25 +271,25 @@ paths:
           name: character_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/CharacterDetail"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/CharacterDetail'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/characters/{character_id}/subjects":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/characters/{character_id}/subjects:
     get:
       tags:
         - 角色
@@ -303,30 +304,30 @@ paths:
           name: character_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
-                  Response Get Person Subjects V0 Characters  Character Id  Subjects
-                  Get
+                title: >-
+                  Response Get Person Subjects V0 Characters  Character Id 
+                  Subjects Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                  $ref: '#/components/schemas/pol__api__v0__models__RelatedSubject'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/characters/{character_id}/persons":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/characters/{character_id}/persons:
     get:
       tags:
         - 角色
@@ -341,30 +342,30 @@ paths:
           name: character_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
-                  Response Get Character Persons V0 Characters  Character Id  Persons
-                  Get
+                title: >-
+                  Response Get Character Persons V0 Characters  Character Id 
+                  Persons Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/CharacterPerson"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                  $ref: '#/components/schemas/CharacterPerson'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/persons/{person_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/persons/{person_id}:
     get:
       tags:
         - 人物
@@ -380,25 +381,25 @@ paths:
           name: person_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/PersonDetail"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/PersonDetail'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/persons/{person_id}/subjects":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/persons/{person_id}/subjects:
     get:
       tags:
         - 人物
@@ -413,30 +414,30 @@ paths:
           name: person_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
+                title: >-
                   Response Get Person Subjects V0 Persons  Person Id  Subjects
                   Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                  $ref: '#/components/schemas/pol__api__v0__models__RelatedSubject'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/persons/{person_id}/characters":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/persons/{person_id}/characters:
     get:
       tags:
         - 人物
@@ -451,31 +452,30 @@ paths:
           name: person_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                title:
-                  Response Get Person Characters V0 Persons  Person Id  Characters
-                  Get
+                title: >-
+                  Response Get Person Characters V0 Persons  Person Id 
+                  Characters Get
                 type: array
                 items:
-                  "$ref": "#/components/schemas/PersonCharacter"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                  $ref: '#/components/schemas/PersonCharacter'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-
-  "/v0/users/{username}":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/users/{username}:
     get:
       tags:
         - 用户
@@ -491,28 +491,25 @@ paths:
           name: username
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
-
-        "400":
+                $ref: '#/components/schemas/User'
+        '400':
           description: username 太长
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-
-        "404":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
           description: 对应用户不存在
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-
-  "/v0/me":
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/me:
     get:
       tags:
         - 用户
@@ -520,22 +517,21 @@ paths:
       description: 返回当前 Access Token 对应的用户信息
       operationId: getMyself
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/User"
-        "403":
+                $ref: '#/components/schemas/User'
+        '403':
           description: unauthorized
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - HTTPBearer: []
-
-  "/v0/users/{username}/collections":
+  /v0/users/{username}/collections:
     get:
       tags:
         - 收藏
@@ -558,7 +554,7 @@ paths:
           required: false
           schema:
             allOf:
-              - "$ref": "#/components/schemas/SubjectType"
+              - $ref: '#/components/schemas/SubjectType'
             description: |-
               条目类型，默认为全部
 
@@ -573,7 +569,7 @@ paths:
           required: false
           schema:
             allOf:
-              - "$ref": "#/components/schemas/CollectionType"
+              - $ref: '#/components/schemas/CollectionType'
             description: |-
               收藏类型，默认为全部
 
@@ -599,27 +595,27 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_UserCollection_"
-        "404":
-          description: 用户不存在
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/Paged_UserCollection_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/revisions/persons":
+  /v0/revisions/persons:
     get:
       tags:
         - 编辑历史
@@ -651,19 +647,19 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_Revision_"
-        "400":
+                $ref: '#/components/schemas/Paged_Revision_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/persons/{revision_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/persons/{revision_id}:
     get:
       tags:
         - 编辑历史
@@ -678,25 +674,25 @@ paths:
           name: revision_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/PersonRevision"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/PersonRevision'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/characters":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/characters:
     get:
       tags:
         - 编辑历史
@@ -728,19 +724,19 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_Revision_"
-        "400":
+                $ref: '#/components/schemas/Paged_Revision_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/characters/{revision_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/characters/{revision_id}:
     get:
       tags:
         - 编辑历史
@@ -755,25 +751,25 @@ paths:
           name: revision_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/CharacterRevision"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/CharacterRevision'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/subjects":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/subjects:
     get:
       tags:
         - 编辑历史
@@ -805,19 +801,19 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_Revision_"
-        "400":
+                $ref: '#/components/schemas/Paged_Revision_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/subjects/{revision_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/subjects/{revision_id}:
     get:
       tags:
         - 编辑历史
@@ -832,25 +828,25 @@ paths:
           name: revision_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/SubjectRevision"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/SubjectRevision'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/episodes":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/episodes:
     get:
       tags:
         - 编辑历史
@@ -882,19 +878,19 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_Revision_"
-        "400":
+                $ref: '#/components/schemas/Paged_Revision_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/revisions/episodes/{revision_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/revisions/episodes/{revision_id}:
     get:
       tags:
         - 编辑历史
@@ -909,25 +905,25 @@ paths:
           name: revision_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/DetailedRevision"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/DetailedRevision'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-  "/v0/indices/{index_id}":
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/indices/{index_id}:
     get:
       tags:
         - 目录
@@ -942,27 +938,27 @@ paths:
           name: index_id
           in: path
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Index"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/Index'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
-  "/v0/indices/{index_id}/subjects":
+  /v0/indices/{index_id}/subjects:
     get:
       tags:
         - 目录
@@ -978,7 +974,7 @@ paths:
           in: path
         - required: false
           schema:
-            "$ref": "#/components/schemas/SubjectType"
+            $ref: '#/components/schemas/SubjectType'
           name: type
           in: query
         - required: false
@@ -999,28 +995,72 @@ paths:
           name: offset
           in: query
       responses:
-        "200":
+        '200':
           description: Successful Response
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/Paged_IndexSubject_"
-        "404":
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                "$ref": "#/components/schemas/ErrorDetail"
-        "400":
+                $ref: '#/components/schemas/Paged_IndexSubject_'
+        '400':
           description: Validation Error
           content:
             application/json:
               schema:
-                "$ref": "#/components/schemas/ErrorDetail"
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
 components:
   schemas:
+    User:
+      example:
+        avatar:
+          large: https://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456
+          medium: https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456
+          small: https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456
+        sign: Awesome!
+        url: https://bgm.tv/user/sai
+        username: sai
+        nickname: Sai🖖
+        id: 1
+        user_group: 1
+      title: User
+      required:
+        - id
+        - url
+        - username
+        - nickname
+        - user_group
+        - avatar
+        - sign
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+        url:
+          title: URL
+          type: string
+        username:
+          title: Username
+          type: string
+          description: 唯一用户名，初始与 UID 相同，可修改一次
+        nickname:
+          title: Nickname
+          type: string
+        user_group:
+          $ref: '#/components/schemas/UserGroup'
+        avatar:
+          $ref: '#/components/schemas/Avatar'
+        sign:
+          title: Sign
+          description: 个人签名
+          type: string
     Avatar:
       title: Avatar
       required:
@@ -1032,12 +1072,54 @@ components:
         large:
           title: Large
           type: string
+          format: url
         medium:
           title: Medium
           type: string
+          format: url
         small:
           title: Small
           type: string
+          format: url
+    UserGroup:
+      title: UserGroup
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 8
+        - 9
+        - 10
+        - 11
+      type: integer
+      description: >-
+        用户组 - 1 = 管理员 - 2 = Bangumi 管理猿 - 3 = 天窗管理猿 - 4 = 禁言用户 - 5 = 禁止访问用户 - 8
+        = 人物管理猿 - 9 = 维基条目管理猿 - 10 = 用户 - 11 = 维基人
+      x-ms-enum:
+        name: UserGroup
+        modelAsString: false
+        values:
+          - Admin
+          - BangumiAdmin
+          - DoujinAdmin
+          - MutedUser
+          - BlockedUser
+          - PersonAdmin
+          - WikiAdmin
+          - User
+          - WikiUser
+      x-enum-varnames:
+        - Admin
+        - BangumiAdmin
+        - DoujinAdmin
+        - MutedUser
+        - BlockedUser
+        - PersonAdmin
+        - WikiAdmin
+        - User
+        - WikiUser
     BloodType:
       title: BloodType
       enum:
@@ -1080,13 +1162,13 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/CharacterType"
+            - $ref: '#/components/schemas/CharacterType'
           description: 角色，机体，舰船，组织...
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         summary:
           title: Summary
@@ -1109,7 +1191,7 @@ components:
         blood_type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/BloodType"
+            - $ref: '#/components/schemas/BloodType'
           description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, AB, O`
         birth_year:
           title: Birth Year
@@ -1124,7 +1206,7 @@ components:
           type: integer
           description: parsed from wiki, maybe `null`
         stat:
-          "$ref": "#/components/schemas/Stat"
+          $ref: '#/components/schemas/Stat'
     CharacterPerson:
       title: CharacterPerson
       required:
@@ -1145,13 +1227,13 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/CharacterType"
+            - $ref: '#/components/schemas/CharacterType'
           description: 角色，机体，舰船，组织...
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         subject_id:
           title: Subject Id
@@ -1269,7 +1351,7 @@ components:
           title: Type
           type: integer
         creator:
-          "$ref": "#/components/schemas/Creator"
+          $ref: '#/components/schemas/Creator'
         summary:
           title: Summary
           type: string
@@ -1284,14 +1366,14 @@ components:
     PersonRevision:
       title: PersonRevision
       allOf:
-        - "$ref": "#/components/schemas/Revision"
+        - $ref: '#/components/schemas/Revision'
         - type: object
           properties:
             data:
               title: Data
               type: object
               additionalProperties:
-                "$ref": "#/components/schemas/PersonRevisionDataItem"
+                $ref: '#/components/schemas/PersonRevisionDataItem'
     PersonRevisionDataItem:
       title: PersonRevisionDataItem
       required:
@@ -1309,9 +1391,9 @@ components:
           title: Person Summary
           type: string
         profession:
-          "$ref": "#/components/schemas/PersonRevisionProfession"
+          $ref: '#/components/schemas/PersonRevisionProfession'
         extra:
-          "$ref": "#/components/schemas/RevisionExtra"
+          $ref: '#/components/schemas/RevisionExtra'
         prsn_name:
           title: Person Name
           type: string
@@ -1350,11 +1432,11 @@ components:
     SubjectRevision:
       title: SubjectRevision
       allOf:
-        - "$ref": "#/components/schemas/Revision"
+        - $ref: '#/components/schemas/Revision'
         - type: object
           properties:
             data:
-              "$ref": "#/components/schemas/SubjectRevisionData"
+              $ref: '#/components/schemas/SubjectRevisionData'
     SubjectRevisionData:
       title: SubjectRevisionData
       required:
@@ -1403,13 +1485,13 @@ components:
     CharacterRevision:
       title: CharacterRevision
       allOf:
-        - "$ref": "#/components/schemas/Revision"
+        - $ref: '#/components/schemas/Revision'
         - type: object
           properties:
             data:
               title: Data
               additionalProperties:
-                "$ref": "#/components/schemas/CharacterRevisionDataItem"
+                $ref: '#/components/schemas/CharacterRevisionDataItem'
     CharacterRevisionDataItem:
       title: CharacterRevisionDataItem
       required:
@@ -1429,7 +1511,7 @@ components:
           title: Character Name
           type: string
         extra:
-          "$ref": "#/components/schemas/RevisionExtra"
+          $ref: '#/components/schemas/RevisionExtra'
     EpType:
       title: EpType
       enum:
@@ -1489,7 +1571,7 @@ components:
         type:
           title: Type
           type: integer
-          description: "`0` 本篇，`1` SP，`2` OP，`3` ED"
+          description: '`0` 本篇，`1` SP，`2` OP，`3` ED'
         name:
           title: Name
           type: string
@@ -1543,7 +1625,7 @@ components:
         type:
           title: Type
           type: integer
-          description: "`0` 本篇，`1` SP，`2` OP，`3` ED"
+          description: '`0` 本篇，`1` SP，`2` OP，`3` ED'
         name:
           title: Name
           type: string
@@ -1576,7 +1658,7 @@ components:
           type: integer
           description: 音乐曲目的碟片数
         subject_id:
-          title: Subject Id
+          title: Subject ID
           type: integer
     ErrorDetail:
       title: ErrorDetail
@@ -1593,14 +1675,16 @@ components:
           type: string
         detail:
           title: Detail
-          type: object
-          properties:
-            "error":
-              type: string
-              description: error message
-            "path":
-              type: string
-              description: request path
+          oneOf:
+            - type: string
+            - type: object
+              properties:
+                error:
+                  type: string
+                  description: error message
+                path:
+                  type: string
+                  description: request path
     Images:
       title: Images
       required:
@@ -1657,14 +1741,14 @@ components:
           title: Stat
           type: object
           allOf:
-            - "$ref": "#/components/schemas/Stat"
+            - $ref: '#/components/schemas/Stat'
           description: 目录评论及收藏数
         created_at:
           title: Created At
           type: string
           format: date-time
         creator:
-          "$ref": "#/components/schemas/Creator"
+          $ref: '#/components/schemas/Creator'
         ban:
           title: Ban
           type: boolean
@@ -1691,12 +1775,12 @@ components:
           title: Name
           type: string
         images:
-          "$ref": "#/components/schemas/Images"
+          $ref: '#/components/schemas/Images'
         infobox:
           title: Infobox
           type: array
           items:
-            "$ref": "#/components/schemas/Item"
+            $ref: '#/components/schemas/Item'
         date:
           title: Date
           type: string
@@ -1726,8 +1810,8 @@ components:
             - type: array
               items:
                 anyOf:
-                  - "$ref": "#/components/schemas/KV"
-                  - "$ref": "#/components/schemas/V"
+                  - $ref: '#/components/schemas/KV'
+                  - $ref: '#/components/schemas/V'
     KV:
       title: KV
       required:
@@ -1740,55 +1824,6 @@ components:
           type: string
         v:
           title: V
-          type: string
-
-    User:
-      example:
-        {
-          "avatar":
-            {
-              "large": "https://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456",
-              "medium": "https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456",
-              "small": "https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456",
-            },
-          "sign": "Awesome!",
-          "url": "https://bgm.tv/user/sai",
-          "username": "sai",
-          "nickname": "Sai🖖",
-          "id": 1,
-          "user_group": 1,
-        }
-      title: User
-      required:
-        - id
-        - url
-        - username
-        - nickname
-        - user_group
-        - avatar
-        - sign
-      type: object
-      properties:
-        id:
-          title: ID
-          type: integer
-        url:
-          title: URL
-          type: string
-        username:
-          title: Username
-          type: string
-          description: 唯一用户名，初始与 UID 相同，可修改一次
-        nickname:
-          title: Nickname
-          type: string
-        user_group:
-          "$ref": "#/components/schemas/UserGroup"
-        avatar:
-          "$ref": "#/components/schemas/Avatar"
-        sign:
-          title: Sign
-          description: 个人签名
           type: string
     Paged_Episode_:
       title: Paged[Episode]
@@ -1810,7 +1845,7 @@ components:
           title: Data
           type: array
           items:
-            "$ref": "#/components/schemas/Episode"
+            $ref: '#/components/schemas/Episode'
           default: []
     Paged_IndexSubject_:
       title: Paged[IndexSubject]
@@ -1832,7 +1867,7 @@ components:
           title: Data
           type: array
           items:
-            "$ref": "#/components/schemas/IndexSubject"
+            $ref: '#/components/schemas/IndexSubject'
           default: []
     Paged_Revision_:
       title: Paged[Revision]
@@ -1854,7 +1889,7 @@ components:
           title: Data
           type: array
           items:
-            "$ref": "#/components/schemas/Revision"
+            $ref: '#/components/schemas/Revision'
           default: []
     Paged_UserCollection_:
       title: Paged[UserCollection]
@@ -1876,7 +1911,7 @@ components:
           title: Data
           type: array
           items:
-            "$ref": "#/components/schemas/UserCollection"
+            $ref: '#/components/schemas/UserCollection'
           default: []
     Person:
       title: Person
@@ -1898,17 +1933,17 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/PersonType"
-          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+            - $ref: '#/components/schemas/PersonType'
+          description: '`1`, `2`, `3` 表示 `个人`, `公司`, `组合`'
         career:
           type: array
           items:
-            "$ref": "#/components/schemas/PersonCareer"
+            $ref: '#/components/schemas/PersonCareer'
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         short_summary:
           title: Short Summary
@@ -1948,12 +1983,12 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/CharacterType"
+            - $ref: '#/components/schemas/CharacterType'
           description: 角色，机体，舰船，组织...
         images:
           title: Images
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         subject_id:
           title: Subject Id
@@ -1986,17 +2021,17 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/PersonType"
-          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+            - $ref: '#/components/schemas/PersonType'
+          description: '`1`, `2`, `3` 表示 `个人`, `公司`, `组合`'
         career:
           type: array
           items:
-            "$ref": "#/components/schemas/PersonCareer"
+            $ref: '#/components/schemas/PersonCareer'
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         summary:
           title: Summary
@@ -2007,9 +2042,9 @@ components:
         last_modified:
           title: Last Modified
           type: string
-          description:
-            currently it's latest user comment time, it will be replaced
-            by wiki modified date in the future
+          description: >-
+            currently it's latest user comment time, it will be replaced by wiki
+            modified date in the future
           format: date-time
         infobox:
           title: Infobox
@@ -2026,7 +2061,7 @@ components:
         blood_type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/BloodType"
+            - $ref: '#/components/schemas/BloodType'
           description: parsed from wiki, maybe null, `1, 2, 3, 4` for `A, B, AB, O`
         birth_year:
           title: Birth Year
@@ -2041,7 +2076,7 @@ components:
           type: integer
           description: parsed from wiki, maybe `null`
         stat:
-          "$ref": "#/components/schemas/Stat"
+          $ref: '#/components/schemas/Stat'
     PersonImages:
       title: PersonImages
       required:
@@ -2070,7 +2105,7 @@ components:
         - 2
         - 3
       type: integer
-      description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+      description: '`1`, `2`, `3` 表示 `个人`, `公司`, `组合`'
       x-ms-enum:
         name: PersonType
         modelAsString: false
@@ -2101,25 +2136,25 @@ components:
           title: Count
           type: object
           properties:
-            "1":
+            '1':
               type: integer
-            "2":
+            '2':
               type: integer
-            "3":
+            '3':
               type: integer
-            "4":
+            '4':
               type: integer
-            "5":
+            '5':
               type: integer
-            "6":
+            '6':
               type: integer
-            "7":
+            '7':
               type: integer
-            "8":
+            '8':
               type: integer
-            "9":
+            '9':
               type: integer
-            "10":
+            '10':
               type: integer
         score:
           title: Score
@@ -2142,13 +2177,13 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/CharacterType"
+            - $ref: '#/components/schemas/CharacterType'
           description: 角色，机体，舰船，组织...
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         relation:
           title: Relation
@@ -2157,7 +2192,7 @@ components:
           title: Actors
           type: array
           items:
-            "$ref": "#/components/schemas/Person"
+            $ref: '#/components/schemas/Person'
           description: 演员列表
           default: []
     RelatedPerson:
@@ -2179,17 +2214,17 @@ components:
         type:
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/PersonType"
-          description: "`1`, `2`, `3` 表示 `个人`, `公司`, `组合`"
+            - $ref: '#/components/schemas/PersonType'
+          description: '`1`, `2`, `3` 表示 `个人`, `公司`, `组合`'
         career:
           type: array
           items:
-            "$ref": "#/components/schemas/PersonCareer"
+            $ref: '#/components/schemas/PersonCareer'
         images:
           title: Images
           type: object
           allOf:
-            - "$ref": "#/components/schemas/PersonImages"
+            - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         relation:
           title: Relation
@@ -2210,7 +2245,7 @@ components:
           title: Type
           type: integer
         creator:
-          "$ref": "#/components/schemas/Creator"
+          $ref: '#/components/schemas/Creator'
         summary:
           title: Summary
           type: string
@@ -2257,7 +2292,7 @@ components:
           title: Type
           type: integer
           allOf:
-            - "$ref": "#/components/schemas/SubjectType"
+            - $ref: '#/components/schemas/SubjectType'
         name:
           title: Name
           type: string
@@ -2282,12 +2317,12 @@ components:
           type: string
           description: TV, Web, 欧美剧, PS4...
         images:
-          "$ref": "#/components/schemas/Images"
+          $ref: '#/components/schemas/Images'
         infobox:
           title: Infobox
           type: array
           items:
-            "$ref": "#/components/schemas/Item"
+            $ref: '#/components/schemas/Item'
         volumes:
           title: Volumes
           type: integer
@@ -2301,14 +2336,14 @@ components:
           type: integer
           description: 数据库中的章节数量
         rating:
-          "$ref": "#/components/schemas/Rating"
+          $ref: '#/components/schemas/Rating'
         collection:
-          "$ref": "#/components/schemas/Collection"
+          $ref: '#/components/schemas/Collection'
         tags:
           title: Tags
           type: array
           items:
-            "$ref": "#/components/schemas/Tag"
+            $ref: '#/components/schemas/Tag'
     SubjectType:
       title: SubjectType
       enum:
@@ -2373,12 +2408,12 @@ components:
           title: Subject Id
           type: integer
         subject_type:
-          "$ref": "#/components/schemas/SubjectType"
+          $ref: '#/components/schemas/SubjectType'
         rate:
           title: Rate
           type: integer
         type:
-          "$ref": "#/components/schemas/CollectionType"
+          $ref: '#/components/schemas/CollectionType'
         comment:
           title: Comment
           type: string
@@ -2400,53 +2435,6 @@ components:
         private:
           title: Private
           type: boolean
-    UserGroup:
-      title: UserGroup
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-        - 8
-        - 9
-        - 10
-        - 11
-      type: integer
-      description: >-
-        用户组
-        - 1 = 管理员
-        - 2 = Bangumi 管理猿
-        - 3 = 天窗管理猿
-        - 4 = 禁言用户
-        - 5 = 禁止访问用户
-        - 8 = 人物管理猿
-        - 9 = 维基条目管理猿
-        - 10 = 用户
-        - 11 = 维基人
-      x-ms-enum:
-        name: UserGroup
-        modelAsString: false
-        values:
-          - Admin
-          - BangumiAdmin
-          - DoujinAdmin
-          - MutedUser
-          - BlockedUser
-          - PersonAdmin
-          - WikiAdmin
-          - User
-          - WikiUser
-      x-enum-varnames:
-        - Admin
-        - BangumiAdmin
-        - DoujinAdmin
-        - MutedUser
-        - BlockedUser
-        - PersonAdmin
-        - WikiAdmin
-        - User
-        - WikiUser
     V:
       title: V
       required:
@@ -2521,7 +2509,7 @@ components:
           title: Name Cn
           type: string
         images:
-          "$ref": "#/components/schemas/Images"
+          $ref: '#/components/schemas/Images'
         relation:
           title: Relation
           type: string
