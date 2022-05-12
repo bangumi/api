@@ -485,9 +485,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: username
-            type: string
-            maxLength: 32
+            $ref: '#/components/schemas/UserName'
           name: username
           in: path
       responses:
@@ -542,9 +540,7 @@ paths:
         - description: 设置了 username 后无法使用UID
           required: true
           schema:
-            title: Username
-            type: string
-            description: 设置了 username 后无法使用UID
+            $ref: '#/components/schemas/UserName'
           name: username
           in: path
         - description: |-
@@ -609,6 +605,47 @@ paths:
                 $ref: '#/components/schemas/ErrorDetail'
         '404':
           description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - OptionalHTTPBearer: []
+  /v0/users/{username}/collections/{subject_id}:
+    get:
+      tags:
+        - 收藏
+      summary: 获取用户单个收藏
+      description: 获取对应用户的收藏，查看私有收藏需要access token。
+      operationId: getUserCollection
+      parameters:
+        - description: 设置了 username 后无法使用UID
+          required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+          name: username
+          in: path
+        - required: true
+          schema:
+            title: subject ID
+            type: integer
+          name: subject_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCollection'
+        '400':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 用户不存在或者条目未收藏，或者条目为私有收藏
           content:
             application/json:
               schema:
@@ -1120,6 +1157,9 @@ components:
         - WikiAdmin
         - User
         - WikiUser
+    UserName:
+      type: string
+      description: 获取用户信息，设置了 username 之后无法使用数字 UID。
     BloodType:
       title: BloodType
       enum:
@@ -2405,7 +2445,7 @@ components:
       type: object
       properties:
         subject_id:
-          title: Subject Id
+          title: Subject ID
           type: integer
         subject_type:
           $ref: '#/components/schemas/SubjectType'
@@ -2443,25 +2483,6 @@ components:
       properties:
         v:
           title: V
-          type: string
-    ValidationError:
-      title: ValidationError
-      required:
-        - loc
-        - msg
-        - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            type: string
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
           type: string
     pol__api__v0__models__RelatedSubject:
       title: RelatedSubject
