@@ -288,31 +288,6 @@ paths:
                 $ref: "#/components/schemas/StatusCode"
       security:
         - HTTPBearer: []
-  /collection/{subject_id}:
-    get:
-      tags:
-        - 收藏
-      summary: 获取指定条目收藏信息
-      operationId: getCollectionBySubjectId
-      parameters:
-        - $ref: "#/components/parameters/subject_id"
-      responses:
-        200:
-          $ref: "#/components/responses/Collection"
-        400:
-          description: 用户未收藏该条目
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StatusCode"
-        401:
-          description: 未授权
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/StatusCode"
-      security:
-        - OptionalHTTPBearer: []
   /collection/{subject_id}/{action}:
     post:
       tags:
