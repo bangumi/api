@@ -14,67 +14,6 @@ info:
 servers:
   - url: https://api.bgm.tv
 paths:
-  /user/{username}/collections/{subject_type}:
-    get:
-      deprecated: true
-      tags:
-        - 用户
-      summary: 用户收藏概览
-      operationId: getUserCollectionsBySubjectType
-      parameters:
-        - $ref: "#/components/parameters/username"
-        - name: subject_type
-          in: path
-          description: 条目类型，详见 [SubjectTypeName](#model-SubjectTypeName)
-          required: true
-          schema:
-            $ref: "#/components/schemas/SubjectTypeName"
-        - $ref: "#/components/parameters/app_id"
-        - name: max_results
-          in: query
-          description: 显示条数
-            <br> 最多 25
-          schema:
-            type: integer
-            maximum: 25
-      responses:
-        200:
-          description: 获取用户指定类型的收藏概览，固定返回最近更新的收藏，不支持翻页
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    type:
-                      $ref: "v0.yaml#/components/schemas/SubjectType"
-                    name:
-                      $ref: "#/components/schemas/SubjectTypeName"
-                    name_cn:
-                      description: 条目类型中文名
-                      type: string
-                      example: 动画
-                    collects:
-                      description: 收藏列表
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          status:
-                            $ref: "#/components/schemas/CollectionStatus"
-                          count:
-                            type: integer
-                          list:
-                            type: array
-                            items:
-                              type: object
-                              properties:
-                                subject_id:
-                                  description: 条目 ID
-                                  type: string
-                                subject:
-                                  $ref: "#/components/schemas/SubjectBase"
   /user/{username}/collections/status:
     get:
       deprecated: true
@@ -96,7 +35,7 @@ paths:
                   type: object
                   properties:
                     type:
-                      $ref: "#/components/schemas/SubjectType"
+                      $ref: "v0.yaml#/components/schemas/SubjectType"
                     name:
                       $ref: "#/components/schemas/SubjectTypeName"
                     name_cn:
