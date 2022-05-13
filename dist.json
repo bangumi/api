@@ -596,7 +596,7 @@
                   "title": "Response Get Subject Relations V0 Subjects  Subject Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/pol__api__v0__models__subject__RelatedSubject"
+                    "$ref": "#/components/schemas/v0_subject_relation"
                   }
                 }
               }
@@ -693,7 +693,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_Episode_"
+                  "$ref": "#/components/schemas/Paged_Episode"
                 }
               }
             }
@@ -862,10 +862,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Person Subjects V0 Characters  Character Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
+                    "$ref": "#/components/schemas/v0_RelatedSubject"
                   }
                 }
               }
@@ -1033,7 +1032,7 @@
                   "title": "Response Get Person Subjects V0 Persons  Person Id  Subjects Get",
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/pol__api__v0__models__RelatedSubject"
+                    "$ref": "#/components/schemas/v0_RelatedSubject"
                   }
                 }
               }
@@ -1286,7 +1285,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_UserCollection_"
+                  "$ref": "#/components/schemas/Paged_UserCollection"
                 }
               }
             }
@@ -1434,7 +1433,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_Revision_"
+                  "$ref": "#/components/schemas/Paged_Revision"
                 }
               }
             }
@@ -1553,7 +1552,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_Revision_"
+                  "$ref": "#/components/schemas/Paged_Revision"
                 }
               }
             }
@@ -1672,7 +1671,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_Revision_"
+                  "$ref": "#/components/schemas/Paged_Revision"
                 }
               }
             }
@@ -1791,7 +1790,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_Revision_"
+                  "$ref": "#/components/schemas/Paged_Revision"
                 }
               }
             }
@@ -1976,7 +1975,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Paged_IndexSubject_"
+                  "$ref": "#/components/schemas/Paged_IndexSubject"
                 }
               }
             }
@@ -3550,7 +3549,7 @@
           }
         }
       },
-      "Paged_Episode_": {
+      "Paged_Episode": {
         "title": "Paged[Episode]",
         "type": "object",
         "properties": {
@@ -3579,7 +3578,7 @@
           }
         }
       },
-      "Paged_IndexSubject_": {
+      "Paged_IndexSubject": {
         "title": "Paged[IndexSubject]",
         "type": "object",
         "properties": {
@@ -3608,7 +3607,7 @@
           }
         }
       },
-      "Paged_Revision_": {
+      "Paged_Revision": {
         "title": "Paged[Revision]",
         "type": "object",
         "properties": {
@@ -3637,7 +3636,7 @@
           }
         }
       },
-      "Paged_UserCollection_": {
+      "Paged_UserCollection": {
         "title": "Paged[UserCollection]",
         "type": "object",
         "properties": {
@@ -4377,7 +4376,7 @@
           }
         }
       },
-      "pol__api__v0__models__RelatedSubject": {
+      "v0_RelatedSubject": {
         "title": "RelatedSubject",
         "required": [
           "id",
@@ -4408,8 +4407,8 @@
           }
         }
       },
-      "pol__api__v0__models__subject__RelatedSubject": {
-        "title": "RelatedSubject",
+      "v0_subject_relation": {
+        "title": "SubjectRelation",
         "required": [
           "id",
           "type",
