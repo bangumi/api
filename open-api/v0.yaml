@@ -48,7 +48,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Subject Id
+            title: Subject ID
             minimum: 0
             type: integer
           name: subject_id
@@ -59,9 +59,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Subject Persons V0 Subjects  Subject Id  Persons
-                  Get
                 type: array
                 items:
                   $ref: '#/components/schemas/RelatedPerson'
@@ -88,7 +85,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Subject Id
+            title: Subject ID
             minimum: 0
             type: integer
           name: subject_id
@@ -99,9 +96,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Subject Characters V0 Subjects  Subject Id 
-                  Characters Get
                 type: array
                 items:
                   $ref: '#/components/schemas/RelatedCharacter'
@@ -128,7 +122,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Subject Id
+            title: Subject ID
             minimum: 0
             type: integer
           name: subject_id
@@ -139,9 +133,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Subject Relations V0 Subjects  Subject Id 
-                  Subjects Get
                 type: array
                 items:
                   $ref: '#/components/schemas/v0_subject_relation'
@@ -168,7 +159,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Subject Id
+            title: Subject ID
             minimum: 0
             type: integer
           name: subject_id
@@ -229,7 +220,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Episode Id
+            title: Episode ID
             type: integer
           name: episode_id
           in: path
@@ -264,7 +255,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Character Id
+            title: Character ID
             minimum: 0
             type: integer
           name: character_id
@@ -297,7 +288,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Character Id
+            title: Character ID
             minimum: 0
             type: integer
           name: character_id
@@ -332,7 +323,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Character Id
+            title: Character ID
             minimum: 0
             type: integer
           name: character_id
@@ -343,9 +334,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Character Persons V0 Characters  Character Id 
-                  Persons Get
                 type: array
                 items:
                   $ref: '#/components/schemas/CharacterPerson'
@@ -371,7 +359,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Person Id
+            title: Person ID
             minimum: 0
             type: integer
           name: person_id
@@ -404,7 +392,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Person Id
+            title: Person ID
             minimum: 0
             type: integer
           name: person_id
@@ -415,9 +403,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Person Subjects V0 Persons  Person Id  Subjects
-                  Get
                 type: array
                 items:
                   $ref: '#/components/schemas/v0_RelatedSubject'
@@ -453,9 +438,6 @@ paths:
           content:
             application/json:
               schema:
-                title: >-
-                  Response Get Person Characters V0 Persons  Person Id 
-                  Characters Get
                 type: array
                 items:
                   $ref: '#/components/schemas/PersonCharacter'
@@ -657,7 +639,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Person Id
+            title: Person ID
             minimum: 0
             type: integer
           name: person_id
@@ -701,7 +683,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Revision Id
+            title: Revision ID
             minimum: 0
             type: integer
           name: revision_id
@@ -734,7 +716,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Character Id
+            title: Character ID
             minimum: 0
             type: integer
           name: character_id
@@ -778,7 +760,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Revision Id
+            title: Revision ID
             minimum: 0
             type: integer
           name: revision_id
@@ -811,7 +793,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Subject Id
+            title: Subject ID
             minimum: 0
             type: integer
           name: subject_id
@@ -855,7 +837,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Revision Id
+            title: Revision ID
             minimum: 0
             type: integer
           name: revision_id
@@ -888,7 +870,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Episode Id
+            title: Episode ID
             minimum: 0
             type: integer
           name: episode_id
@@ -932,7 +914,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Revision Id
+            title: Revision ID
             minimum: 0
             type: integer
           name: revision_id
@@ -960,12 +942,12 @@ paths:
     get:
       tags:
         - 目录
-      summary: Get Index By Id
+      summary: Get Index By ID
       operationId: getIndexById
       parameters:
         - required: true
           schema:
-            title: Index Id
+            title: Index ID
             minimum: 0
             type: integer
           name: index_id
@@ -1000,7 +982,7 @@ paths:
       parameters:
         - required: true
           schema:
-            title: Index Id
+            title: Index ID
             minimum: 0
             type: integer
           name: index_id
@@ -1057,15 +1039,16 @@ components:
           medium: https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456
           small: https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456
         sign: Awesome!
-        url: https://bgm.tv/user/sai
         username: sai
         nickname: Sai🖖
         id: 1
         user_group: 1
       title: User
+      description: |
+        实际的返回值可能包括文档未声明的 `url` 字段，此字段主要用于开发者从 api 响应直接转跳到网页。
+        客户端开发者请不用依赖于此特性，此字段的值随时可能会改变。
       required:
         - id
-        - url
         - username
         - nickname
         - user_group
@@ -1076,9 +1059,6 @@ components:
         id:
           title: ID
           type: integer
-        url:
-          title: URL
-          type: string
         username:
           title: Username
           type: string
@@ -1190,7 +1170,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -1255,7 +1235,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -1272,7 +1252,7 @@ components:
             - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         subject_id:
-          title: Subject Id
+          title: Subject ID
           type: integer
         subject_name:
           title: Subject Name
@@ -1381,7 +1361,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -1602,7 +1582,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -1656,7 +1636,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -1760,7 +1740,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         title:
           title: Title
@@ -1802,7 +1782,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -1961,7 +1941,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -2011,7 +1991,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -2027,7 +2007,7 @@ components:
             - $ref: '#/components/schemas/PersonImages'
           description: object with some size of images, this object maybe `null`
         subject_id:
-          title: Subject Id
+          title: Subject ID
           type: integer
         subject_name:
           title: Subject Name
@@ -2049,7 +2029,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -2205,7 +2185,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -2242,7 +2222,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         name:
           title: Name
@@ -2275,7 +2255,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -2322,7 +2302,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
@@ -2489,7 +2469,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         staff:
           title: Staff
@@ -2514,7 +2494,7 @@ components:
       type: object
       properties:
         id:
-          title: Id
+          title: ID
           type: integer
         type:
           title: Type
