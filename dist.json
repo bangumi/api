@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n各种请求库的默认 UA 在未来可能会被禁用。\n",
-    "version": "2022-05-13",
+    "version": "2022-05-16",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -455,7 +455,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Subject Id",
+              "title": "Subject ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -469,7 +469,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Subject Persons V0 Subjects  Subject Id  Persons Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/RelatedPerson"
@@ -517,7 +516,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Subject Id",
+              "title": "Subject ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -531,7 +530,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Subject Characters V0 Subjects  Subject Id  Characters Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/RelatedCharacter"
@@ -579,7 +577,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Subject Id",
+              "title": "Subject ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -593,7 +591,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Subject Relations V0 Subjects  Subject Id  Subjects Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/v0_subject_relation"
@@ -641,7 +638,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Subject Id",
+              "title": "Subject ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -737,7 +734,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Episode Id",
+              "title": "Episode ID",
               "type": "integer"
             },
             "name": "episode_id",
@@ -795,7 +792,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Character Id",
+              "title": "Character ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -848,7 +845,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Character Id",
+              "title": "Character ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -904,7 +901,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Character Id",
+              "title": "Character ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -918,7 +915,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Character Persons V0 Characters  Character Id  Persons Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/CharacterPerson"
@@ -962,7 +958,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Person Id",
+              "title": "Person ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1015,7 +1011,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Person Id",
+              "title": "Person ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1029,7 +1025,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Person Subjects V0 Persons  Person Id  Subjects Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/v0_RelatedSubject"
@@ -1086,7 +1081,6 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Person Characters V0 Persons  Person Id  Characters Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/PersonCharacter"
@@ -1396,7 +1390,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Person Id",
+              "title": "Person ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1462,7 +1456,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Revision Id",
+              "title": "Revision ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1515,7 +1509,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Character Id",
+              "title": "Character ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1581,7 +1575,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Revision Id",
+              "title": "Revision ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1634,7 +1628,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Subject Id",
+              "title": "Subject ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1700,7 +1694,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Revision Id",
+              "title": "Revision ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1753,7 +1747,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Episode Id",
+              "title": "Episode ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1819,7 +1813,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Revision Id",
+              "title": "Revision ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1866,13 +1860,13 @@
         "tags": [
           "目录"
         ],
-        "summary": "Get Index By Id",
+        "summary": "Get Index By ID",
         "operationId": "getIndexById",
         "parameters": [
           {
             "required": true,
             "schema": {
-              "title": "Index Id",
+              "title": "Index ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -1930,7 +1924,7 @@
           {
             "required": true,
             "schema": {
-              "title": "Index Id",
+              "title": "Index ID",
               "minimum": 0,
               "type": "integer"
             },
@@ -2489,16 +2483,15 @@
             "small": "https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456"
           },
           "sign": "Awesome!",
-          "url": "https://bgm.tv/user/sai",
           "username": "sai",
           "nickname": "Sai🖖",
           "id": 1,
           "user_group": 1
         },
         "title": "User",
+        "description": "实际的返回值可能包括文档未声明的 `url` 字段，此字段主要用于开发者从 api 响应直接转跳到网页。\n客户端开发者请不用依赖于此特性，此字段的值随时可能会改变。\n",
         "required": [
           "id",
-          "url",
           "username",
           "nickname",
           "user_group",
@@ -2510,10 +2503,6 @@
           "id": {
             "title": "ID",
             "type": "integer"
-          },
-          "url": {
-            "title": "URL",
-            "type": "string"
           },
           "username": {
             "title": "Username",
@@ -2649,7 +2638,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -2738,7 +2727,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -2765,7 +2754,7 @@
             "description": "object with some size of images, this object maybe `null`"
           },
           "subject_id": {
-            "title": "Subject Id",
+            "title": "Subject ID",
             "type": "integer"
           },
           "subject_name": {
@@ -2898,7 +2887,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -3192,7 +3181,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -3260,7 +3249,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -3401,7 +3390,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "title": {
@@ -3458,7 +3447,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -3678,7 +3667,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -3747,7 +3736,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -3773,7 +3762,7 @@
             "description": "object with some size of images, this object maybe `null`"
           },
           "subject_id": {
-            "title": "Subject Id",
+            "title": "Subject ID",
             "type": "integer"
           },
           "subject_name": {
@@ -3801,7 +3790,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -4012,7 +4001,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -4065,7 +4054,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "name": {
@@ -4114,7 +4103,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -4174,7 +4163,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
@@ -4386,7 +4375,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "staff": {
@@ -4419,7 +4408,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "title": "Id",
+            "title": "ID",
             "type": "integer"
           },
           "type": {
