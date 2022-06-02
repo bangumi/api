@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n各种请求库的默认 UA 在未来可能会被禁用。\n",
-    "version": "2022-05-24",
+    "version": "2022-06-2",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -444,6 +444,75 @@
         ]
       }
     },
+    "/v0/subjects/{subject_id}/image": {
+      "get": {
+        "tags": [
+          "条目"
+        ],
+        "summary": "Get Subject Image",
+        "operationId": "getSubjectImageById",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Subject ID",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "name": "subject_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "枚举值 {small|grid|large|medium|common}",
+            "schema": {
+              "title": "Image Type",
+              "type": "string"
+            },
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "图片链接\n无图时返回默认图片 https://lain.bgm.tv/img/no_icon_subject.png"
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v0/subjects/{subject_id}/persons": {
       "get": {
         "tags": [
@@ -834,6 +903,75 @@
         }
       }
     },
+    "/v0/characters/{character_id}/image": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "Get Character Image",
+        "operationId": "getCharacterImageById",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Character ID",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "name": "character_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "枚举值 {small|grid|large|medium}",
+            "schema": {
+              "title": "Image Type",
+              "type": "string"
+            },
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "图片链接\n无图时返回默认图片 https://lain.bgm.tv/img/no_icon_subject.png"
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v0/characters/{character_id}/subjects": {
       "get": {
         "tags": [
@@ -998,6 +1136,75 @@
             }
           }
         }
+      }
+    },
+    "/v0/persons/{person_id}/image": {
+      "get": {
+        "tags": [
+          "角色"
+        ],
+        "summary": "Get Person Image",
+        "operationId": "getPersonImageById",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Person ID",
+              "minimum": 0,
+              "type": "integer"
+            },
+            "name": "person_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "枚举值 {small|grid|large|medium}",
+            "schema": {
+              "title": "Image Type",
+              "type": "string"
+            },
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "图片链接\n无图时返回默认图片 https://lain.bgm.tv/img/no_icon_subject.png"
+              }
+            }
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
       }
     },
     "/v0/persons/{person_id}/subjects": {
