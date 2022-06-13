@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://api.bgm.tv/v0/oauth/> 生成一个 Access Token\n\n## 建议客户端开发者指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n各种请求库的默认 UA 在未来可能会被禁用。\n",
-    "version": "2022-06-2",
+    "version": "2022-06-13",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -1345,6 +1345,69 @@
                 "schema": {
                   "$ref": "#/components/schemas/User1"
                 }
+              }
+            }
+          },
+          "400": {
+            "description": "username 太长",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "对应用户不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v0/users/{username}/avatar": {
+      "get": {
+        "tags": [
+          "用户"
+        ],
+        "summary": "Get User Avatar by name",
+        "description": "获取用户头像，302 重定向至头像地址，设置了 username 之后无法使用 UID 查询。",
+        "operationId": "getUserAvatarByName",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserName"
+            },
+            "name": "username",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "枚举值 {small|large|medium}",
+            "schema": {
+              "title": "Avatar Type",
+              "type": "string"
+            },
+            "name": "type",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Successful Response",
+            "headers": {
+              "Location": {
+                "schema": {
+                  "type": "string"
+                },
+                "description": "用户头像链接\n无头像时返回默认头像 https://lain.bgm.tv/pic/user/m/icon.jpg"
               }
             }
           },
