@@ -620,6 +620,48 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDetail'
+  /v0/users/{username}/avatar:
+    get:
+      tags:
+        - 用户
+      summary: Get User Avatar by name
+      description: 获取用户头像，302 重定向至头像地址，设置了 username 之后无法使用 UID 查询。
+      operationId: getUserAvatarByName
+      parameters:
+        - required: true
+          schema:
+            $ref: '#/components/schemas/UserName'
+          name: username
+          in: path
+        - required: true
+          description: 枚举值 {small|large|medium}
+          schema:
+            title: Avatar Type
+            type: string
+          name: type
+          in: query
+      responses:
+        '302':
+          description: Successful Response
+          headers:
+            Location:
+              schema:
+                type: string
+              description: |-
+                用户头像链接
+                无头像时返回默认头像 https://lain.bgm.tv/pic/user/m/icon.jpg
+        '400':
+          description: username 太长
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 对应用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
   /v0/me:
     get:
       tags:
