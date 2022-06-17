@@ -12,4 +12,4 @@
 - `trim21/bangumi-episode-ics (https://github.com/Trim21/bangumi-episode-calendar)`：cloudflare workers，不进行分发，不需要添加版本号。
 - `sai/my-private-project`：某人的私有项目。
 
-**请不要使用 "database"，"Bangumi/1.0"，"Bangumi/1.0.0.0"，"Bangumi/1.3.13.0" 等类似的 User Agent。**
+**请不要使用类似于 `database`，`Bangumi/1.0`，`Bangumi/1.3.13.0` 的 User Agent。**
