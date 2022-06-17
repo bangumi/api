@@ -2,7 +2,7 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Bangumi API",
-    "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## 客户端开发者请指定一个带有 APP 名称和版本的 User Agent，而非使用 HTTP 请求库默认的 UA\n\n如果你是开源项目，请在 UA 中附上项目主页。\n\n请不要使用类似\"database\"，\"Bangumi/1.0\"，\"Bangumi/1.0.0.0\"，\"Bangumi/1.3.13.0\" 等类似的 UA。\n\n各种请求库的默认 UA 可能会被禁用。\n",
+    "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user-agent.md)\n",
     "version": "2022-06-18",
     "contact": {
       "name": "Bangumi API",
