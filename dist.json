@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user-agent.md)\n",
-    "version": "2022-06-19",
+    "version": "2022-06-22",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -12,6 +12,32 @@
   "servers": [
     {
       "url": "https://api.bgm.tv"
+    }
+  ],
+  "tags": [
+    {
+      "name": "条目"
+    },
+    {
+      "name": "章节"
+    },
+    {
+      "name": "角色"
+    },
+    {
+      "name": "人物"
+    },
+    {
+      "name": "用户"
+    },
+    {
+      "name": "收藏"
+    },
+    {
+      "name": "编辑历史"
+    },
+    {
+      "name": "目录"
     }
   ],
   "paths": {
@@ -396,12 +422,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           }
         ],
@@ -454,12 +482,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           },
           {
@@ -523,12 +553,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           }
         ],
@@ -584,12 +616,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           }
         ],
@@ -645,12 +679,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           }
         ],
@@ -706,12 +742,14 @@
         "parameters": [
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "query"
           },
           {
@@ -731,10 +769,11 @@
           },
           {
             "required": false,
+            "description": "分页参数",
             "schema": {
               "title": "Limit",
               "maximum": 200,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 100
             },
@@ -743,6 +782,7 @@
           },
           {
             "required": false,
+            "description": "分页参数",
             "schema": {
               "title": "Offset",
               "minimum": 0,
@@ -804,9 +844,12 @@
             "required": true,
             "schema": {
               "title": "Episode ID",
+              "minimum": 1,
+              "description": "剧集 ID",
               "type": "integer"
             },
             "name": "episode_id",
+            "description": "章节 ID",
             "in": "path"
           }
         ],
@@ -860,9 +903,10 @@
         "parameters": [
           {
             "required": true,
+            "description": "角色 ID",
             "schema": {
               "title": "Character ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "character_id",
@@ -913,9 +957,10 @@
         "parameters": [
           {
             "required": true,
+            "description": "角色 ID",
             "schema": {
               "title": "Character ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "character_id",
@@ -982,9 +1027,10 @@
         "parameters": [
           {
             "required": true,
+            "description": "角色 ID",
             "schema": {
               "title": "Character ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "character_id",
@@ -1038,9 +1084,10 @@
         "parameters": [
           {
             "required": true,
+            "description": "角色 ID",
             "schema": {
               "title": "Character ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "character_id",
@@ -1097,10 +1144,11 @@
             "required": true,
             "schema": {
               "title": "Person ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "person_id",
+            "description": "人物 ID",
             "in": "path"
           }
         ],
@@ -1150,10 +1198,11 @@
             "required": true,
             "schema": {
               "title": "Person ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "person_id",
+            "description": "人物 ID",
             "in": "path"
           },
           {
@@ -1219,10 +1268,11 @@
             "required": true,
             "schema": {
               "title": "Person ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "person_id",
+            "description": "人物 ID",
             "in": "path"
           }
         ],
@@ -1275,10 +1325,11 @@
             "required": true,
             "schema": {
               "title": "Person ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "person_id",
+            "description": "人物 ID",
             "in": "path"
           }
         ],
@@ -1325,14 +1376,15 @@
           "用户"
         ],
         "summary": "Get User by name",
-        "description": "获取用户信息，设置了 username 之后无法使用 UID 查询。",
+        "description": "获取用户信息",
         "operationId": "getUserByName",
         "parameters": [
           {
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/UserName"
+              "type": "string"
             },
+            "description": "设置了用户名之后无法使用 UID。",
             "name": "username",
             "in": "path"
           }
@@ -1383,8 +1435,9 @@
           {
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/UserName"
+              "type": "string"
             },
+            "description": "设置了用户名之后无法使用 UID。",
             "name": "username",
             "in": "path"
           },
@@ -1481,11 +1534,11 @@
         "operationId": "getUserCollectionsByUsername",
         "parameters": [
           {
-            "description": "设置了 username 后无法使用UID",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/UserName"
+              "type": "string"
             },
+            "description": "设置了用户名之后无法使用 UID。",
             "name": "username",
             "in": "path"
           },
@@ -1493,13 +1546,7 @@
             "description": "条目类型，默认为全部\n\n具体含义见 [SubjectType](#model-SubjectType)",
             "required": false,
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/components/schemas/SubjectType"
-                }
-              ],
-              "description": "条目类型，默认为全部\n\n具体含义见 [SubjectType](#model-SubjectType)",
-              "type": "integer"
+              "$ref": "#/components/schemas/SubjectType"
             },
             "name": "subject_type",
             "in": "query"
@@ -1513,7 +1560,6 @@
                   "$ref": "#/components/schemas/CollectionType"
                 }
               ],
-              "description": "收藏类型，默认为全部\n\n具体含义见 [CollectionType](#model-CollectionType)",
               "type": "integer"
             },
             "name": "type",
@@ -1524,11 +1570,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -1539,6 +1586,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -1592,21 +1640,24 @@
         "operationId": "getUserCollection",
         "parameters": [
           {
-            "description": "设置了 username 后无法使用UID",
             "required": true,
             "schema": {
-              "$ref": "#/components/schemas/UserName"
+              "type": "string"
             },
+            "description": "设置了用户名之后无法使用 UID。",
             "name": "username",
             "in": "path"
           },
           {
             "required": true,
+            "name": "subject_id",
+            "description": "条目 ID",
             "schema": {
-              "title": "subject ID",
+              "title": "Subject ID",
+              "minimum": 1,
+              "description": "条目 ID",
               "type": "integer"
             },
-            "name": "subject_id",
             "in": "path"
           }
         ],
@@ -1661,10 +1712,11 @@
             "required": true,
             "schema": {
               "title": "Person ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "person_id",
+            "description": "角色 ID",
             "in": "query"
           },
           {
@@ -1672,11 +1724,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -1687,6 +1740,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -1727,10 +1781,11 @@
             "required": true,
             "schema": {
               "title": "Revision ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "revision_id",
+            "description": "历史版本 ID",
             "in": "path"
           }
         ],
@@ -1780,10 +1835,11 @@
             "required": true,
             "schema": {
               "title": "Character ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "character_id",
+            "description": "角色 ID",
             "in": "query"
           },
           {
@@ -1791,11 +1847,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -1806,6 +1863,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -1846,10 +1904,11 @@
             "required": true,
             "schema": {
               "title": "Revision ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "revision_id",
+            "description": "版本 ID",
             "in": "path"
           }
         ],
@@ -1899,10 +1958,11 @@
             "required": true,
             "schema": {
               "title": "Subject ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "subject_id",
+            "description": "条目 ID",
             "in": "query"
           },
           {
@@ -1910,11 +1970,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -1925,6 +1986,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -1965,10 +2027,11 @@
             "required": true,
             "schema": {
               "title": "Revision ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "revision_id",
+            "description": "版本 ID",
             "in": "path"
           }
         ],
@@ -2018,10 +2081,11 @@
             "required": true,
             "schema": {
               "title": "Episode ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "episode_id",
+            "description": "章节 ID",
             "in": "query"
           },
           {
@@ -2029,11 +2093,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -2044,6 +2109,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -2084,10 +2150,11 @@
             "required": true,
             "schema": {
               "title": "Revision ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "revision_id",
+            "description": "版本 ID",
             "in": "path"
           }
         ],
@@ -2137,10 +2204,11 @@
             "required": true,
             "schema": {
               "title": "Index ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "index_id",
+            "description": "目录 ID",
             "in": "path"
           }
         ],
@@ -2193,9 +2261,10 @@
         "parameters": [
           {
             "required": true,
+            "description": "条目 ID",
             "schema": {
               "title": "Index ID",
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer"
             },
             "name": "index_id",
@@ -2203,6 +2272,7 @@
           },
           {
             "required": false,
+            "description": "条目类型",
             "schema": {
               "$ref": "#/components/schemas/SubjectType"
             },
@@ -2214,11 +2284,12 @@
             "schema": {
               "title": "Limit",
               "maximum": 50,
-              "minimum": 0,
+              "minimum": 1,
               "type": "integer",
               "default": 30
             },
             "name": "limit",
+            "description": "分页参数",
             "in": "query"
           },
           {
@@ -2229,6 +2300,7 @@
               "type": "integer",
               "default": 0
             },
+            "description": "分页参数",
             "name": "offset",
             "in": "query"
           }
@@ -2863,10 +2935,6 @@
           "User",
           "WikiUser"
         ]
-      },
-      "UserName": {
-        "type": "string",
-        "description": "获取用户信息，设置了 username 之后无法使用数字 UID。"
       },
       "BloodType": {
         "title": "BloodType",
