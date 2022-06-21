@@ -2,6 +2,15 @@ openapi: 3.0.2
 info:
   title: ''
   version: ''
+tags:
+  - name: 条目
+  - name: 章节
+  - name: 角色
+  - name: 人物
+  - name: 用户
+  - name: 收藏
+  - name: 编辑历史
+  - name: 目录
 paths:
   /v0/subjects/{subject_id}:
     get:
@@ -12,11 +21,13 @@ paths:
       operationId: getSubjectById
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: path
       responses:
         '200':
@@ -47,11 +58,13 @@ paths:
       operationId: getSubjectImageById
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: path
         - required: true
           description: 枚举值 {small|grid|large|medium|common}
@@ -92,11 +105,13 @@ paths:
       operationId: getRelatedPersonsBySubjectId
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: path
       responses:
         '200':
@@ -129,11 +144,13 @@ paths:
       operationId: getRelatedCharactersBySubjectId
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: path
       responses:
         '200':
@@ -166,11 +183,13 @@ paths:
       operationId: getRelatedSubjectsBySubjectId
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: path
       responses:
         '200':
@@ -203,11 +222,13 @@ paths:
       operationId: getEpisodes
       parameters:
         - required: true
+          name: subject_id
+          description: 条目 ID
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
+            description: 条目 ID
             type: integer
-          name: subject_id
           in: query
         - description: 参照章节的`type`
           required: false
@@ -219,15 +240,17 @@ paths:
           name: type
           in: query
         - required: false
+          description: 分页参数
           schema:
             title: Limit
             maximum: 200
-            minimum: 0
+            minimum: 1
             type: integer
             default: 100
           name: limit
           in: query
         - required: false
+          description: 分页参数
           schema:
             title: Offset
             minimum: 0
@@ -266,8 +289,11 @@ paths:
         - required: true
           schema:
             title: Episode ID
+            minimum: 1
+            description: 剧集 ID
             type: integer
           name: episode_id
+          description: 章节 ID
           in: path
       responses:
         '200':
@@ -299,9 +325,10 @@ paths:
       operationId: getCharacterById
       parameters:
         - required: true
+          description: 角色 ID
           schema:
             title: Character ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: character_id
           in: path
@@ -332,9 +359,10 @@ paths:
       operationId: getCharacterImageById
       parameters:
         - required: true
+          description: 角色 ID
           schema:
             title: Character ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: character_id
           in: path
@@ -377,9 +405,10 @@ paths:
       operationId: getRelatedSubjectsByCharacterId
       parameters:
         - required: true
+          description: 角色 ID
           schema:
             title: Character ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: character_id
           in: path
@@ -412,9 +441,10 @@ paths:
       operationId: getRelatedPersonsByCharacterId
       parameters:
         - required: true
+          description: 角色 ID
           schema:
             title: Character ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: character_id
           in: path
@@ -450,9 +480,10 @@ paths:
         - required: true
           schema:
             title: Person ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: person_id
+          description: 人物 ID
           in: path
       responses:
         '200':
@@ -483,9 +514,10 @@ paths:
         - required: true
           schema:
             title: Person ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: person_id
+          description: 人物 ID
           in: path
         - required: true
           description: 枚举值 {small|grid|large|medium}
@@ -528,9 +560,10 @@ paths:
         - required: true
           schema:
             title: Person ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: person_id
+          description: 人物 ID
           in: path
       responses:
         '200':
@@ -563,9 +596,10 @@ paths:
         - required: true
           schema:
             title: Person ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: person_id
+          description: 人物 ID
           in: path
       responses:
         '200':
@@ -593,12 +627,13 @@ paths:
       tags:
         - 用户
       summary: Get User by name
-      description: 获取用户信息，设置了 username 之后无法使用 UID 查询。
+      description: 获取用户信息
       operationId: getUserByName
       parameters:
         - required: true
           schema:
-            $ref: '#/components/schemas/UserName'
+            type: string
+          description: 设置了用户名之后无法使用 UID。
           name: username
           in: path
       responses:
@@ -630,7 +665,8 @@ paths:
       parameters:
         - required: true
           schema:
-            $ref: '#/components/schemas/UserName'
+            type: string
+          description: 设置了用户名之后无法使用 UID。
           name: username
           in: path
         - required: true
@@ -692,10 +728,10 @@ paths:
       description: 获取对应用户的收藏，查看私有收藏需要access token。
       operationId: getUserCollectionsByUsername
       parameters:
-        - description: 设置了 username 后无法使用UID
-          required: true
+        - required: true
           schema:
-            $ref: '#/components/schemas/UserName'
+            type: string
+          description: 设置了用户名之后无法使用 UID。
           name: username
           in: path
         - description: |-
@@ -704,13 +740,7 @@ paths:
             具体含义见 [SubjectType](#model-SubjectType)
           required: false
           schema:
-            allOf:
-              - $ref: '#/components/schemas/SubjectType'
-            description: |-
-              条目类型，默认为全部
-
-              具体含义见 [SubjectType](#model-SubjectType)
-            type: integer
+            $ref: '#/components/schemas/SubjectType'
           name: subject_type
           in: query
         - description: |-
@@ -721,10 +751,6 @@ paths:
           schema:
             allOf:
               - $ref: '#/components/schemas/CollectionType'
-            description: |-
-              收藏类型，默认为全部
-
-              具体含义见 [CollectionType](#model-CollectionType)
             type: integer
           name: type
           in: query
@@ -732,10 +758,11 @@ paths:
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -743,6 +770,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -774,17 +802,20 @@ paths:
       description: 获取对应用户的收藏，查看私有收藏需要access token。
       operationId: getUserCollection
       parameters:
-        - description: 设置了 username 后无法使用UID
-          required: true
+        - required: true
           schema:
-            $ref: '#/components/schemas/UserName'
+            type: string
+          description: 设置了用户名之后无法使用 UID。
           name: username
           in: path
         - required: true
-          schema:
-            title: subject ID
-            type: integer
           name: subject_id
+          description: 条目 ID
+          schema:
+            title: Subject ID
+            minimum: 1
+            description: 条目 ID
+            type: integer
           in: path
       responses:
         '200':
@@ -817,18 +848,20 @@ paths:
         - required: true
           schema:
             title: Person ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: person_id
+          description: 角色 ID
           in: query
         - required: false
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -836,6 +869,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -861,9 +895,10 @@ paths:
         - required: true
           schema:
             title: Revision ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: revision_id
+          description: 历史版本 ID
           in: path
       responses:
         '200':
@@ -894,18 +929,20 @@ paths:
         - required: true
           schema:
             title: Character ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: character_id
+          description: 角色 ID
           in: query
         - required: false
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -913,6 +950,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -938,9 +976,10 @@ paths:
         - required: true
           schema:
             title: Revision ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: revision_id
+          description: 版本 ID
           in: path
       responses:
         '200':
@@ -971,18 +1010,20 @@ paths:
         - required: true
           schema:
             title: Subject ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: subject_id
+          description: 条目 ID
           in: query
         - required: false
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -990,6 +1031,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -1015,9 +1057,10 @@ paths:
         - required: true
           schema:
             title: Revision ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: revision_id
+          description: 版本 ID
           in: path
       responses:
         '200':
@@ -1048,18 +1091,20 @@ paths:
         - required: true
           schema:
             title: Episode ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: episode_id
+          description: 章节 ID
           in: query
         - required: false
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -1067,6 +1112,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -1092,9 +1138,10 @@ paths:
         - required: true
           schema:
             title: Revision ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: revision_id
+          description: 版本 ID
           in: path
       responses:
         '200':
@@ -1125,9 +1172,10 @@ paths:
         - required: true
           schema:
             title: Index ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: index_id
+          description: 目录 ID
           in: path
       responses:
         '200':
@@ -1158,13 +1206,15 @@ paths:
       operationId: getIndexSubjectsByIndexId
       parameters:
         - required: true
+          description: 条目 ID
           schema:
             title: Index ID
-            minimum: 0
+            minimum: 1
             type: integer
           name: index_id
           in: path
         - required: false
+          description: 条目类型
           schema:
             $ref: '#/components/schemas/SubjectType'
           name: type
@@ -1173,10 +1223,11 @@ paths:
           schema:
             title: Limit
             maximum: 50
-            minimum: 0
+            minimum: 1
             type: integer
             default: 30
           name: limit
+          description: 分页参数
           in: query
         - required: false
           schema:
@@ -1184,6 +1235,7 @@ paths:
             minimum: 0
             type: integer
             default: 0
+          description: 分页参数
           name: offset
           in: query
       responses:
@@ -1310,9 +1362,6 @@ components:
         - WikiAdmin
         - User
         - WikiUser
-    UserName:
-      type: string
-      description: 获取用户信息，设置了 username 之后无法使用数字 UID。
     BloodType:
       title: BloodType
       enum:
