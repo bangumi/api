@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user-agent.md)\n",
-    "version": "2022-06-22",
+    "version": "2022-06-29",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -1667,7 +1667,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserCollection"
+                  "$ref": "#/components/schemas/UserSubjectCollection"
                 }
               }
             }
@@ -2869,6 +2869,11 @@
         }
       },
       "Avatar": {
+        "example": {
+          "large": "https://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456",
+          "medium": "https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456",
+          "small": "https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456"
+        },
         "title": "Avatar",
         "required": [
           "large",
@@ -3167,6 +3172,7 @@
       },
       "CollectionType": {
         "title": "CollectionType",
+        "example": 3,
         "enum": [
           1,
           2,
@@ -3181,7 +3187,7 @@
           "modelAsString": false,
           "values": [
             "Wish",
-            "Collect",
+            "Done",
             "Doing",
             "OnHold",
             "Dropped"
@@ -3189,7 +3195,7 @@
         },
         "x-enum-varnames": [
           "Wish",
-          "Collect",
+          "Done",
           "Doing",
           "OnHold",
           "Dropped"
@@ -3986,7 +3992,7 @@
             "title": "Data",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserCollection"
+              "$ref": "#/components/schemas/UserSubjectCollection"
             },
             "default": []
           }
@@ -4585,6 +4591,7 @@
       },
       "SubjectType": {
         "title": "SubjectType",
+        "example": 2,
         "enum": [
           1,
           2,
@@ -4631,8 +4638,8 @@
           }
         }
       },
-      "UserCollection": {
-        "title": "UserCollection",
+      "UserSubjectCollection": {
+        "title": "UserSubjectCollection",
         "required": [
           "subject_id",
           "subject_type",
@@ -4648,12 +4655,14 @@
         "properties": {
           "subject_id": {
             "title": "Subject ID",
-            "type": "integer"
+            "type": "integer",
+            "example": 8
           },
           "subject_type": {
             "$ref": "#/components/schemas/SubjectType"
           },
           "rate": {
+            "example": 4,
             "title": "Rate",
             "type": "integer"
           },
@@ -4662,24 +4671,35 @@
           },
           "comment": {
             "title": "Comment",
-            "type": "string"
+            "type": "string",
+            "example": "看看"
           },
           "tags": {
             "title": "Tags",
             "type": "array",
+            "example": [
+              "柯南",
+              "万年小学生",
+              "推理",
+              "青山刚昌",
+              "TV"
+            ],
             "items": {
               "type": "string"
             }
           },
           "ep_status": {
             "title": "Ep Status",
-            "type": "integer"
+            "type": "integer",
+            "example": 5
           },
           "vol_status": {
             "title": "Vol Status",
-            "type": "integer"
+            "type": "integer",
+            "example": 0
           },
           "updated_at": {
+            "example": "2022-06-19T18:44:13.6140127+08:00",
             "title": "Updated At",
             "type": "string",
             "format": "date-time"
