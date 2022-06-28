@@ -2,6 +2,22 @@ openapi: 3.0.2
 info:
   title: ''
   version: ''
+  description: |
+    ## 错误处理
+
+    ### 不带有 Body 的请求：
+
+    `400`: 请求 path 或者 query 中的数据错误，如 `?subject_id=-1`，或者对应的信息缺失。
+
+    ### 带有 Body 的请求：
+
+    `415`: 请求没有设置 `content-type` header，应该统一设置为 `application/json`。
+
+    `422`: 无法以 JSON 格式解析请求（跟 WebDAV 的 RFC 定义的不同）
+
+    `400`: 请求数据错误，比如请求体或者 path， query 中的数据错误。（不代表请求体一定能够正确以 JSON 格式解析）
+
+    **未用到的多余的字段会被直接忽略，不会报错。**
 tags:
   - name: 条目
   - name: 章节
@@ -823,7 +839,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserCollection'
+                $ref: '#/components/schemas/UserSubjectCollection'
         '400':
           description: Validation Error
           content:
@@ -1304,6 +1320,10 @@ components:
           description: 个人签名
           type: string
     Avatar:
+      example:
+        large: https://lain.bgm.tv/pic/user/l/000/00/00/1.jpg?r=1391790456
+        medium: https://lain.bgm.tv/pic/user/m/000/00/00/1.jpg?r=1391790456
+        small: https://lain.bgm.tv/pic/user/s/000/00/00/1.jpg?r=1391790456
       title: Avatar
       required:
         - large
@@ -1535,6 +1555,7 @@ components:
           type: integer
     CollectionType:
       title: CollectionType
+      example: 3
       enum:
         - 1
         - 2
@@ -1553,13 +1574,13 @@ components:
         modelAsString: false
         values:
           - Wish
-          - Collect
+          - Done
           - Doing
           - OnHold
           - Dropped
       x-enum-varnames:
         - Wish
-        - Collect
+        - Done
         - Doing
         - OnHold
         - Dropped
@@ -2153,7 +2174,7 @@ components:
           title: Data
           type: array
           items:
-            $ref: '#/components/schemas/UserCollection'
+            $ref: '#/components/schemas/UserSubjectCollection'
           default: []
     Person:
       title: Person
@@ -2588,6 +2609,7 @@ components:
             $ref: '#/components/schemas/Tag'
     SubjectType:
       title: SubjectType
+      example: 2
       enum:
         - 1
         - 2
@@ -2632,8 +2654,8 @@ components:
         count:
           title: Count
           type: integer
-    UserCollection:
-      title: UserCollection
+    UserSubjectCollection:
+      title: UserSubjectCollection
       required:
         - subject_id
         - subject_type
@@ -2649,9 +2671,11 @@ components:
         subject_id:
           title: Subject ID
           type: integer
+          example: 8
         subject_type:
           $ref: '#/components/schemas/SubjectType'
         rate:
+          example: 4
           title: Rate
           type: integer
         type:
@@ -2659,18 +2683,28 @@ components:
         comment:
           title: Comment
           type: string
+          example: 看看
         tags:
           title: Tags
           type: array
+          example:
+            - 柯南
+            - 万年小学生
+            - 推理
+            - 青山刚昌
+            - TV
           items:
             type: string
         ep_status:
           title: Ep Status
           type: integer
+          example: 5
         vol_status:
           title: Vol Status
           type: integer
+          example: 0
         updated_at:
+          example: '2022-06-19T18:44:13.6140127+08:00'
           title: Updated At
           type: string
           format: date-time
