@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user-agent.md)\n",
-    "version": "2022-06-29",
+    "version": "2022-07-8",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -4700,6 +4700,7 @@
           },
           "updated_at": {
             "example": "2022-06-19T18:44:13.6140127+08:00",
+            "description": "本时间并不代表条目的收藏时间。修改评分，评价，章节观看状态等收藏信息时未更新此时间是一个 bug。请不要依赖此特性",
             "title": "Updated At",
             "type": "string",
             "format": "date-time"
