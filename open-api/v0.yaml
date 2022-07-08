@@ -2705,6 +2705,7 @@ components:
           example: 0
         updated_at:
           example: '2022-06-19T18:44:13.6140127+08:00'
+          description: 本时间并不代表条目的收藏时间。修改评分，评价，章节观看状态等收藏信息时未更新此时间是一个 bug。请不要依赖此特性
           title: Updated At
           type: string
           format: date-time
