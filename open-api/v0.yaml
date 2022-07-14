@@ -1528,31 +1528,6 @@ components:
         - Mechanic
         - Ship
         - Organization
-    Collection:
-      title: Collection
-      required:
-        - wish
-        - collect
-        - doing
-        - on_hold
-        - dropped
-      type: object
-      properties:
-        wish:
-          title: Wish
-          type: integer
-        collect:
-          title: Collect
-          type: integer
-        doing:
-          title: Doing
-          type: integer
-        on_hold:
-          title: On Hold
-          type: integer
-        dropped:
-          title: Dropped
-          type: integer
     CollectionType:
       title: CollectionType
       example: 3
@@ -2040,10 +2015,7 @@ components:
         images:
           $ref: '#/components/schemas/Images'
         infobox:
-          title: Infobox
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
+          $ref: '#/components/schemas/WikiV0'
         date:
           title: Date
           type: string
@@ -2055,39 +2027,77 @@ components:
           type: string
           format: date-time
       description: 同名字段意义同<a href="#model-Subject">Subject</a>
-    Item:
-      title: Item
-      required:
-        - key
-        - value
-      type: object
-      properties:
-        key:
-          title: Key
-          type: string
-        value:
-          title: Value
-          type: object
-          anyOf:
-            - type: string
-            - type: array
-              items:
-                anyOf:
-                  - $ref: '#/components/schemas/KV'
-                  - $ref: '#/components/schemas/V'
-    KV:
-      title: KV
-      required:
-        - k
-        - v
-      type: object
-      properties:
-        k:
-          title: K
-          type: string
-        v:
-          title: V
-          type: string
+    WikiV0:
+      title: Infobox
+      type: array
+      items:
+        title: Item
+        required:
+          - key
+          - value
+        type: object
+        properties:
+          key:
+            title: Key
+            type: string
+          value:
+            title: Value
+            type: object
+            anyOf:
+              - type: string
+              - type: array
+                items:
+                  anyOf:
+                    - title: KV
+                      required:
+                        - k
+                        - v
+                      type: object
+                      properties:
+                        k:
+                          title: K
+                          type: string
+                        v:
+                          title: V
+                          type: string
+                    - title: V
+                      required:
+                        - v
+                      type: object
+                      properties:
+                        v:
+                          title: V
+                          type: string
+      example:
+        - key: 简体中文名
+          value: 鲁路修·兰佩路基
+        - key: 别名
+          value:
+            - v: L.L.
+            - v: 勒鲁什
+            - v: 鲁鲁修
+            - v: ゼロ
+            - v: Zero
+            - k: 英文名
+              v: Lelouch Lamperouge
+            - k: 第二中文名
+              v: 鲁路修·冯·布里塔尼亚
+            - k: 英文名二
+              v: Lelouch Vie Britannia
+            - k: 日文名
+              v: ルルーシュ・ヴィ・ブリタニア
+        - key: 性别
+          value: 男
+        - key: 生日
+          value: 12月5日
+        - key: 血型
+          value: A型
+        - key: 身高
+          value: 178cm→181cm
+        - key: 体重
+          value: 54kg
+        - key: 引用来源
+          value: Wikipedia
     Paged_Episode:
       title: Paged[Episode]
       type: object
@@ -2380,48 +2390,6 @@ components:
         - Individual
         - Corporation
         - Association
-    Rating:
-      title: Rating
-      required:
-        - rank
-        - total
-        - count
-        - score
-      type: object
-      properties:
-        rank:
-          title: Rank
-          type: integer
-        total:
-          title: Total
-          type: integer
-        count:
-          title: Count
-          type: object
-          properties:
-            '1':
-              type: integer
-            '2':
-              type: integer
-            '3':
-              type: integer
-            '4':
-              type: integer
-            '5':
-              type: integer
-            '6':
-              type: integer
-            '7':
-              type: integer
-            '8':
-              type: integer
-            '9':
-              type: integer
-            '10':
-              type: integer
-        score:
-          title: Score
-          type: number
     RelatedCharacter:
       title: RelatedCharacter
       required:
@@ -2582,10 +2550,7 @@ components:
         images:
           $ref: '#/components/schemas/Images'
         infobox:
-          title: Infobox
-          type: array
-          items:
-            $ref: '#/components/schemas/Item'
+          $ref: '#/components/schemas/WikiV0'
         volumes:
           title: Volumes
           type: integer
@@ -2599,14 +2564,88 @@ components:
           type: integer
           description: 数据库中的章节数量
         rating:
-          $ref: '#/components/schemas/Rating'
+          title: Rating
+          required:
+            - rank
+            - total
+            - count
+            - score
+          type: object
+          properties:
+            rank:
+              title: Rank
+              type: integer
+            total:
+              title: Total
+              type: integer
+            count:
+              title: Count
+              type: object
+              properties:
+                '1':
+                  type: integer
+                '2':
+                  type: integer
+                '3':
+                  type: integer
+                '4':
+                  type: integer
+                '5':
+                  type: integer
+                '6':
+                  type: integer
+                '7':
+                  type: integer
+                '8':
+                  type: integer
+                '9':
+                  type: integer
+                '10':
+                  type: integer
+            score:
+              title: Score
+              type: number
         collection:
-          $ref: '#/components/schemas/Collection'
+          title: Collection
+          required:
+            - wish
+            - collect
+            - doing
+            - on_hold
+            - dropped
+          type: object
+          properties:
+            wish:
+              title: Wish
+              type: integer
+            collect:
+              title: Collect
+              type: integer
+            doing:
+              title: Doing
+              type: integer
+            on_hold:
+              title: On Hold
+              type: integer
+            dropped:
+              title: Dropped
+              type: integer
         tags:
           title: Tags
           type: array
           items:
-            $ref: '#/components/schemas/Tag'
+            title: Tag
+            required:
+              - name
+              - count
+            type: object
+            properties:
+              name:
+                title: Name
+                type: string
+              count:
+                title: Count
+                type: integer
     SubjectType:
       title: SubjectType
       example: 2
@@ -2641,19 +2680,6 @@ components:
         - Music
         - Game
         - Real
-    Tag:
-      title: Tag
-      required:
-        - name
-        - count
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-        count:
-          title: Count
-          type: integer
     UserSubjectCollection:
       title: UserSubjectCollection
       required:
@@ -2712,15 +2738,8 @@ components:
         private:
           title: Private
           type: boolean
-    V:
-      title: V
-      required:
-        - v
-      type: object
-      properties:
-        v:
-          title: V
-          type: string
+        subject:
+          $ref: '#/components/schemas/Subject'
     v0_RelatedSubject:
       title: RelatedSubject
       required:
