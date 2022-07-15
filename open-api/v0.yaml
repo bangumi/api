@@ -2512,6 +2512,7 @@ components:
         - eps
         - total_episodes
         - rating
+        - images
         - collection
         - tags
       type: object
@@ -2646,6 +2647,80 @@ components:
               count:
                 title: Count
                 type: integer
+    SlimSubject:
+      title: SlimSubject
+      required:
+        - images
+        - name
+        - name_cn
+        - short_summary
+        - tags
+        - score
+        - type
+        - id
+        - eps
+        - volumes
+        - collection_total
+        - rank
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+        type:
+          title: Type
+          type: integer
+          allOf:
+            - $ref: '#/components/schemas/SubjectType'
+        name:
+          title: Name
+          type: string
+        name_cn:
+          title: Name Cn
+          type: string
+        short_summary:
+          title: Summary
+          type: string
+          description: 截短后的条目描述。
+        date:
+          title: Date
+          type: string
+          description: air date in `YYYY-MM-DD` format
+        images:
+          $ref: '#/components/schemas/Images'
+        volumes:
+          title: Volumes
+          type: integer
+          description: 书籍条目的册数，由旧服务端从wiki中解析
+        eps:
+          title: Eps
+          type: integer
+          description: 由旧服务端从wiki中解析，对于书籍条目为`话数`
+        collection_total:
+          description: 收藏人数
+          title: Total
+          type: integer
+        score:
+          description: 分数
+          title: Total
+          type: number
+        tags:
+          description: 前 10 个 tag
+          title: Tags
+          type: array
+          items:
+            title: Tag
+            required:
+              - name
+              - count
+            type: object
+            properties:
+              name:
+                title: Name
+                type: string
+              count:
+                title: Count
+                type: integer
     SubjectType:
       title: SubjectType
       example: 2
@@ -2739,7 +2814,7 @@ components:
           title: Private
           type: boolean
         subject:
-          $ref: '#/components/schemas/Subject'
+          $ref: '#/components/schemas/SlimSubject'
     v0_RelatedSubject:
       title: RelatedSubject
       required:
