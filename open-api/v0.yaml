@@ -1564,6 +1564,7 @@ components:
       required:
         - username
         - nickname
+        - avatar
       type: object
       properties:
         username:
@@ -1572,6 +1573,8 @@ components:
         nickname:
           title: Nickname
           type: string
+        avatar:
+          $ref: '#/components/schemas/Avatar'
       description: 意义同<a href="#model-Me">Me</a>
     DetailedRevision:
       title: DetailedRevision
