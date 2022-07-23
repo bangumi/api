@@ -854,6 +854,124 @@ paths:
                 $ref: '#/components/schemas/ErrorDetail'
       security:
         - OptionalHTTPBearer: []
+  /users/-/collections/{subject_id}/episodes:
+    get:
+      tags:
+        - 收藏
+      summary: 章节收藏信息
+      operationId: getUserSubjectEpisodeCollection
+      parameters:
+        - required: true
+          name: subject_id
+          description: 条目 ID
+          schema:
+            title: Subject ID
+            minimum: 1
+            description: 条目 ID
+            type: integer
+          in: path
+        - required: false
+          schema:
+            title: Offset
+            minimum: 0
+            type: integer
+            default: 0
+          description: 分页参数
+          name: offset
+          in: query
+        - required: false
+          schema:
+            title: Limit
+            maximum: 1000
+            minimum: 1
+            type: integer
+            default: 100
+          name: limit
+          description: 分页参数
+          in: query
+        - required: false
+          schema:
+            $ref: '#/components/schemas/EpType'
+          in: query
+          name: episode_type
+          description: 章节类型，不传则不按照章节进行筛选
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Page'
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/UserEpisodeCollection'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 条目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
+  /users/-/collections/-/episodes/{episode_id}:
+    get:
+      tags:
+        - 收藏
+      summary: 章节收藏信息
+      operationId: getUserEpisodeCollection
+      parameters:
+        - required: true
+          schema:
+            title: Episode ID
+            minimum: 1
+            description: 剧集 ID
+            type: integer
+          name: episode_id
+          description: 章节 ID
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEpisodeCollection'
+        '400':
+          description: episode ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 条目或者章节不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
   /v0/revisions/persons:
     get:
       tags:
@@ -1115,10 +1233,10 @@ paths:
         - required: false
           schema:
             title: Limit
-            maximum: 50
+            maximum: 1000
             minimum: 1
             type: integer
-            default: 30
+            default: 100
           name: limit
           description: 分页参数
           in: query
@@ -1841,6 +1959,19 @@ components:
           title: Disc
           type: integer
           description: 音乐曲目的碟片数
+      example:
+        airdate: ''
+        comment: 0
+        desc: ''
+        disc: 0
+        duration: ''
+        ep: 6
+        id: 8
+        name: 蒼と白の境界線
+        name_cn: ''
+        sort: 6
+        subject_id: 15
+        type: 0
     EpisodeDetail:
       title: EpisodeDetail
       required:
@@ -2098,6 +2229,28 @@ components:
           value: 54kg
         - key: 引用来源
           value: Wikipedia
+    Page:
+      type: object
+      required:
+        - total
+        - limit
+        - offset
+        - data
+      properties:
+        total:
+          title: Total
+          type: integer
+        limit:
+          title: Limit
+          type: integer
+        offset:
+          title: Offset
+          type: integer
+        data:
+          title: Data
+          type: array
+          items:
+            type: object
     Paged_Episode:
       title: Paged[Episode]
       type: object
@@ -2815,6 +2968,42 @@ components:
           type: boolean
         subject:
           $ref: '#/components/schemas/SlimSubject'
+    UserEpisodeCollection:
+      additionalProperties: false
+      properties:
+        episode:
+          $ref: '#/components/schemas/Episode'
+        type:
+          title: EpisodeCollectionType
+          example: 2
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+          type: integer
+          description: |-
+            - `0`: 未收藏
+            - `1`: 想看
+            - `2`: 看过
+            - `3`: 抛弃
+          x-ms-enum:
+            name: EpisodeCollectionType
+            modelAsString: false
+            values:
+              - Noop
+              - Wish
+              - Done
+              - Dropped
+          x-enum-varNames:
+            - Noop
+            - Wish
+            - Done
+            - Dropped
+      required:
+        - episode
+        - type
+      type: object
     v0_RelatedSubject:
       title: RelatedSubject
       required:
