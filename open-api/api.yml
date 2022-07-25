@@ -4,7 +4,7 @@ info:
   description: |
     你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token
 
-    ## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user-agent.md)
+    ## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)
 
   version: "dev"
   contact:
