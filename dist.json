@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n",
-    "version": "2022-07-26",
+    "version": "2022-08-9",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -1557,7 +1557,7 @@
             "schema": {
               "allOf": [
                 {
-                  "$ref": "#/components/schemas/CollectionType"
+                  "$ref": "#/components/schemas/SubjectCollectionType"
                 }
               ],
               "type": "integer"
@@ -3326,7 +3326,7 @@
           "Organization"
         ]
       },
-      "CollectionType": {
+      "SubjectCollectionType": {
         "title": "CollectionType",
         "example": 3,
         "enum": [
@@ -5058,7 +5058,7 @@
             "type": "integer"
           },
           "type": {
-            "$ref": "#/components/schemas/CollectionType"
+            "$ref": "#/components/schemas/SubjectCollectionType"
           },
           "comment": {
             "title": "Comment",
