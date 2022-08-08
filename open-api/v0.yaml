@@ -2,22 +2,6 @@ openapi: 3.0.2
 info:
   title: ''
   version: ''
-  description: |
-    ## 错误处理
-
-    ### 不带有 Body 的请求：
-
-    `400`: 请求 path 或者 query 中的数据错误，如 `?subject_id=-1`，或者对应的信息缺失。
-
-    ### 带有 Body 的请求：
-
-    `415`: 请求没有设置 `content-type` header，应该统一设置为 `application/json`。
-
-    `422`: 无法以 JSON 格式解析请求（跟 WebDAV 的 RFC 定义的不同）
-
-    `400`: 请求数据错误，比如请求体或者 path， query 中的数据错误。（不代表请求体一定能够正确以 JSON 格式解析）
-
-    **未用到的多余的字段会被直接忽略，不会报错。**
 tags:
   - name: 条目
   - name: 章节
@@ -766,7 +750,7 @@ paths:
           required: false
           schema:
             allOf:
-              - $ref: '#/components/schemas/CollectionType'
+              - $ref: '#/components/schemas/SubjectCollectionType'
             type: integer
           name: type
           in: query
@@ -1646,7 +1630,7 @@ components:
         - Mechanic
         - Ship
         - Organization
-    CollectionType:
+    SubjectCollectionType:
       title: CollectionType
       example: 3
       enum:
@@ -2933,7 +2917,7 @@ components:
           title: Rate
           type: integer
         type:
-          $ref: '#/components/schemas/CollectionType'
+          $ref: '#/components/schemas/SubjectCollectionType'
         comment:
           title: Comment
           type: string
