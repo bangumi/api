@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n",
-    "version": "2022-08-9",
+    "version": "2022-08-13",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -1700,6 +1700,118 @@
         ]
       }
     },
+    "/v0/users/-/collections/{subject_id}": {
+      "patch": {
+        "tags": [
+          "收藏"
+        ],
+        "summary": "修改用户单个收藏",
+        "description": "修改条目收藏状态，暂时不会生成时间线。\n\n由于直接修改剧集条目的完成度可能会引起意料之外效果，只能用于修改书籍类条目的完成度。\n\nPATCH 方法的所有请求体字段均可选\n",
+        "operationId": "patchUserCollection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/path_subject_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "所有的字段均可选",
+                "properties": {
+                  "type": {
+                    "description": "修改条目收藏类型",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/SubjectCollectionType"
+                      }
+                    ]
+                  },
+                  "rate": {
+                    "description": "评分，`0` 表示删除评分",
+                    "type": "integer",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "exclusiveMaximum": false,
+                    "exclusiveMinimum": false
+                  },
+                  "ep_status": {
+                    "description": "只能用于修改书籍条目进度",
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": false
+                  },
+                  "vol_status": {
+                    "description": "只能用于修改书籍条目进度",
+                    "type": "integer",
+                    "minimum": 0,
+                    "exclusiveMinimum": false
+                  },
+                  "comment": {
+                    "description": "评价",
+                    "type": "string"
+                  },
+                  "private": {
+                    "description": "仅自己可见",
+                    "type": "boolean"
+                  },
+                  "tags": {
+                    "title": "标签",
+                    "description": "不传或者 `null` 都会被忽略，传 `[]` 则会删除所有 tag。",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "description": "不能包含空格"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "400": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "用户不存在或者条目未收藏",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "OptionalHTTPBearer": []
+          }
+        ]
+      }
+    },
     "/v0/users/-/collections/{subject_id}/episodes": {
       "get": {
         "tags": [
@@ -1780,6 +1892,88 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "条目不存在",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "收藏"
+        ],
+        "summary": "章节收藏信息",
+        "description": "同时会重新计算条目的完成度\n\n暂时不能生成时间线\n",
+        "operationId": "patchUserSubjectEpisodeCollection",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/path_subject_id"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "episode_id",
+                  "type"
+                ],
+                "properties": {
+                  "episode_id": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    },
+                    "example": [
+                      1,
+                      2,
+                      8
+                    ]
+                  },
+                  "type": {
+                    "$ref": "#/components/schemas/EpisodeCollectionType"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
           },
           "400": {
             "description": "Bad Request",
@@ -3354,6 +3548,34 @@
           "Done",
           "Doing",
           "OnHold",
+          "Dropped"
+        ]
+      },
+      "EpisodeCollectionType": {
+        "title": "EpisodeCollectionType",
+        "example": 2,
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "type": "integer",
+        "description": "- `0`: 未收藏\n- `1`: 想看\n- `2`: 看过\n- `3`: 抛弃",
+        "x-ms-enum": {
+          "name": "EpisodeCollectionType",
+          "modelAsString": false,
+          "values": [
+            "Noop",
+            "Wish",
+            "Done",
+            "Dropped"
+          ]
+        },
+        "x-enum-varNames": [
+          "Noop",
+          "Wish",
+          "Done",
           "Dropped"
         ]
       },
@@ -5112,32 +5334,7 @@
             "$ref": "#/components/schemas/Episode"
           },
           "type": {
-            "title": "EpisodeCollectionType",
-            "example": 2,
-            "enum": [
-              0,
-              1,
-              2,
-              3
-            ],
-            "type": "integer",
-            "description": "- `0`: 未收藏\n- `1`: 想看\n- `2`: 看过\n- `3`: 抛弃",
-            "x-ms-enum": {
-              "name": "EpisodeCollectionType",
-              "modelAsString": false,
-              "values": [
-                "Noop",
-                "Wish",
-                "Done",
-                "Dropped"
-              ]
-            },
-            "x-enum-varNames": [
-              "Noop",
-              "Wish",
-              "Done",
-              "Dropped"
-            ]
+            "$ref": "#/components/schemas/EpisodeCollectionType"
           }
         },
         "required": [
@@ -5320,6 +5517,27 @@
         "schema": {
           "type": "string"
         }
+      },
+      "path_subject_id": {
+        "required": true,
+        "name": "subject_id",
+        "description": "条目 ID",
+        "schema": {
+          "title": "Subject ID",
+          "minimum": 1,
+          "description": "条目 ID",
+          "type": "integer"
+        },
+        "in": "path"
+      },
+      "path_username": {
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "设置了用户名之后无法使用 UID。",
+        "name": "username",
+        "in": "path"
       }
     },
     "securitySchemes": {
