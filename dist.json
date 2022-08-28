@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n",
-    "version": "2022-08-13",
+    "version": "2022-08-28",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -409,6 +409,196 @@
             "HTTPBearer": []
           }
         ]
+      }
+    },
+    "/v0/search/subjects": {
+      "post": {
+        "tags": [
+          "条目"
+        ],
+        "summary": "条目搜索",
+        "operationId": "searchSubjects",
+        "description": "## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动\n\n目前支持的筛选条件包括:\n- `type`: 条目类型，参照 `SubjectType` enum， `或`。\n- `tag`: 标签，可以多次出现。`且` 关系。\n- `airdate`: 播出日期/发售日期。`且` 关系。\n- `rating`: 用于搜索指定评分的条目。`且` 关系。\n- `rank`: 用于搜索指定排名的条目。`且` 关系。\n- `nsfw`: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。\n\n不同筛选条件之间为 `且`\n\n计划支持:\n- 标记人数\n- 评分人数\n",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "分页参数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "分页参数",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "keyword"
+                ],
+                "properties": {
+                  "keyword": {
+                    "type": "string"
+                  },
+                  "order": {
+                    "type": "string",
+                    "example": "rank",
+                    "description": "排序"
+                  },
+                  "filter": {
+                    "type": "object",
+                    "description": "不同条件之间是 `且` 的关系",
+                    "properties": {
+                      "type": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/components/schemas/SubjectType"
+                        },
+                        "description": "条目类型，参照 `SubjectType` enum，多值之间为 `或` 的关系。"
+                      },
+                      "tag": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "童年",
+                          "原创"
+                        ],
+                        "description": "标签，可以多次出现。多值之间为 `且` 关系。"
+                      },
+                      "air_date": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          ">=2020-07-01",
+                          "<2020-10-01"
+                        ],
+                        "description": "播出日期/发售日期，日期必需为 `YYYY-MM-DD` 格式。多值之间为 `且` 关系。"
+                      },
+                      "rating": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          ">=6",
+                          "<8"
+                        ],
+                        "description": "用于搜索指定评分的条目，多值之间为 `且` 关系。"
+                      },
+                      "rank": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          ">10",
+                          "<=18"
+                        ],
+                        "description": "用于搜索指定排名的条目，多值之间为 `且` 关系。"
+                      },
+                      "nsfw": {
+                        "type": "boolean",
+                        "description": "无权限的用户会直接忽略此字段，不会返回R18条目。\n\n默认或者 `null` 会返回包含 R18 的所有搜索结果。\n\n`true` 只会返回 R18 条目。\n\n`false` 只会返回非 R18 条目。\n"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "返回搜索结果",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "用户信息",
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "description": "搜索结果数量",
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "limit": {
+                      "description": "当前分页参数",
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "offset": {
+                      "description": "当前分页参数",
+                      "type": "integer",
+                      "example": 100
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "description": "条目ID",
+                            "type": "integer",
+                            "example": 8
+                          },
+                          "type": {
+                            "$ref": "#/components/schemas/SubjectType"
+                          },
+                          "url": {
+                            "description": "条目页面",
+                            "type": "string",
+                            "example": "https://bgm.tv/subject/8"
+                          },
+                          "images": {
+                            "description": "条目图片",
+                            "type": "object",
+                            "properties": {
+                              "large": {
+                                "type": "string",
+                                "example": "https://lain.bgm.tv/pic/cover/l/c9/f0/8_wK0z3.jpg"
+                              },
+                              "medium": {
+                                "type": "string",
+                                "example": "https://lain.bgm.tv/pic/cover/m/c9/f0/8_wK0z3.jpg"
+                              },
+                              "small": {
+                                "type": "string",
+                                "example": "https://lain.bgm.tv/pic/cover/s/c9/f0/8_wK0z3.jpg"
+                              },
+                              "common": {
+                                "type": "string",
+                                "example": "https://lain.bgm.tv/pic/cover/c/c9/f0/8_wK0z3.jpg"
+                              },
+                              "grid": {
+                                "type": "string",
+                                "example": "https://lain.bgm.tv/pic/cover/g/c9/f0/8_wK0z3.jpg"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v0/subjects/{subject_id}": {
