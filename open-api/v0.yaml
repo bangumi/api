@@ -57,10 +57,22 @@ paths:
               properties:
                 keyword:
                   type: string
-                order:
+                sort:
+                  enum:
+                    - match
+                    - heat
+                    - rank
+                    - score
+                  default: match
                   type: string
                   example: rank
-                  description: 排序
+                  description: |
+                    排序规则
+
+                    - `match` meilisearch 的默认排序，按照匹配程度
+                    - `heat` 收藏人数
+                    - `rank` 排名由高到低
+                    - `score` 评分
                 filter:
                   type: object
                   description: 不同条件之间是 `且` 的关系
@@ -146,6 +158,7 @@ paths:
                         - name_cn
                         - image
                         - date
+                        - summary
                       properties:
                         id:
                           description: 条目ID
@@ -160,6 +173,9 @@ paths:
                           type: string
                           format: url
                           description: 封面
+                        summary:
+                          type: string
+                          description: 条目描述
                         name:
                           type: string
                           description: 条目原名
