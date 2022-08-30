@@ -137,6 +137,15 @@ paths:
                     type: array
                     items:
                       type: object
+                      required:
+                        - score
+                        - id
+                        - rank
+                        - tags
+                        - name
+                        - name_cn
+                        - image
+                        - date
                       properties:
                         id:
                           description: 条目ID
@@ -144,34 +153,27 @@ paths:
                           example: 8
                         type:
                           $ref: '#/components/schemas/SubjectType'
-                        url:
-                          description: 条目页面
+                        date:
                           type: string
-                          example: https://bgm.tv/subject/8
-                        images:
-                          description: 条目图片
-                          type: object
-                          properties:
-                            large:
-                              type: string
-                              example: >-
-                                https://lain.bgm.tv/pic/cover/l/c9/f0/8_wK0z3.jpg
-                            medium:
-                              type: string
-                              example: >-
-                                https://lain.bgm.tv/pic/cover/m/c9/f0/8_wK0z3.jpg
-                            small:
-                              type: string
-                              example: >-
-                                https://lain.bgm.tv/pic/cover/s/c9/f0/8_wK0z3.jpg
-                            common:
-                              type: string
-                              example: >-
-                                https://lain.bgm.tv/pic/cover/c/c9/f0/8_wK0z3.jpg
-                            grid:
-                              type: string
-                              example: >-
-                                https://lain.bgm.tv/pic/cover/g/c9/f0/8_wK0z3.jpg
+                          description: 上映/开播/连载开始日期，可能为空字符串
+                        image:
+                          type: string
+                          format: url
+                          description: 封面
+                        name:
+                          type: string
+                          description: 条目原名
+                        name_cn:
+                          type: string
+                          description: 条目中文名
+                        tags:
+                          $ref: '#/components/schemas/SubjectTags'
+                        score:
+                          description: 评分
+                          type: number
+                        rank:
+                          description: 排名
+                          type: integer
   /v0/subjects/{subject_id}:
     get:
       tags:
@@ -3105,21 +3107,7 @@ components:
               title: Dropped
               type: integer
         tags:
-          title: Tags
-          type: array
-          items:
-            title: Tag
-            required:
-              - name
-              - count
-            type: object
-            properties:
-              name:
-                title: Name
-                type: string
-              count:
-                title: Count
-                type: integer
+          $ref: '#/components/schemas/SubjectTags'
     SlimSubject:
       title: SlimSubject
       required:
@@ -3179,21 +3167,24 @@ components:
           type: number
         tags:
           description: 前 10 个 tag
-          title: Tags
-          type: array
-          items:
-            title: Tag
-            required:
-              - name
-              - count
-            type: object
-            properties:
-              name:
-                title: Name
-                type: string
-              count:
-                title: Count
-                type: integer
+          allOf:
+            - $ref: '#/components/schemas/SubjectTags'
+    SubjectTags:
+      title: Tags
+      type: array
+      items:
+        title: Tag
+        required:
+          - name
+          - count
+        type: object
+        properties:
+          name:
+            title: Name
+            type: string
+          count:
+            title: Count
+            type: integer
     SubjectType:
       title: SubjectType
       example: 2
