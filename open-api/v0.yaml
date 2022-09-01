@@ -198,15 +198,7 @@ paths:
       description: cache with 300s
       operationId: getSubjectById
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_subject_id'
       responses:
         '200':
           description: Successful Response
@@ -235,15 +227,7 @@ paths:
       summary: Get Subject Image
       operationId: getSubjectImageById
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_subject_id'
         - required: true
           description: 枚举值 {small|grid|large|medium|common}
           schema:
@@ -282,15 +266,7 @@ paths:
       summary: Get Subject Persons
       operationId: getRelatedPersonsBySubjectId
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_subject_id'
       responses:
         '200':
           description: Successful Response
@@ -321,15 +297,7 @@ paths:
       summary: Get Subject Characters
       operationId: getRelatedCharactersBySubjectId
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_subject_id'
       responses:
         '200':
           description: Successful Response
@@ -360,15 +328,7 @@ paths:
       summary: Get Subject Relations
       operationId: getRelatedSubjectsBySubjectId
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_subject_id'
       responses:
         '200':
           description: Successful Response
@@ -399,15 +359,7 @@ paths:
       summary: Get Episodes
       operationId: getEpisodes
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: query
+        - $ref: '#/components/parameters/query_subject_id'
         - description: 参照章节的`type`
           required: false
           schema:
@@ -464,15 +416,7 @@ paths:
       summary: Get Episode
       operationId: getEpisodeById
       parameters:
-        - required: true
-          schema:
-            title: Episode ID
-            minimum: 1
-            description: 剧集 ID
-            type: integer
-          name: episode_id
-          description: 章节 ID
-          in: path
+        - $ref: '#/components/parameters/path_episode_id'
       responses:
         '200':
           description: Successful Response
@@ -502,14 +446,7 @@ paths:
       description: cache with 60s
       operationId: getCharacterById
       parameters:
-        - required: true
-          description: 角色 ID
-          schema:
-            title: Character ID
-            minimum: 1
-            type: integer
-          name: character_id
-          in: path
+        - $ref: '#/components/parameters/path_character_id'
       responses:
         '200':
           description: Successful Response
@@ -536,14 +473,7 @@ paths:
       summary: Get Character Image
       operationId: getCharacterImageById
       parameters:
-        - required: true
-          description: 角色 ID
-          schema:
-            title: Character ID
-            minimum: 1
-            type: integer
-          name: character_id
-          in: path
+        - $ref: '#/components/parameters/path_character_id'
         - required: true
           description: 枚举值 {small|grid|large|medium}
           schema:
@@ -582,14 +512,7 @@ paths:
       summary: get character related subjects
       operationId: getRelatedSubjectsByCharacterId
       parameters:
-        - required: true
-          description: 角色 ID
-          schema:
-            title: Character ID
-            minimum: 1
-            type: integer
-          name: character_id
-          in: path
+        - $ref: '#/components/parameters/path_character_id'
       responses:
         '200':
           description: Successful Response
@@ -618,14 +541,7 @@ paths:
       summary: get character related persons
       operationId: getRelatedPersonsByCharacterId
       parameters:
-        - required: true
-          description: 角色 ID
-          schema:
-            title: Character ID
-            minimum: 1
-            type: integer
-          name: character_id
-          in: path
+        - $ref: '#/components/parameters/path_character_id'
       responses:
         '200':
           description: Successful Response
@@ -655,14 +571,7 @@ paths:
       description: cache with 60s
       operationId: getPersonById
       parameters:
-        - required: true
-          schema:
-            title: Person ID
-            minimum: 1
-            type: integer
-          name: person_id
-          description: 人物 ID
-          in: path
+        - $ref: '#/components/parameters/path_person_id'
       responses:
         '200':
           description: Successful Response
@@ -689,14 +598,7 @@ paths:
       summary: Get Person Image
       operationId: getPersonImageById
       parameters:
-        - required: true
-          schema:
-            title: Person ID
-            minimum: 1
-            type: integer
-          name: person_id
-          description: 人物 ID
-          in: path
+        - $ref: '#/components/parameters/path_person_id'
         - required: true
           description: 枚举值 {small|grid|large|medium}
           schema:
@@ -735,14 +637,7 @@ paths:
       summary: get person related subjects
       operationId: getRelatedSubjectsByPersonId
       parameters:
-        - required: true
-          schema:
-            title: Person ID
-            minimum: 1
-            type: integer
-          name: person_id
-          description: 人物 ID
-          in: path
+        - $ref: '#/components/parameters/path_person_id'
       responses:
         '200':
           description: Successful Response
@@ -771,14 +666,7 @@ paths:
       summary: get person related characters
       operationId: getRelatedCharactersByPersonId
       parameters:
-        - required: true
-          schema:
-            title: Person ID
-            minimum: 1
-            type: integer
-          name: person_id
-          description: 人物 ID
-          in: path
+        - $ref: '#/components/parameters/path_person_id'
       responses:
         '200':
           description: Successful Response
@@ -808,12 +696,7 @@ paths:
       description: 获取用户信息
       operationId: getUserByName
       parameters:
-        - required: true
-          schema:
-            type: string
-          description: 设置了用户名之后无法使用 UID。
-          name: username
-          in: path
+        - $ref: '#/components/parameters/path_username'
       responses:
         '200':
           description: Successful Response
@@ -841,12 +724,7 @@ paths:
       description: 获取用户头像，302 重定向至头像地址，设置了 username 之后无法使用 UID 查询。
       operationId: getUserAvatarByName
       parameters:
-        - required: true
-          schema:
-            type: string
-          description: 设置了用户名之后无法使用 UID。
-          name: username
-          in: path
+        - $ref: '#/components/parameters/path_username'
         - required: true
           description: 枚举值 {small|large|medium}
           schema:
@@ -906,12 +784,7 @@ paths:
       description: 获取对应用户的收藏，查看私有收藏需要access token。
       operationId: getUserCollectionsByUsername
       parameters:
-        - required: true
-          schema:
-            type: string
-          description: 设置了用户名之后无法使用 UID。
-          name: username
-          in: path
+        - $ref: '#/components/parameters/path_username'
         - description: |-
             条目类型，默认为全部
 
@@ -932,25 +805,8 @@ paths:
             type: integer
           name: type
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 50
-            minimum: 1
-            type: integer
-            default: 30
-          name: limit
-          description: 分页参数
-          in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -980,21 +836,8 @@ paths:
       description: 获取对应用户的收藏，查看私有收藏需要access token。
       operationId: getUserCollection
       parameters:
-        - required: true
-          schema:
-            type: string
-          description: 设置了用户名之后无法使用 UID。
-          name: username
-          in: path
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
+        - $ref: '#/components/parameters/path_username'
+        - $ref: '#/components/parameters/path_subject_id'
       responses:
         '200':
           description: Successful Response
@@ -1101,24 +944,8 @@ paths:
       summary: 章节收藏信息
       operationId: getUserSubjectEpisodeCollection
       parameters:
-        - required: true
-          name: subject_id
-          description: 条目 ID
-          schema:
-            title: Subject ID
-            minimum: 1
-            description: 条目 ID
-            type: integer
-          in: path
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/path_subject_id'
+        - $ref: '#/components/parameters/default_query_offset'
         - required: false
           schema:
             title: Limit
@@ -1229,15 +1056,7 @@ paths:
       summary: 章节收藏信息
       operationId: getUserEpisodeCollection
       parameters:
-        - required: true
-          schema:
-            title: Episode ID
-            minimum: 1
-            description: 剧集 ID
-            type: integer
-          name: episode_id
-          description: 章节 ID
-          in: path
+        - $ref: '#/components/parameters/path_episode_id'
       responses:
         '200':
           description: Successful Response
@@ -1280,25 +1099,8 @@ paths:
           name: person_id
           description: 角色 ID
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 50
-            minimum: 1
-            type: integer
-            default: 30
-          name: limit
-          description: 分页参数
-          in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -1361,25 +1163,8 @@ paths:
           name: character_id
           description: 角色 ID
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 50
-            minimum: 1
-            type: integer
-            default: 30
-          name: limit
-          description: 分页参数
-          in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -1400,14 +1185,7 @@ paths:
       summary: Get Character Revision
       operationId: getCharacterRevisionByRevisionId
       parameters:
-        - required: true
-          schema:
-            title: Revision ID
-            minimum: 1
-            type: integer
-          name: revision_id
-          description: 版本 ID
-          in: path
+        - $ref: '#/components/parameters/path_revision_id'
       responses:
         '200':
           description: Successful Response
@@ -1442,25 +1220,8 @@ paths:
           name: subject_id
           description: 条目 ID
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 50
-            minimum: 1
-            type: integer
-            default: 30
-          name: limit
-          description: 分页参数
-          in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -1481,14 +1242,7 @@ paths:
       summary: Get Subject Revision
       operationId: getSubjectRevisionByRevisionId
       parameters:
-        - required: true
-          schema:
-            title: Revision ID
-            minimum: 1
-            type: integer
-          name: revision_id
-          description: 版本 ID
-          in: path
+        - $ref: '#/components/parameters/path_revision_id'
       responses:
         '200':
           description: Successful Response
@@ -1533,15 +1287,7 @@ paths:
           name: limit
           description: 分页参数
           in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -1562,14 +1308,7 @@ paths:
       summary: Get Episode Revision
       operationId: getEpisodeRevisionByRevisionId
       parameters:
-        - required: true
-          schema:
-            title: Revision ID
-            minimum: 1
-            type: integer
-          name: revision_id
-          description: 版本 ID
-          in: path
+        - $ref: '#/components/parameters/path_revision_id'
       responses:
         '200':
           description: Successful Response
@@ -1646,25 +1385,8 @@ paths:
             $ref: '#/components/schemas/SubjectType'
           name: type
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 50
-            minimum: 1
-            type: integer
-            default: 30
-          name: limit
-          description: 分页参数
-          in: query
-        - required: false
-          schema:
-            title: Offset
-            minimum: 0
-            type: integer
-            default: 0
-          description: 分页参数
-          name: offset
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
           description: Successful Response
@@ -1693,10 +1415,7 @@ components:
       name: subject_id
       description: 条目 ID
       schema:
-        title: Subject ID
-        minimum: 1
-        description: 条目 ID
-        type: integer
+        $ref: '#/components/schemas/SubjectID'
       in: path
     path_username:
       required: true
@@ -1705,7 +1424,77 @@ components:
       description: 设置了用户名之后无法使用 UID。
       name: username
       in: path
+    path_episode_id:
+      required: true
+      schema:
+        title: Episode ID
+        minimum: 1
+        description: 剧集 ID
+        type: integer
+      name: episode_id
+      description: 章节 ID
+      in: path
+    path_character_id:
+      required: true
+      description: 角色 ID
+      schema:
+        title: Character ID
+        minimum: 1
+        type: integer
+      name: character_id
+      in: path
+    path_person_id:
+      required: true
+      schema:
+        title: Person ID
+        minimum: 1
+        type: integer
+      name: person_id
+      description: 人物 ID
+      in: path
+    query_subject_id:
+      required: true
+      name: subject_id
+      description: 条目 ID
+      schema:
+        $ref: '#/components/schemas/SubjectID'
+      in: query
+    default_query_limit:
+      required: false
+      schema:
+        title: Limit
+        maximum: 50
+        minimum: 1
+        type: integer
+        default: 30
+      name: limit
+      description: 分页参数
+      in: query
+    default_query_offset:
+      required: false
+      schema:
+        title: Offset
+        minimum: 0
+        type: integer
+        default: 0
+      description: 分页参数
+      name: offset
+      in: query
+    path_revision_id:
+      required: true
+      schema:
+        title: Revision ID
+        minimum: 1
+        type: integer
+      name: revision_id
+      description: 版本 ID
+      in: path
   schemas:
+    SubjectID:
+      title: Subject ID
+      minimum: 1
+      description: 条目 ID
+      type: integer
     User:
       example:
         avatar:
@@ -2288,6 +2077,7 @@ components:
           type: integer
         duration:
           title: Duration
+          description: 维基人填写的原始时长
           type: string
         desc:
           title: Desc
@@ -2297,6 +2087,9 @@ components:
           title: Disc
           type: integer
           description: 音乐曲目的碟片数
+        duration_seconds:
+          description: 服务器解析的时长，无法解析时为 `0`
+          type: integer
       example:
         airdate: ''
         comment: 0
@@ -2310,6 +2103,7 @@ components:
         sort: 6
         subject_id: 15
         type: 0
+        duration_seconds: 1440
     EpisodeDetail:
       title: EpisodeDetail
       required:
