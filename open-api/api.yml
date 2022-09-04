@@ -121,16 +121,6 @@ paths:
                         description: 结果列表
                         type: array
                         items:
-                          $ref: "#/components/schemas/Legacy_SubjectSmall"
-                  - type: object
-                    properties:
-                      results:
-                        description: 总条数
-                        type: integer
-                      list:
-                        description: 结果列表
-                        type: array
-                        items:
                           $ref: "#/components/schemas/Legacy_SubjectMedium"
                   - type: object
                     properties:
