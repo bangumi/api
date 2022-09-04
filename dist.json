@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n",
-    "version": "2022-09-4",
+    "version": "2022-09-5",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
