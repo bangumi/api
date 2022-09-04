@@ -122,7 +122,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: []
+        - HTTPBearer: [ ]
     post:
       tags:
         - 进度
@@ -153,13 +153,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: []
+        - HTTPBearer: [ ]
   /subject/{subject_id}/update/watched_eps:
     post:
       tags:
         - 进度
+      deprecated: true
       summary: 批量更新收视进度
       operationId: batchUpdateEpisodeStatusBySubjectId
+      description: 建议使用 [patchUserSubjectEpisodeCollection](#/%E6%94%B6%E8%97%8F/patchUserSubjectEpisodeCollection)
       parameters:
         - $ref: "#/components/parameters/subject_id"
         - name: watched_eps
@@ -191,7 +193,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: []
+        - HTTPBearer: [ ]
   /collection/{subject_id}/{action}:
     post:
       tags:
@@ -256,7 +258,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: []
+        - HTTPBearer: [ ]
 components:
   schemas:
     CollectionStatusId:
