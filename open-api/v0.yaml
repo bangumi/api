@@ -1084,6 +1084,46 @@ paths:
                 $ref: '#/components/schemas/ErrorDetail'
       security:
         - HTTPBearer: []
+    put:
+      tags:
+        - 收藏
+      summary: 更新章节收藏信息
+      operationId: putUserEpisodeCollection
+      parameters:
+        - $ref: '#/components/parameters/path_episode_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/EpisodeCollectionType'
+              required:
+                - type
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: episode ID not valid or subject not collected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 条目或者章节不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
   /v0/revisions/persons:
     get:
       tags:
@@ -1781,7 +1821,6 @@ components:
       title: EpisodeCollectionType
       example: 2
       enum:
-        - 0
         - 1
         - 2
         - 3
@@ -1795,12 +1834,10 @@ components:
         name: EpisodeCollectionType
         modelAsString: false
         values:
-          - Noop
           - Wish
           - Done
           - Dropped
       x-enum-varNames:
-        - Noop
         - Wish
         - Done
         - Dropped
