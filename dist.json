@@ -175,6 +175,7 @@
         "tags": [
           "进度"
         ],
+        "deprecated": true,
         "summary": "更新收视进度",
         "operationId": "getEpisodeStatus",
         "parameters": [
@@ -217,6 +218,7 @@
         "tags": [
           "进度"
         ],
+        "deprecated": true,
         "summary": "更新收视进度",
         "operationId": "UpdateEpisodeStatus",
         "parameters": [
@@ -334,6 +336,7 @@
         "tags": [
           "收藏"
         ],
+        "deprecated": true,
         "summary": "管理收藏",
         "operationId": "UpdateCollectionBySubjectIdWithAction",
         "description": "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded，参数都得放在body里。",
