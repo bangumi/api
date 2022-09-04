@@ -103,6 +103,7 @@ paths:
     get:
       tags:
         - 进度
+      deprecated: true
       summary: 更新收视进度
       operationId: getEpisodeStatus
       parameters:
@@ -122,10 +123,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: [ ]
+        - HTTPBearer: []
     post:
       tags:
         - 进度
+      deprecated: true
       summary: 更新收视进度
       operationId: UpdateEpisodeStatus
       parameters:
@@ -153,7 +155,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: [ ]
+        - HTTPBearer: []
   /subject/{subject_id}/update/watched_eps:
     post:
       tags:
@@ -193,11 +195,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: [ ]
+        - HTTPBearer: []
   /collection/{subject_id}/{action}:
     post:
       tags:
         - 收藏
+      deprecated: true
       summary: 管理收藏
       operationId: UpdateCollectionBySubjectIdWithAction
       description: "管理收藏。Content-type必须为multipart/form-data或application/x-www-form-urlencoded，参数都得放在body里。"
@@ -258,7 +261,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/StatusCode"
       security:
-        - HTTPBearer: [ ]
+        - HTTPBearer: []
 components:
   schemas:
     CollectionStatusId:
