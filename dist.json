@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n",
-    "version": "2022-09-1",
+    "version": "2022-09-4",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -271,8 +271,10 @@
         "tags": [
           "进度"
         ],
+        "deprecated": true,
         "summary": "批量更新收视进度",
         "operationId": "batchUpdateEpisodeStatusBySubjectId",
+        "description": "建议使用 [patchUserSubjectEpisodeCollection](#/%E6%94%B6%E8%97%8F/patchUserSubjectEpisodeCollection)",
         "parameters": [
           {
             "$ref": "#/components/parameters/subject_id"
