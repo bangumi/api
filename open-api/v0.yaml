@@ -1368,6 +1368,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDetail'
+  /v0/indices:
+    post:
+      tags:
+        - 目录
+      summary: Create a new index
+      operationId: newIndex
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
   /v0/indices/{index_id}:
     get:
       tags:
@@ -1375,14 +1396,30 @@ paths:
       summary: Get Index By ID
       operationId: getIndexById
       parameters:
-        - required: true
-          schema:
-            title: Index ID
-            minimum: 1
-            type: integer
-          name: index_id
-          description: 目录 ID
-          in: path
+        - $ref: '#/components/parameters/path_index_id'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Index'
+        '404':
+          $ref: '#/components/responses/404'
+      security:
+        - OptionalHTTPBearer: []
+    put:
+      tags:
+        - 目录
+      summary: Edit index's information
+      operationId: editIndexById
+      parameters:
+        - $ref: '#/components/parameters/path_index_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndexBasicInfo'
       responses:
         '200':
           description: Successful Response
@@ -1391,19 +1428,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Index'
         '400':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDetail'
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDetail'
+          $ref: '#/components/responses/404'
       security:
-        - OptionalHTTPBearer: []
+        - HTTPBearer: []
   /v0/indices/{index_id}/subjects:
     get:
       tags:
@@ -1411,14 +1442,7 @@ paths:
       summary: Get Index Subjects
       operationId: getIndexSubjectsByIndexId
       parameters:
-        - required: true
-          description: 条目 ID
-          schema:
-            title: Index ID
-            minimum: 1
-            type: integer
-          name: index_id
-          in: path
+        - $ref: '#/components/parameters/path_index_id'
         - required: false
           description: 条目类型
           schema:
@@ -1430,24 +1454,78 @@ paths:
       responses:
         '200':
           description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Paged_IndexSubject'
         '400':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDetail'
+          $ref: '#/components/responses/400'
         '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorDetail'
+          $ref: '#/components/responses/404'
       security:
         - OptionalHTTPBearer: []
+    post:
+      tags:
+        - 目录
+      summary: Add a subject to Index
+      operationId: addSubjectToIndexByIndexId
+      parameters:
+        - $ref: '#/components/parameters/path_index_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndexSubjectAddInfo'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-no-content'
+        '400':
+          $ref: '#/components/responses/401'
+        '401':
+          $ref: '#/components/responses/400'
+        '404':
+          $ref: '#/components/responses/404'
+      security:
+        - HTTPBearer: []
+  /v0/indices/{index_id}/subjects/{subject_id}:
+    put:
+      tags:
+        - 目录
+      summary: Edit subject information in a index
+      operationId: editIndexSubjectsByIndexIdAndSubjectID
+      description: 如果条目不存在于目录，会创建该条目
+      parameters:
+        - $ref: '#/components/parameters/path_index_id'
+        - $ref: '#/components/parameters/path_subject_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndexSubjectEditInfo'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-no-content'
+        '400':
+          $ref: '#/components/responses/400'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+      security:
+        - HTTPBearer: []
+    delete:
+      tags:
+        - 目录
+      summary: Delete a subject from a Index
+      operationId: delelteSubjectFromIndexByIndexIdAndSubjectID
+      parameters:
+        - $ref: '#/components/parameters/path_index_id'
+        - $ref: '#/components/parameters/path_subject_id'
+      responses:
+        '200':
+          $ref: '#/components/responses/200-no-content'
+        '401':
+          $ref: '#/components/responses/401'
+        '404':
+          $ref: '#/components/responses/404'
+      security:
+        - HTTPBearer: []
 components:
   parameters:
     path_subject_id:
@@ -1491,6 +1569,15 @@ components:
         type: integer
       name: person_id
       description: 人物 ID
+      in: path
+    path_index_id:
+      required: true
+      description: 目录 ID
+      schema:
+        title: Index ID
+        minimum: 1
+        type: integer
+      name: index_id
       in: path
     query_subject_id:
       required: true
@@ -2256,6 +2343,7 @@ components:
         - desc
         - stat
         - created_at
+        - updated_at
         - creator
         - ban
         - nsfw
@@ -2283,6 +2371,10 @@ components:
           description: 目录评论及收藏数
         created_at:
           title: Created At
+          type: string
+          format: date-time
+        updated_at:
+          title: Updated At
           type: string
           format: date-time
         creator:
@@ -2327,6 +2419,44 @@ components:
           type: string
           format: date-time
       description: 同名字段意义同<a href="#model-Subject">Subject</a>
+    IndexBasicInfo:
+      title: IndexBasicInfo
+      type: object
+      description: 新增或修改条目的内容，同名字段意义同<a href="#model-Subject">Subject</a>
+      properties:
+        title:
+          title: Title
+          type: string
+        description:
+          title: Description
+          type: string
+    IndexSubjectAddInfo:
+      title: IndexBasicInfo
+      type: object
+      description: 新增某条目到目录的请求信息
+      properties:
+        subject_id:
+          title: Subject ID
+          type: integer
+        sort:
+          title: Sort
+          type: integer
+          description: 排序条件，越小越靠前
+        comment:
+          title: Comment
+          type: string
+    IndexSubjectEditInfo:
+      title: IndexBasicInfo
+      type: object
+      description: 修改目录中条目的信息
+      properties:
+        sort:
+          title: Sort
+          type: integer
+          description: 排序条件，越小越靠前
+        comment:
+          title: Comment
+          type: string
     WikiV0:
       title: Infobox
       type: array
@@ -3196,3 +3326,24 @@ components:
       type: http
       description: 需要使用 access token 进行认证
       scheme: Bearer
+  responses:
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDetail'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDetail'
+    '404':
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorDetail'
+    200-no-content:
+      description: Successful Response
