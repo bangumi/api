@@ -31,9 +31,9 @@ paths:
 
         不同筛选条件之间为 `且`
 
-        计划支持:
-        - 标记人数
-        - 评分人数
+        由于目前 meilisearch 的一些问题，条目排名更新并不会触发搜索数据更新，所以条目排名可能是过期数据。
+        
+        希望未来版本的 meilisearch 能解决相关的问题。
       parameters:
         - name: limit
           in: query
