@@ -2535,7 +2535,6 @@ components:
         - total
         - limit
         - offset
-        - data
       properties:
         total:
           title: Total
@@ -2546,11 +2545,6 @@ components:
         offset:
           title: Offset
           type: integer
-        data:
-          title: Data
-          type: array
-          items:
-            type: object
     Paged_Episode:
       title: Paged[Episode]
       type: object
