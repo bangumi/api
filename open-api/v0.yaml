@@ -1318,16 +1318,7 @@ paths:
           name: episode_id
           description: 章节 ID
           in: query
-        - required: false
-          schema:
-            title: Limit
-            maximum: 1000
-            minimum: 1
-            type: integer
-            default: 100
-          name: limit
-          description: 分页参数
-          in: query
+        - $ref: '#/components/parameters/default_query_limit'
         - $ref: '#/components/parameters/default_query_offset'
       responses:
         '200':
@@ -1969,8 +1960,8 @@ components:
           format: date-time
         data:
           title: Data
-          type: string
-          description: 编辑修改内容
+          type: object
+          description: 编辑修改内容，响应类型不固定
     PersonRevision:
       title: PersonRevision
       allOf:
