@@ -866,7 +866,7 @@ paths:
         - 收藏
       summary: 修改用户单个收藏
       description: |
-        修改条目收藏状态，暂时不会生成时间线。
+        修改条目收藏状态
 
         由于直接修改剧集条目的完成度可能会引起意料之外效果，只能用于修改书籍类条目的完成度。
 
@@ -1003,8 +1003,6 @@ paths:
       summary: 章节收藏信息
       description: |
         同时会重新计算条目的完成度
-
-        暂时不能生成时间线
       operationId: patchUserSubjectEpisodeCollection
       parameters:
         - $ref: '#/components/parameters/path_subject_id'
