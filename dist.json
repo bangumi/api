@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n\n如果你在使用中遇到了问题，请优先使用 GitHub issue 提交问题。在 bangumi 小组发帖可能无法得到及时反馈。\n",
-    "version": "2023-03-28",
+    "version": "2023-03-31",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -1544,7 +1544,7 @@
           "收藏"
         ],
         "summary": "修改用户单个收藏",
-        "description": "修改条目收藏状态，暂时不会生成时间线。\n\n由于直接修改剧集条目的完成度可能会引起意料之外效果，只能用于修改书籍类条目的完成度。\n\nPATCH 方法的所有请求体字段均可选\n",
+        "description": "修改条目收藏状态\n\n由于直接修改剧集条目的完成度可能会引起意料之外效果，只能用于修改书籍类条目的完成度。\n\nPATCH 方法的所有请求体字段均可选\n",
         "operationId": "patchUserCollection",
         "parameters": [
           {
@@ -1755,7 +1755,7 @@
           "收藏"
         ],
         "summary": "章节收藏信息",
-        "description": "同时会重新计算条目的完成度\n\n暂时不能生成时间线\n",
+        "description": "同时会重新计算条目的完成度\n",
         "operationId": "patchUserSubjectEpisodeCollection",
         "parameters": [
           {
