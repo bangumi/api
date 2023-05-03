@@ -861,6 +861,47 @@ paths:
       security:
         - OptionalHTTPBearer: []
   /v0/users/-/collections/{subject_id}:
+    post:
+      tags:
+        - 收藏
+      summary: 新增或修改用户单个收藏
+      description: |
+        修改条目收藏状态, 如果不存在则创建，如果存在则修改
+
+        由于直接修改剧集条目的完成度可能会引起意料之外效果，只能用于修改书籍类条目的完成度。
+
+        方法的所有请求体字段均可选
+      operationId: postUserCollection
+      parameters:
+        - $ref: '#/components/parameters/path_subject_id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSubjectCollectionModifyPayload'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - OptionalHTTPBearer: []
     patch:
       tags:
         - 收藏
@@ -878,43 +919,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              description: 所有的字段均可选
-              properties:
-                type:
-                  description: 修改条目收藏类型
-                  allOf:
-                    - $ref: '#/components/schemas/SubjectCollectionType'
-                rate:
-                  description: 评分，`0` 表示删除评分
-                  type: integer
-                  maximum: 10
-                  minimum: 0
-                  exclusiveMaximum: false
-                  exclusiveMinimum: false
-                ep_status:
-                  description: 只能用于修改书籍条目进度
-                  type: integer
-                  minimum: 0
-                  exclusiveMinimum: false
-                vol_status:
-                  description: 只能用于修改书籍条目进度
-                  type: integer
-                  minimum: 0
-                  exclusiveMinimum: false
-                comment:
-                  description: 评价
-                  type: string
-                private:
-                  description: 仅自己可见
-                  type: boolean
-                tags:
-                  title: 标签
-                  description: 不传或者 `null` 都会被忽略，传 `[]` 则会删除所有 tag。
-                  type: array
-                  items:
-                    type: string
-                    description: 不能包含空格
+              $ref: '#/components/schemas/UserSubjectCollectionModifyPayload'
       responses:
         '204':
           description: Successful Response
@@ -3285,6 +3290,45 @@ components:
           type: boolean
         subject:
           $ref: '#/components/schemas/SlimSubject'
+    UserSubjectCollectionModifyPayload:
+      title: UserSubjectCollectionModifyPayload
+      type: object
+      description: 所有的字段均可选
+      properties:
+        type:
+          description: 修改条目收藏类型
+          allOf:
+            - $ref: '#/components/schemas/SubjectCollectionType'
+        rate:
+          description: 评分，`0` 表示删除评分
+          type: integer
+          maximum: 10
+          minimum: 0
+          exclusiveMaximum: false
+          exclusiveMinimum: false
+        ep_status:
+          description: 只能用于修改书籍条目进度
+          type: integer
+          minimum: 0
+          exclusiveMinimum: false
+        vol_status:
+          description: 只能用于修改书籍条目进度
+          type: integer
+          minimum: 0
+          exclusiveMinimum: false
+        comment:
+          description: 评价
+          type: string
+        private:
+          description: 仅自己可见
+          type: boolean
+        tags:
+          title: 标签
+          description: 不传或者 `null` 都会被忽略，传 `[]` 则会删除所有 tag。
+          type: array
+          items:
+            type: string
+            description: 不能包含空格
     UserEpisodeCollection:
       additionalProperties: false
       properties:
