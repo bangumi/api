@@ -4410,7 +4410,9 @@
           },
           "ban": {
             "title": "Ban",
-            "type": "boolean"
+            "deprecated": true,
+            "type": "boolean",
+            "description": "deprecated, always false."
           },
           "nsfw": {
             "title": "目录是否包括 nsfw 条目",
