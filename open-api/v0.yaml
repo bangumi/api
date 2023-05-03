@@ -2418,7 +2418,9 @@ components:
           $ref: '#/components/schemas/Creator'
         ban:
           title: Ban
+          deprecated: true
           type: boolean
+          description: deprecated, always false.
         nsfw:
           title: 目录是否包括 nsfw 条目
           type: boolean
