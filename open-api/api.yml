@@ -683,7 +683,7 @@ components:
       type: "http"
       description: |
         Some api like getting a subject doesn't require any authorization. 
-        But only authorized user can see NSFW recoed, non-authorized user get 404 response.
+        But NSFW contents are only visible to authorized user, non-authorized user will get 404 response.
         You can create a access token here [https://bgm.tv/dev/app](https://bgm.tv/dev/app)
       scheme: "bearer"
 
