@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n\n如果你在使用中遇到了问题，请优先使用 GitHub issue 提交问题。在 bangumi 小组发帖可能无法得到及时反馈。\n",
-    "version": "2023-11-15",
+    "version": "2024-01-30",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -5750,7 +5750,7 @@
     "securitySchemes": {
       "OptionalHTTPBearer": {
         "type": "http",
-        "description": "Some api like getting a subject doesn't require any authorization. \nBut only authorized user can see NSFW recoed, non-authorized user get 404 response.\nYou can create a access token here [https://bgm.tv/dev/app](https://bgm.tv/dev/app)\n",
+        "description": "Some api like getting a subject doesn't require any authorization. \nBut NSFW contents are only visible to authorized user, non-authorized user will get 404 response.\nYou can create a access token here [https://bgm.tv/dev/app](https://bgm.tv/dev/app)\n",
         "scheme": "bearer"
       },
       "HTTPBearer": {
