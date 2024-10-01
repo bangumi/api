@@ -191,6 +191,80 @@ paths:
                         rank:
                           description: 排名
                           type: integer
+  /v0/subjects:
+    get:
+      tags:
+        - 条目
+      summary: 浏览条目
+      description: 第一页会 cache 24h，之后会 cache 1h
+      operationId: getSubjects
+      parameters:
+        - name: type
+          in: query
+          description: 条目类型
+          required: true
+          schema:
+            $ref: '#/components/schemas/SubjectType'
+        - name: cat
+          in: query
+          description: 条目分类，参照 `SubjectCategory` enum
+          required: false
+          schema:
+            $ref: '#/components/schemas/SubjectCategory'
+        - name: series
+          in: query
+          description: 是否系列，仅对书籍类型的条目有效
+          required: false
+          schema:
+            type: boolean
+        - name: platform
+          in: query
+          description: 平台，仅对游戏类型的条目有效
+          required: false
+          schema:
+            type: string
+        - name: sort
+          in: query
+          description: 排序，枚举值 {date|rank}
+          required: false
+          schema:
+            title: Sort Order
+            type: string
+        - name: year
+          in: query
+          description: 年份
+          required: false
+          schema:
+            type: integer
+        - name: month
+          in: query
+          description: 月份
+          required: false
+          schema:
+            type: integer
+        - $ref: '#/components/parameters/default_query_limit'
+        - $ref: '#/components/parameters/default_query_offset'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paged_Subject'
+        '400':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - OptionalHTTPBearer: []
   /v0/subjects/{subject_id}:
     get:
       tags:
@@ -564,6 +638,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDetail'
+  /v0/characters/{character_id}/collect:
+    post:
+      tags:
+        - 角色
+      summary: Collect character for current user
+      operationId: collectCharacterByCharacterIdAndUserId
+      description: 为当前用户收藏角色
+      parameters:
+        - $ref: '#/components/parameters/path_character_id'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: character ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 角色不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
+    delete:
+      tags:
+        - 角色
+      summary: Uncollect character for current user
+      operationId: uncollectCharacterByCharacterIdAndUserId
+      description: 为当前用户取消收藏角色
+      parameters:
+        - $ref: '#/components/parameters/path_character_id'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: character ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 角色不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - HTTPBearer: []
   /v0/persons/{person_id}:
     get:
       tags:
@@ -595,7 +732,7 @@ paths:
   /v0/persons/{person_id}/image:
     get:
       tags:
-        - 角色
+        - 人物
       summary: Get Person Image
       operationId: getPersonImageById
       parameters:
@@ -689,6 +826,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorDetail'
+  /v0/persons/{person_id}/collect:
+    post:
+      tags:
+        - 人物
+      summary: Collect person for current user
+      operationId: collectPersonByPersonIdAndUserId
+      description: 为当前用户收藏人物
+      parameters:
+        - $ref: '#/components/parameters/path_person_id'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: person ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 人物不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - OptionalHTTPBearer: []
+    delete:
+      tags:
+        - 人物
+      summary: Uncollect person for current user
+      operationId: uncollectPersonByPersonIdAndUserId
+      description: 为当前用户取消收藏人物
+      parameters:
+        - $ref: '#/components/parameters/path_person_id'
+      responses:
+        '204':
+          description: Successful Response
+        '400':
+          description: person ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '401':
+          description: not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 人物不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+      security:
+        - OptionalHTTPBearer: []
   /v0/users/{username}:
     get:
       tags:
@@ -768,7 +968,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                allOf:
+                  - $ref: '#/components/schemas/User'
+                  - type: object
+                    properties:
+                      time_offset:
+                        description: 用户设置的时区偏移，以小时为单位。比如 GMT+8（shanghai/beijing）为 8
+                        type: integer
         '403':
           description: unauthorized
           content:
@@ -833,8 +1039,8 @@ paths:
     get:
       tags:
         - 收藏
-      summary: 获取用户单个收藏
-      description: 获取对应用户的收藏，查看私有收藏需要access token。
+      summary: 获取用户单个条目收藏
+      description: 获取对应用户的收藏，查看私有收藏需要 access token
       operationId: getUserCollection
       parameters:
         - $ref: '#/components/parameters/path_username'
@@ -864,7 +1070,7 @@ paths:
     post:
       tags:
         - 收藏
-      summary: 新增或修改用户单个收藏
+      summary: 新增或修改用户单个条目收藏
       description: |
         修改条目收藏状态, 如果不存在则创建，如果存在则修改
 
@@ -1128,6 +1334,104 @@ paths:
                 $ref: '#/components/schemas/ErrorDetail'
       security:
         - HTTPBearer: []
+  /v0/users/{username}/collections/-/characters:
+    get:
+      tags:
+        - 收藏
+      summary: 获取用户角色收藏列表
+      operationId: getUserCharacterCollections
+      parameters:
+        - $ref: '#/components/parameters/path_username'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paged_UserCharacterCollection'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/users/{username}/collections/-/characters/{character_id}:
+    get:
+      tags:
+        - 收藏
+      summary: 获取用户单个角色收藏信息
+      operationId: getUserCharacterCollection
+      parameters:
+        - $ref: '#/components/parameters/path_username'
+        - $ref: '#/components/parameters/path_character_id'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCharacterCollection'
+        '400':
+          description: character ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 用户或角色不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/users/{username}/collections/-/persons:
+    get:
+      tags:
+        - 收藏
+      summary: 获取用户人物收藏列表
+      operationId: getUserPersonCollections
+      parameters:
+        - $ref: '#/components/parameters/path_username'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paged_UserPersonCollection'
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+  /v0/users/{username}/collections/-/persons/{person_id}:
+    get:
+      tags:
+        - 收藏
+      summary: 获取用户单个人物收藏信息
+      operationId: getUserPersonCollection
+      parameters:
+        - $ref: '#/components/parameters/path_username'
+        - $ref: '#/components/parameters/path_person_id'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserPersonCollection'
+        '400':
+          description: person ID not valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
+        '404':
+          description: 用户或人物不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorDetail'
   /v0/revisions/persons:
     get:
       tags:
@@ -1855,6 +2159,7 @@ components:
         - name
         - type
         - subject_id
+        - subject_type
         - subject_name
         - subject_name_cn
       type: object
@@ -1879,6 +2184,8 @@ components:
         subject_id:
           title: Subject ID
           type: integer
+        subject_type:
+          $ref: '#/components/schemas/SubjectType'
         subject_name:
           title: Subject Name
           type: string
@@ -2285,9 +2592,7 @@ components:
           title: ID
           type: integer
         type:
-          title: Type
-          type: integer
-          description: '`0` 本篇，`1` SP，`2` OP，`3` ED'
+          $ref: '#/components/schemas/EpType'
         name:
           title: Name
           type: string
@@ -2583,6 +2888,28 @@ components:
         offset:
           title: Offset
           type: integer
+    Paged_Subject:
+      title: Paged[Subject]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          default: []
     Paged_Episode:
       title: Paged[Episode]
       type: object
@@ -2671,6 +2998,50 @@ components:
           items:
             $ref: '#/components/schemas/UserSubjectCollection'
           default: []
+    Paged_UserCharacterCollection:
+      title: Paged[UserCharacterCollection]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserCharacterCollection'
+          default: []
+    Paged_UserPersonCollection:
+      title: Paged[UserPersonCollection]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/UserPersonCollection'
+          default: []
     Person:
       title: Person
       required:
@@ -2728,6 +3099,7 @@ components:
         - name
         - type
         - subject_id
+        - subject_type
         - subject_name
         - subject_name_cn
       type: object
@@ -2751,6 +3123,8 @@ components:
         subject_id:
           title: Subject ID
           type: integer
+        subject_type:
+          $ref: '#/components/schemas/SubjectType'
         subject_name:
           title: Subject Name
           type: string
@@ -2922,6 +3296,7 @@ components:
         - type
         - career
         - relation
+        - eps
       type: object
       properties:
         id:
@@ -2948,6 +3323,75 @@ components:
         relation:
           title: Relation
           type: string
+        eps:
+          title: Eps
+          type: string
+          description: 参与章节/曲目
+    UserCharacterCollection:
+      title: UserCharacterCollection
+      required:
+        - id
+        - name
+        - type
+        - created_at
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          type: integer
+          allOf:
+            - $ref: '#/components/schemas/CharacterType'
+          description: 角色，机体，舰船，组织...
+        images:
+          title: Images
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/PersonImages'
+          description: object with some size of images, this object maybe `null`
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
+    UserPersonCollection:
+      title: UserPersonCollection
+      required:
+        - id
+        - name
+        - type
+        - career
+        - created_at
+      type: object
+      properties:
+        id:
+          title: ID
+          type: integer
+        name:
+          title: Name
+          type: string
+        type:
+          type: integer
+          allOf:
+            - $ref: '#/components/schemas/PersonType'
+          description: '`1`, `2`, `3` 表示 `个人`, `公司`, `组合`'
+        career:
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonCareer'
+        images:
+          title: Images
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/PersonImages'
+          description: object with some size of images, this object maybe `null`
+        created_at:
+          title: Created At
+          type: string
+          format: date-time
     Revision:
       title: Revision
       required:
@@ -2998,6 +3442,7 @@ components:
         - platform
         - volumes
         - eps
+        - series
         - total_episodes
         - rating
         - images
@@ -3022,6 +3467,10 @@ components:
         summary:
           title: Summary
           type: string
+        series:
+          title: Series
+          type: boolean
+          description: 是否为书籍系列的主条目
         nsfw:
           title: Nsfw
           type: boolean
@@ -3035,7 +3484,7 @@ components:
         platform:
           title: Platform
           type: string
-          description: TV, Web, 欧美剧, PS4...
+          description: TV, Web, 欧美剧, DLC...
         images:
           $ref: '#/components/schemas/Images'
         infobox:
@@ -3176,8 +3625,12 @@ components:
           type: integer
         score:
           description: 分数
-          title: Total
+          title: Score
           type: number
+        rank:
+          description: 排名
+          title: Rank
+          type: integer
         tags:
           description: 前 10 个 tag
           allOf:
@@ -3232,6 +3685,148 @@ components:
         - Music
         - Game
         - Real
+    SubjectBookCategory:
+      title: SubjectBookCategory
+      example: 1001
+      enum:
+        - 0
+        - 1001
+        - 1002
+        - 1003
+      type: integer
+      description: |-
+        书籍类型
+        - `0` 为 其他
+        - `1001` 为 漫画
+        - `1002` 为 小说
+        - `1003` 为 画集
+      x-ms-enum:
+        name: SubjectBookCategory
+        modelAsString: false
+        values:
+          - Other
+          - Comic
+          - Novel
+          - Illustration
+      x-enum-varnames:
+        - Other
+        - Comic
+        - Novel
+        - Illustration
+    SubjectAnimeCategory:
+      title: SubjectAnimeCategory
+      example: 1
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 5
+      type: integer
+      description: |-
+        动画类型
+        - `0` 为 其他
+        - `1` 为 TV
+        - `2` 为 OVA
+        - `3` 为 Movie
+        - `5` 为 WEB
+      x-ms-enum:
+        name: SubjectAnimeCategory
+        modelAsString: false
+        values:
+          - Other
+          - TV
+          - OVA
+          - Movie
+          - WEB
+      x-enum-varnames:
+        - Other
+        - TV
+        - OVA
+        - Movie
+        - WEB
+    SubjectGameCategory:
+      title: SubjectGameCategory
+      example: 4001
+      enum:
+        - 0
+        - 4001
+        - 4003
+        - 4002
+        - 4005
+      type: integer
+      description: |-
+        游戏类型
+        - `0` 为 其他
+        - `4001` 为 游戏
+        - `4002` 为 软件
+        - `4003` 为 扩展包
+        - `4005` 为 桌游
+      x-ms-enum:
+        name: SubjectGameCategory
+        modelAsString: false
+        values:
+          - Other
+          - Games
+          - Software
+          - DLC
+          - Tabletop
+      x-enum-varnames:
+        - Other
+        - Games
+        - Software
+        - DLC
+        - Tabletop
+    SubjectRealCategory:
+      title: SubjectRealCategory
+      example: 6
+      enum:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 6001
+        - 6002
+        - 6003
+        - 6004
+      type: integer
+      description: |-
+        电影类型
+        - `0` 为 其他
+        - `1` 为 日剧
+        - `2` 为 欧美剧
+        - `3` 为 华语剧
+        - `6001` 为 电视剧
+        - `6002` 为 电影
+        - `6003` 为 演出
+        - `6004` 为 综艺
+      x-ms-enum:
+        name: SubjectRealCategory
+        modelAsString: false
+        values:
+          - Other
+          - JP
+          - EN
+          - CN
+          - TV
+          - Movie
+          - Live
+          - Show
+      x-enum-varnames:
+        - Other
+        - JP
+        - EN
+        - CN
+        - TV
+        - Movie
+        - Live
+        - Show
+    SubjectCategory:
+      anyOf:
+        - $ref: '#/components/schemas/SubjectBookCategory'
+        - $ref: '#/components/schemas/SubjectAnimeCategory'
+        - $ref: '#/components/schemas/SubjectGameCategory'
+        - $ref: '#/components/schemas/SubjectRealCategory'
     UserSubjectCollection:
       title: UserSubjectCollection
       required:
@@ -3346,13 +3941,17 @@ components:
       title: RelatedSubject
       required:
         - id
+        - type
         - staff
+        - name
         - name_cn
       type: object
       properties:
         id:
           title: ID
           type: integer
+        type:
+          $ref: '#/components/schemas/SubjectType'
         staff:
           title: Staff
           type: string
