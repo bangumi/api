@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n\n如果你在使用中遇到了问题，请优先使用 GitHub issue 提交问题。在 bangumi 小组发帖可能无法得到及时反馈。\n",
-    "version": "2024-10-1",
+    "version": "2024-10-15",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -5940,6 +5940,7 @@
           "nsfw",
           "locked",
           "platform",
+          "meta_tags",
           "volumes",
           "eps",
           "series",
@@ -6111,6 +6112,13 @@
                 "title": "Dropped",
                 "type": "integer"
               }
+            }
+          },
+          "meta_tags": {
+            "description": "由维基人维护的 tag",
+            "type": "array",
+            "items": {
+              "type": "string"
             }
           },
           "tags": {
