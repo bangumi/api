@@ -282,6 +282,17 @@
                         },
                         "description": "条目类型，参照 `SubjectType` enum，多值之间为 `或` 的关系。"
                       },
+                      "meta_tags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          "童年",
+                          "原创"
+                        ],
+                        "description": "公共标签。多个值之间为 `且` 关系。可以用 `-` 排除标签。比如 `-科幻` 可以排除科幻标签。"
+                      },
                       "tag": {
                         "type": "array",
                         "items": {
