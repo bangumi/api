@@ -3440,6 +3440,7 @@ components:
         - nsfw
         - locked
         - platform
+        - meta_tags
         - volumes
         - eps
         - series
@@ -3568,6 +3569,11 @@ components:
             dropped:
               title: Dropped
               type: integer
+        meta_tags:
+          description: 由维基人维护的 tag
+          type: array
+          items:
+            type: string
         tags:
           $ref: '#/components/schemas/SubjectTags'
     SlimSubject:
