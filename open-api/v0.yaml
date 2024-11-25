@@ -139,66 +139,7 @@ paths:
           content:
             application/json:
               schema:
-                description: 用户信息
-                type: object
-                properties:
-                  total:
-                    description: 搜索结果数量
-                    type: integer
-                    example: 100
-                  limit:
-                    description: 当前分页参数
-                    type: integer
-                    example: 100
-                  offset:
-                    description: 当前分页参数
-                    type: integer
-                    example: 100
-                  data:
-                    type: array
-                    items:
-                      type: object
-                      required:
-                        - score
-                        - id
-                        - rank
-                        - tags
-                        - name
-                        - name_cn
-                        - image
-                        - date
-                        - summary
-                      properties:
-                        id:
-                          description: 条目ID
-                          type: integer
-                          example: 8
-                        type:
-                          $ref: '#/components/schemas/SubjectType'
-                        date:
-                          type: string
-                          description: 上映/开播/连载开始日期，可能为空字符串
-                        image:
-                          type: string
-                          format: url
-                          description: 封面
-                        summary:
-                          type: string
-                          description: 条目描述
-                        name:
-                          type: string
-                          description: 条目原名
-                        name_cn:
-                          type: string
-                          description: 条目中文名
-                        tags:
-                          $ref: '#/components/schemas/SubjectTags'
-                        score:
-                          description: 评分
-                          type: number
-                        rank:
-                          description: 排名
-                          type: integer
+                $ref: '#/components/schemas/Paged_Subject'
   /v0/subjects:
     get:
       tags:
