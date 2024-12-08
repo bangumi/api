@@ -135,6 +135,116 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Paged_Subject'
+  /v0/search/characters:
+    post:
+      tags:
+        - 角色
+      summary: 角色搜索
+      operationId: searchCharacters
+      description: |
+        ## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动
+
+        目前支持的筛选条件包括:
+        - `nsfw`: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。
+      parameters:
+        - name: limit
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - keyword
+              properties:
+                keyword:
+                  type: string
+                filter:
+                  type: object
+                  description: 不同条件之间是 `且` 的关系
+                  properties:
+                    nsfw:
+                      type: boolean
+                      description: |
+                        无权限的用户会直接忽略此字段，不会返回 R18 角色。
+
+                        默认或者 `null` 会返回包含 R18 的所有搜索结果。
+
+                        `true` 只会返回 R18 角色。
+
+                        `false` 只会返回非 R18 角色。
+      responses:
+        '200':
+          description: 返回搜索结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paged_Character'
+  /v0/search/persons:
+    post:
+      tags:
+        - 人物
+      summary: 人物搜索
+      operationId: searchPersons
+      description: |
+        ## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动
+
+        目前支持的筛选条件包括:
+        - `career`: 职业，可以多次出现。`且` 关系。
+
+        不同筛选条件之间为 `且`
+      parameters:
+        - name: limit
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: 分页参数
+          required: false
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - keyword
+              properties:
+                keyword:
+                  type: string
+                filter:
+                  type: object
+                  description: 不同条件之间是 `且` 的关系
+                  properties:
+                    career:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - artist
+                        - director
+                      description: 职业，可以多次出现。多值之间为 `且` 关系。
+      responses:
+        '200':
+          description: 返回搜索结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Paged_Person'
   /v0/subjects:
     get:
       tags:
@@ -472,7 +582,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CharacterDetail'
+                $ref: '#/components/schemas/Character'
         '400':
           description: Validation Error
           content:
@@ -914,8 +1024,19 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/User'
+                  - required:
+                      - email
+                      - reg_time
                   - type: object
                     properties:
+                      email:
+                        description: 用户绑定的邮箱地址
+                        type: string
+                        format: email
+                      reg_time:
+                        description: 用户注册时间。比如 2017-12-03T08:51:16+08:00
+                        type: string
+                        format: date-time
                       time_offset:
                         description: 用户设置的时区偏移，以小时为单位。比如 GMT+8（shanghai/beijing）为 8
                         type: integer
@@ -2031,8 +2152,8 @@ components:
         - B
         - AB
         - O
-    CharacterDetail:
-      title: CharacterDetail
+    Character:
+      title: Character
       required:
         - id
         - name
@@ -2853,6 +2974,50 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Subject'
+          default: []
+    Paged_Character:
+      title: Paged[Character]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/Character'
+          default: []
+    Paged_Person:
+      title: Paged[Person]
+      type: object
+      properties:
+        total:
+          title: Total
+          type: integer
+          default: 0
+        limit:
+          title: Limit
+          type: integer
+          default: 0
+        offset:
+          title: Offset
+          type: integer
+          default: 0
+        data:
+          title: Data
+          type: array
+          items:
+            $ref: '#/components/schemas/Person'
           default: []
     Paged_Episode:
       title: Paged[Episode]
