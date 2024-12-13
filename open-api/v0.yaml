@@ -1040,7 +1040,7 @@ paths:
                       time_offset:
                         description: 用户设置的时区偏移，以小时为单位。比如 GMT+8（shanghai/beijing）为 8
                         type: integer
-        '403':
+        '401':
           description: unauthorized
           content:
             application/json:
