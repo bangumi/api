@@ -495,7 +495,6 @@ paths:
             allOf:
               - $ref: '#/components/schemas/EpType'
             description: 参照章节的`type`
-            type: integer
           name: type
           in: query
         - required: false
@@ -1074,7 +1073,6 @@ paths:
           schema:
             allOf:
               - $ref: '#/components/schemas/SubjectCollectionType'
-            type: integer
           name: type
           in: query
         - $ref: '#/components/parameters/default_query_limit'
