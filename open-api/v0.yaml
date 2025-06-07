@@ -4040,15 +4040,22 @@ components:
             type: string
             description: 不能包含空格
     UserEpisodeCollection:
-      additionalProperties: false
+      additionalProperties: true
       properties:
         episode:
           $ref: '#/components/schemas/Episode'
         type:
           $ref: '#/components/schemas/EpisodeCollectionType'
+        updated_at:
+          type: integer
+          description: A int64 unix timestamp, `0` as unknown or un-recorded.
+          example:
+            - 0
+            - 1700000000
       required:
         - episode
         - type
+        - updated_at
       type: object
     v0_RelatedSubject:
       title: RelatedSubject
