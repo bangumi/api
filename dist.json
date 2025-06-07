@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n\n如果你在使用中遇到了问题，请优先使用 GitHub issue 提交问题。在 bangumi 小组发帖可能无法得到及时反馈。\n",
-    "version": "2025-02-5",
+    "version": "2025-06-7",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -6692,18 +6692,27 @@
         }
       },
       "UserEpisodeCollection": {
-        "additionalProperties": false,
+        "additionalProperties": true,
         "properties": {
           "episode": {
             "$ref": "#/components/schemas/Episode"
           },
           "type": {
             "$ref": "#/components/schemas/EpisodeCollectionType"
+          },
+          "updated_at": {
+            "type": "integer",
+            "description": "A int64 unix timestamp, `0` as unknown or un-recorded.",
+            "example": [
+              0,
+              1700000000
+            ]
           }
         },
         "required": [
           "episode",
-          "type"
+          "type",
+          "updated_at"
         ],
         "type": "object"
       },
