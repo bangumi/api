@@ -3,7 +3,7 @@
   "info": {
     "title": "Bangumi API",
     "description": "你可以在 <https://next.bgm.tv/demo/access-token> 生成一个 Access Token\n\n## [关于 User Agent](https://github.com/bangumi/api/blob/master/docs-raw/user%20agent.md)\n\n如果你在使用中遇到了问题，请优先使用 GitHub issue 提交问题。在 bangumi 小组发帖可能无法得到及时反馈。\n",
-    "version": "2025-06-7",
+    "version": "2025-07-1",
     "contact": {
       "name": "Bangumi API",
       "url": "https://github.com/bangumi/api/"
@@ -87,131 +87,6 @@
                       }
                     }
                   }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/search/subject/{keywords}": {
-      "get": {
-        "tags": [
-          "搜索"
-        ],
-        "summary": "条目搜索",
-        "operationId": "searchSubjectByKeywords",
-        "parameters": [
-          {
-            "name": "keywords",
-            "in": "path",
-            "description": "关键词 <br> 需要 URL Encode",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "type",
-            "in": "query",
-            "description": "条目类型，参考 [SubjectType](#model-Legacy_SubjectType)",
-            "required": false,
-            "schema": {
-              "$ref": "#/components/schemas/Legacy_SubjectType"
-            }
-          },
-          {
-            "name": "responseGroup",
-            "in": "query",
-            "description": "返回数据大小 <br> 默认为 small",
-            "required": false,
-            "schema": {
-              "description": "返回数据大小",
-              "type": "string",
-              "enum": [
-                "small",
-                "medium",
-                "large"
-              ],
-              "default": "small"
-            }
-          },
-          {
-            "name": "start",
-            "in": "query",
-            "description": "开始条数",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            }
-          },
-          {
-            "name": "max_results",
-            "in": "query",
-            "description": "每页条数 <br> 最多 25",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 25
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "搜索结果",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "results": {
-                          "description": "总条数",
-                          "type": "integer"
-                        },
-                        "list": {
-                          "description": "结果列表",
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Legacy_SubjectSmall"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "results": {
-                          "description": "总条数",
-                          "type": "integer"
-                        },
-                        "list": {
-                          "description": "结果列表",
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Legacy_SubjectMedium"
-                          }
-                        }
-                      }
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "results": {
-                          "description": "总条数",
-                          "type": "integer"
-                        },
-                        "list": {
-                          "description": "结果列表",
-                          "type": "array",
-                          "items": {
-                            "$ref": "#/components/schemas/Legacy_SubjectLarge"
-                          }
-                        }
-                      }
-                    }
-                  ]
                 }
               }
             }
