@@ -26,6 +26,7 @@ paths:
         - `tag`: 标签，可以多次出现。`且` 关系。
         - `air_date`: 播出日期/发售日期。`且` 关系。
         - `rating`: 用于搜索指定评分的条目。`且` 关系。
+        - `rating_count`: 用于按照评分人数筛选条目。`且` 关系。
         - `rank`: 用于搜索指定排名的条目。`且` 关系。
         - `nsfw`: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。
 
@@ -110,6 +111,14 @@ paths:
                         - '>=6'
                         - <8
                       description: 用于搜索指定评分的条目，多值之间为 `且` 关系。
+                    rating_count:
+                      type: array
+                      items:
+                        type: string
+                      example:
+                        - '>=200'
+                        - <5000
+                      description: 用于按照评分人数筛选条目，多值之间为 `且` 关系，格式与 `rating` 相同。
                     rank:
                       type: array
                       items:
@@ -4063,6 +4072,7 @@ components:
         - id
         - type
         - staff
+        - eps
         - name
         - name_cn
       type: object
@@ -4075,6 +4085,10 @@ components:
         staff:
           title: Staff
           type: string
+        eps:
+          title: Eps
+          type: string
+          description: 参与章节/曲目
         name:
           title: Name
           type: string
