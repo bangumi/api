@@ -101,7 +101,7 @@
         ],
         "summary": "条目搜索",
         "operationId": "searchSubjects",
-        "description": "## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动\n\n目前支持的筛选条件包括:\n- `type`: 条目类型，参照 `SubjectType` enum， `或`。\n- `tag`: 标签，可以多次出现。`且` 关系。\n- `air_date`: 播出日期/发售日期。`且` 关系。\n- `rating`: 用于搜索指定评分的条目。`且` 关系。\n- `rank`: 用于搜索指定排名的条目。`且` 关系。\n- `nsfw`: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。\n\n不同筛选条件之间为 `且`\n",
+        "description": "## 实验性 API， 本 schema 和实际的 API 行为都可能随时发生改动\n\n目前支持的筛选条件包括:\n- `type`: 条目类型，参照 `SubjectType` enum， `或`。\n- `tag`: 标签，可以多次出现。`且` 关系。\n- `air_date`: 播出日期/发售日期。`且` 关系。\n- `rating`: 用于搜索指定评分的条目。`且` 关系。\n- `rating_count`: 用于按照评分人数筛选条目。`且` 关系。\n- `rank`: 用于搜索指定排名的条目。`且` 关系。\n- `nsfw`: 使用 `include` 包含NSFW搜索结果。默认排除搜索NSFW条目。无权限情况下忽略此选项，不会返回NSFW条目。\n\n不同筛选条件之间为 `且`\n",
         "parameters": [
           {
             "name": "limit",
@@ -200,6 +200,17 @@
                           "<8"
                         ],
                         "description": "用于搜索指定评分的条目，多值之间为 `且` 关系。"
+                      },
+                      "rating_count": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "example": [
+                          ">=200",
+                          "<5000"
+                        ],
+                        "description": "用于按照评分人数筛选条目，多值之间为 `且` 关系，格式与 `rating` 相同。"
                       },
                       "rank": {
                         "type": "array",
@@ -6597,6 +6608,7 @@
           "id",
           "type",
           "staff",
+          "eps",
           "name",
           "name_cn"
         ],
@@ -6612,6 +6624,11 @@
           "staff": {
             "title": "Staff",
             "type": "string"
+          },
+          "eps": {
+            "title": "Eps",
+            "type": "string",
+            "description": "参与章节/曲目"
           },
           "name": {
             "title": "Name",
