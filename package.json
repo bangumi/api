@@ -7,7 +7,7 @@
     "build:local": "npm run resolveRef && npm run fillVersion && npm run build && npm run resetVersion"
   },
   "dependencies": {
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "openapi-merge-cli": "^1.3.1"
   }
 }
