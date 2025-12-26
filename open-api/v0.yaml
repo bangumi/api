@@ -3373,6 +3373,7 @@ components:
       required:
         - id
         - name
+        - summary
         - type
         - relation
       type: object
@@ -3382,6 +3383,9 @@ components:
           type: integer
         name:
           title: Name
+          type: string
+        summary:
+          title: Summary
           type: string
         type:
           type: integer
