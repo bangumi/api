@@ -2324,6 +2324,7 @@ components:
       title: EpisodeCollectionType
       example: 2
       enum:
+        - 0
         - 1
         - 2
         - 3
@@ -2337,10 +2338,12 @@ components:
         name: EpisodeCollectionType
         modelAsString: false
         values:
+          - None
           - Wish
           - Done
           - Dropped
       x-enum-varNames:
+        - None
         - Wish
         - Done
         - Dropped
