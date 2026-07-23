@@ -3789,7 +3789,7 @@ components:
         required:
           - name
           - count
-          - total_cont
+          - total_count
         type: object
         properties:
           name:
@@ -3799,7 +3799,7 @@ components:
             title: Count
             description: 使用此标签标记本条目的用户数
             type: integer
-          total_cont:
+          total_count:
             title: Total Count
             description: 此标签在所有条目中的使用总次数
             type: integer
